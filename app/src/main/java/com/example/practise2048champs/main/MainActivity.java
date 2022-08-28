@@ -161,14 +161,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void achievementsClicked(View view) {
-        Toast.makeText(this, "Achievements Icon Clicked", Toast.LENGTH_SHORT).show();
-    }
-
-    public void menuClicked(View view) {
-        Toast.makeText(this, "Menu Icon Clicked", Toast.LENGTH_SHORT).show();
-    }
-
     /**
      * onClick listeners of Game Mode Options Linear Layout are as follows
      */
