@@ -5,6 +5,8 @@
     android:id="@+id/root_layout_pregame_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
     android:background="@drawable/background1_complete"
     tools:context=".pregame.PreGameFragment">
 
