@@ -43,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.90" />
+        app:layout_constraintGuide_percent="0.95" />
 
     <FrameLayout
         android:id="@+id/navigation_fragment_container"
@@ -53,7 +53,7 @@
         app:layout_constraintBottom_toBottomOf="@id/horizontal_guide_bottom_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/horizontal_guide_top_1"/>
+        app:layout_constraintTop_toTopOf="@id/horizontal_guide_top_1" />
 
     <FrameLayout
         android:id="@+id/full_screen_fragment_container"

@@ -56,17 +56,17 @@
   <!-- This path tag is for -> Sound texture, mid -->
   <path
       android:pathData="M435.84,148.68l-33.89,13.3c-2,0.73 -2.73,3.64 -1.64,6.38c1.09,2.73 3.64,4.37 5.65,3.64l33.89,-13.3c2,-0.73 2.73,-3.64 1.64,-6.38C440.39,149.59 437.84,147.95 435.84,148.68z"
-      android:fillColor="@color/orange_button"/>
+      android:fillColor="@color/orange_button_dark"/>
 
   <!-- This path tag is for -> Sound texture, top -->
   <path
       android:pathData="M401.58,82.54l-21.86,29.15c-1.27,1.64 -0.36,4.55 2,6.38c2.37,1.82 5.28,1.82 6.56,0.18l21.86,-29.15c1.27,-1.64 0.36,-4.55 -2,-6.38C405.77,80.9 402.86,80.9 401.58,82.54z"
-      android:fillColor="@color/orange_button"/>
+      android:fillColor="@color/orange_button_dark"/>
 
   <!-- This path tag is for -> Sound texture, mid -->
   <path
       android:pathData="M458.98,229.76l-35.71,-6.74c-2,-0.36 -3.28,-3.1 -2.73,-6.01c0.55,-2.91 2.73,-4.92 4.74,-4.55l35.71,6.74c2,0.36 3.28,3.1 2.73,6.01C463.17,228.12 460.98,230.13 458.98,229.76z"
-      android:fillColor="@color/orange_button"/>
+      android:fillColor="@color/orange_button_dark"/>
 
   <!-- This path tag is for -> Shining texture at the mid-joint -->
   <path

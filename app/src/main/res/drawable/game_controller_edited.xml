@@ -17,28 +17,28 @@
 
     <!-- This path tag is for -> Big circle top left side -->
     <path
-        android:fillColor="@color/orange_button"
+        android:fillColor="@color/orange_button_dark"
         android:pathData="M13.786,20.268m-4,0a4,4 0,1 1,8 0a4,4 0,1 1,-8 0" />
 
     <!-- This path tag is for -> 4 circle cluster, top -->
     <path
-        android:fillColor="@color/orange_button"
+        android:fillColor="@color/orange_button_dark"
         android:pathData="M43.786,16.268m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0" />
 
     <!-- This path tag is for -> 4 circle cluster, left -->
     <path
-        android:fillColor="@color/orange_button"
+        android:fillColor="@color/orange_button_dark"
         android:pathData="M39.786,20.268m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0" />
 
     <!-- This path tag is for -> 4 circle cluster, right -->
     <path
 
-        android:fillColor="@color/orange_button"
+        android:fillColor="@color/orange_button_dark"
         android:pathData="M47.786,20.268m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0" />
 
     <!-- This path tag is for -> 4 circle cluster, bottom -->
     <path
-        android:fillColor="@color/orange_button"
+        android:fillColor="@color/orange_button_dark"
         android:pathData="M43.786,24.268m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0" />
 
     <!-- This path tag is for -> Top middle half-cut circle -->

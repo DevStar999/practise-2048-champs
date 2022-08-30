@@ -5,15 +5,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
 public class NavigationFragment extends Fragment {
     private OnNavigationFragmentInteractionListener mListener;
-    private AppCompatButton pregameFragmentButton;
-    private AppCompatButton announcementsFragmentButton;
-    private AppCompatButton settingsFragmentButton;
 
     public NavigationFragment() {
         // Required empty public constructor
@@ -29,11 +27,11 @@ public class NavigationFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_navigation, container, false);
 
-        pregameFragmentButton = view.findViewById(R.id.pregame_fragment_temp_button);
-        announcementsFragmentButton = view.findViewById(R.id.announcements_fragment_temp_button);
-        settingsFragmentButton = view.findViewById(R.id.settings_fragment_temp_button);
+        FrameLayout pregameLinearLayout = view.findViewById(R.id.fragment_navigation_pregame_frame_layout);
+        FrameLayout announcementsLinearLayout = view.findViewById(R.id.fragment_navigation_announcements_linear_layout);
+        FrameLayout settingsLinearLayout = view.findViewById(R.id.fragment_navigation_settings_linear_layout);
 
-        pregameFragmentButton.setOnClickListener(new View.OnClickListener() {
+        pregameLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mListener != null) {
@@ -41,7 +39,7 @@ public class NavigationFragment extends Fragment {
                 }
             }
         });
-        announcementsFragmentButton.setOnClickListener(new View.OnClickListener() {
+        announcementsLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mListener != null) {
@@ -49,7 +47,7 @@ public class NavigationFragment extends Fragment {
                 }
             }
         });
-        settingsFragmentButton.setOnClickListener(new View.OnClickListener() {
+        settingsLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mListener != null) {
@@ -63,7 +61,9 @@ public class NavigationFragment extends Fragment {
 
     public interface OnNavigationFragmentInteractionListener {
         void onNavigationFragmentSettingsClicked();
+
         void onNavigationFragmentAnnouncementsClicked();
+
         void onNavigationFragmentPreGameClicked();
     }
 
