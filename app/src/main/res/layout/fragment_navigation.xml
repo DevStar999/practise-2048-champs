@@ -26,10 +26,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
-            android:text="Play Game"
+            android:background="@color/game_primary_background_color"
+            android:text="PLAY GAME"
             android:textAlignment="center"
             android:textColor="@color/game_text_color"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
     </FrameLayout>
 
@@ -62,7 +63,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|bottom"
                 android:layout_marginBottom="4dp"
-                android:text="Announcements"
+                android:background="@color/game_primary_background_color"
+                android:text="ANNOUCEMENTS"
                 android:textAlignment="center"
                 android:textColor="@color/game_text_color"
                 android:textSize="12sp"
@@ -91,7 +93,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|bottom"
                 android:layout_marginBottom="4dp"
-                android:text="Settings"
+                android:background="@color/game_primary_background_color"
+                android:text="SETTINGS"
                 android:textAlignment="center"
                 android:textColor="@color/game_text_color"
                 android:textSize="12sp"
