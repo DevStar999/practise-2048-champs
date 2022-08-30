@@ -231,8 +231,51 @@ public class PreGameFragment extends Fragment {
         });
     }
 
-    private void settingOnClickListenersForSizeButtons() {
+    public void handleGameSizeBrowse(int indexOfCurrentSize) {
+        // Make changes to the game size
+        String newGameSize = allCurrentGameSizes.get(indexOfCurrentSize);
+        currentGameMode = GameModes.getGameModeEnum(
+                Character.getNumericValue(newGameSize.charAt(0)),
+                Character.getNumericValue(newGameSize.charAt(newGameSize.length() - 1)),
+                currentGameMode.getMode());
+        gameSizeTextView.setText(currentGameMode.getDimensions());
 
+        // Updating Game Size Browse Icons
+        preGameManager.updateSizeBrowseIcons(currentGameMode.getDimensions(), allCurrentGameSizes);
+
+        // Updating Preview
+        preGameManager.updatePreview(currentGameMode.getGamePreviewAssetFileName());
+
+        // Update the text of the start game button
+        if (sharedPreferences.getInt("GameStateEnumIndex" + " " + currentGameMode.getMode()
+                + " " + currentGameMode.getDimensions(), 0) == GameStates.GAME_ONGOING.ordinal()) {
+            startGameButton.setText("RESUME GAME");
+        } else {
+            startGameButton.setText("START GAME");
+        }
+    }
+
+    private void settingOnClickListenersForSizeButtons() {
+        sizeLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (view.getVisibility() == View.VISIBLE) {
+                    int indexOfCurrentSize = allCurrentGameSizes.indexOf(currentGameMode.getDimensions());
+                    indexOfCurrentSize--;
+                    handleGameSizeBrowse(indexOfCurrentSize);
+                }
+            }
+        });
+        sizeRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (view.getVisibility() == View.VISIBLE) {
+                    int indexOfCurrentSize = allCurrentGameSizes.indexOf(currentGameMode.getDimensions());
+                    indexOfCurrentSize++;
+                    handleGameSizeBrowse(indexOfCurrentSize);
+                }
+            }
+        });
     }
     
     @Override
