@@ -5,14 +5,15 @@
     android:id="@+id/root_layout_pregame_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_film1"
+    android:background="@drawable/background1_complete"
     tools:context=".pregame.PreGameFragment">
 
     <FrameLayout
         android:id="@+id/pregame_fragment_title_frame_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/game_primary_background_color"
+        android:background="@color/game_text_color"
+        android:paddingVertical="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -25,20 +26,21 @@
             android:scrollHorizontally="false"
             android:text="Select Game Mode"
             android:textAlignment="center"
-            android:textColor="@color/game_text_color"
+            android:textColor="@color/game_primary_background_color"
             android:textSize="24sp"
             android:textStyle="bold" />
 
         <!-- Either use scaleX & scaleY OR scaleType -->
         <ImageView
             android:id="@+id/title_back_pregame_fragment_button"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="left|center_vertical"
+            android:padding="6dp"
+            android:layout_marginStart="12dp"
+            android:contentDescription="Back button for closing PreGameFragment"
             android:background="@drawable/rounded_corner_button_small"
-            android:layout_weight="1"
             android:alpha="1"
-            android:onClick="preGameBackButton"
             app:srcCompat="@drawable/back_arrow" />
     </FrameLayout>
 
