@@ -1,23 +1,25 @@
 package com.example.practise2048champs.main;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.practise2048champs.AnnouncementsFragment;
+import com.example.practise2048champs.GameActivity;
 import com.example.practise2048champs.LogoLottieFragment;
 import com.example.practise2048champs.NavigationFragment;
 import com.example.practise2048champs.R;
-import com.example.practise2048champs.AnnouncementsFragment;
 import com.example.practise2048champs.SettingsFragment;
+import com.example.practise2048champs.dialogs.ArrivingFeatureDialog;
 import com.example.practise2048champs.dialogs.GameExitDialog;
 import com.example.practise2048champs.pregame.PreGameFragment;
 
@@ -142,5 +144,20 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onPreGameFragmentInteractionBackClicked() {
         onBackPressed();
+    }
+
+    @Override
+    public void onPreGameFragmentInteractionStartGame(String gameMode, int gameMatrixColumns, int gameMatrixRows) {
+        Intent intent = new Intent(MainActivity.this, GameActivity.class);
+        intent.putExtra("gameMode", gameMode);
+        intent.putExtra("gameMatrixColumns", gameMatrixColumns);
+        intent.putExtra("gameMatrixRows", gameMatrixRows);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onPreGameFragmentInteractionShowArrivingFeatureDialog() {
+        new ArrivingFeatureDialog(this).show();
     }
 }
