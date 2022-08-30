@@ -21,7 +21,9 @@ import com.example.practise2048champs.SettingsFragment;
 import com.example.practise2048champs.dialogs.GameExitDialog;
 import com.example.practise2048champs.pregame.PreGameFragment;
 
-public class MainActivity extends AppCompatActivity implements NavigationFragment.OnNavigationFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements
+        NavigationFragment.OnNavigationFragmentInteractionListener,
+        PreGameFragment.OnPreGameFragmentInteractionListener {
     private LogoLottieFragment logoLottieFragment;
     private NavigationFragment navigationFragment;
 
@@ -135,5 +137,10 @@ public class MainActivity extends AppCompatActivity implements NavigationFragmen
         transaction.addToBackStack(null);
         transaction.replace(R.id.full_screen_fragment_container, fragment, "PREGAME_FRAGMENT")
                 .commit();
+    }
+
+    @Override
+    public void onPreGameFragmentInteractionBackClicked() {
+        onBackPressed();
     }
 }

@@ -30,8 +30,7 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
-        <!-- Either use scaleX & scaleY OR scaleType -->
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/title_back_pregame_fragment_button"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -44,6 +43,69 @@
             app:srcCompat="@drawable/back_arrow" />
     </FrameLayout>
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal_guide_title_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/pregame_fragment_title_frame_layout"/>
+
+    <FrameLayout
+        android:id="@+id/game_preview_pregame_fragment_frame_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/game_options_pregame_fragment_linear_layout"
+        app:layout_constraintDimensionRatio="1.5:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/horizontal_guide_title_bottom">
+
+        <!-- Lottie Animation Link = https://lottiefiles.com/42266-roatating-light -->
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/game_preview_spotlight_lottie"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleX="1.2"
+            android:scaleY="1.2"
+            android:visibility="visible"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/rotating_light"
+            app:lottie_speed="0.75" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/game_preview_image_constraint_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:padding="56dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/game_preview_image_view"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Lottie Animation Link = https://lottiefiles.com/70455-video-game-console -->
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/start_game_lottie"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"
+            app:lottie_autoPlay="false"
+            app:lottie_loop="false"
+            app:lottie_rawRes="@raw/start_game_console"
+            app:lottie_speed="1.25" />
+
+    </FrameLayout>
+
     <LinearLayout
         android:id="@+id/game_options_pregame_fragment_linear_layout"
         android:layout_width="match_parent"
@@ -54,7 +116,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/game_preview_pregame_fragment_frame_layout">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/start_game_pregame_fragment_button"
