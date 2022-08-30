@@ -62,7 +62,7 @@
 
         <!-- Lottie Animation Link = https://lottiefiles.com/42266-roatating-light -->
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/game_preview_spotlight_lottie"
+            android:id="@+id/game_preview_pregame_fragment_spotlight_lottie"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleX="1.2"
@@ -74,14 +74,14 @@
             app:lottie_speed="0.75" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/game_preview_image_constraint_layout"
+            android:id="@+id/game_preview_pregame_fragment_image_constraint_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:padding="56dp">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/game_preview_image_view"
+                android:id="@+id/game_preview_pregame_fragment_image_view"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:visibility="visible"
@@ -95,7 +95,7 @@
 
         <!-- Lottie Animation Link = https://lottiefiles.com/70455-video-game-console -->
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/start_game_lottie"
+            android:id="@+id/start_game_pregame_fragment_lottie"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="invisible"
