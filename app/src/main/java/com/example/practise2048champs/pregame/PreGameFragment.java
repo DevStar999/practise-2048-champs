@@ -177,8 +177,58 @@ public class PreGameFragment extends Fragment {
         });
     }
 
-    private void settingOnClickListenersForModeButtons() {
+    private void handleGameModeBrowse(int indexOfCurrentMode) {
+        // Make changes to the game mode and size both
+        String newGameMode = allGameModes.get(indexOfCurrentMode);
+        allCurrentGameSizes = GameModes.getAllGameVariantsOfMode(newGameMode);
+        currentGameMode = GameModes.getGameModeEnum(
+                Character.getNumericValue(allCurrentGameSizes.get(0).charAt(0)),
+                Character.getNumericValue(allCurrentGameSizes.get(0)
+                        .charAt(allCurrentGameSizes.get(0).length() - 1)), newGameMode);
 
+        // Updating the text views for both mode and size
+        gameModeTextView.setText(currentGameMode.getMode());
+        gameSizeTextView.setText(currentGameMode.getDimensions());
+
+        // Updating Game Mode Browse Icons
+        preGameManager.updateModeBrowseIcons(currentGameMode.getMode(), allGameModes);
+
+        // Updating Game Size Browse Icons
+        preGameManager.updateSizeBrowseIcons(currentGameMode.getDimensions(), allCurrentGameSizes);
+
+        // Updating Preview
+        preGameManager.updatePreview(currentGameMode.getGamePreviewAssetFileName());
+
+        // Update the text of the start game button
+        if (sharedPreferences.getInt("GameStateEnumIndex" + " " + currentGameMode.getMode()
+                + " " + currentGameMode.getDimensions(), 0) == GameStates.GAME_ONGOING.ordinal()) {
+            startGameButton.setText("RESUME GAME");
+        } else {
+            startGameButton.setText("START GAME");
+        }
+    }
+
+    private void settingOnClickListenersForModeButtons() {
+        modeLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (view.getVisibility() == View.VISIBLE) {
+                    int indexOfCurrentMode = allGameModes.indexOf(currentGameMode.getMode());
+                    indexOfCurrentMode--;
+                    handleGameModeBrowse(indexOfCurrentMode);
+                }
+            }
+        });
+        modeRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (view.getVisibility() == View.VISIBLE) {
+                    int indexOfCurrentMode = allGameModes.indexOf(currentGameMode.getMode());
+                    indexOfCurrentMode++;
+                    handleGameModeBrowse(indexOfCurrentMode);
+                }
+            }
+        });
     }
 
     private void settingOnClickListenersForSizeButtons() {
