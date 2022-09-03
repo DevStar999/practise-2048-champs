@@ -11,8 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 
-import com.example.practise2048champs.R;
-
 public class AnnouncementsFragment extends Fragment {
     private OnAnnouncementsFragmentInteractionListener mListener;
 
