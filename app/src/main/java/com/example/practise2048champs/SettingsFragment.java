@@ -41,6 +41,7 @@ public class SettingsFragment extends Fragment {
                 }
             }
         });
+        // TODO -> Check if we get redirected to the fb page inside FB app as well
         facebookLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,6 +50,7 @@ public class SettingsFragment extends Fragment {
                 startActivity(browserIntent);
             }
         });
+        // TODO -> Check if we get redirected to the ig handle inside IG app as well
         instagramLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,6 +59,7 @@ public class SettingsFragment extends Fragment {
                 startActivity(browserIntent);
             }
         });
+        // TODO -> Check if we get redirected to the twitter handle inside Twitter app as well
         twitterLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
