@@ -26,7 +26,8 @@ import com.example.practise2048champs.pregame.PreGameFragment;
 public class MainActivity extends AppCompatActivity implements
         NavigationFragment.OnNavigationFragmentInteractionListener,
         PreGameFragment.OnPreGameFragmentInteractionListener,
-        AnnouncementsFragment.OnAnnouncementsFragmentInteractionListener {
+        AnnouncementsFragment.OnAnnouncementsFragmentInteractionListener,
+        SettingsFragment.OnSettingsFragmentInteractionListener {
     private LogoLottieFragment logoLottieFragment;
     private NavigationFragment navigationFragment;
 
@@ -164,6 +165,11 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onAnnouncementsFragmentInteractionBackClicked() {
+        onBackPressed();
+    }
+
+    @Override
+    public void onSettingsFragmentInteractionBackClicked() {
         onBackPressed();
     }
 }
