@@ -1,10 +1,13 @@
 package com.example.practise2048champs;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,6 +16,10 @@ import androidx.fragment.app.Fragment;
 
 public class SettingsFragment extends Fragment {
     private OnSettingsFragmentInteractionListener mListener;
+    private AppCompatImageView backButton;
+    private LinearLayout facebookLinearLayout;
+    private LinearLayout instagramLinearLayout;
+    private LinearLayout twitterLinearLayout;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -23,13 +30,7 @@ public class SettingsFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_settings, container, false);
-
-        // Back button in the title text of the fragment
-        AppCompatImageView backButton = view.findViewById(R.id.title_back_settings_fragment_button);
+    private void settingOnClickListeners() {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -38,6 +39,43 @@ public class SettingsFragment extends Fragment {
                 }
             }
         });
+        facebookLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("https://www.facebook.com/Nerdcore-Development-109351035183956"));
+                startActivity(browserIntent);
+            }
+        });
+        instagramLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("https://www.instagram.com/nerdcoredev/"));
+                startActivity(browserIntent);
+            }
+        });
+        twitterLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("https://twitter.com/NerdcoreDev"));
+                startActivity(browserIntent);
+            }
+        });
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+
+        backButton = view.findViewById(R.id.title_back_settings_fragment_button);
+        facebookLinearLayout = view.findViewById(R.id.facebook_linear_layout);
+        instagramLinearLayout = view.findViewById(R.id.instagram_linear_layout);
+        twitterLinearLayout = view.findViewById(R.id.twitter_linear_layout);
+
+        settingOnClickListeners();
 
         return view;
     }
