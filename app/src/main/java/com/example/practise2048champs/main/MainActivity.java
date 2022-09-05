@@ -121,11 +121,6 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onNavigationFragmentLeaderboardsClicked() {
-        Toast.makeText(MainActivity.this, "Leaderboards Clicked", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
     public void onNavigationFragmentAnnouncementsClicked() {
         AnnouncementsFragment fragment = new AnnouncementsFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -138,6 +133,11 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void onNavigationFragmentLeaderboardsClicked() {
+        Toast.makeText(MainActivity.this, "Leaderboards Clicked", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void onNavigationFragmentSettingsClicked() {
         SettingsFragment fragment = new SettingsFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -147,6 +147,11 @@ public class MainActivity extends AppCompatActivity implements
         transaction.addToBackStack(null);
         transaction.replace(R.id.full_screen_fragment_container, fragment, "SETTINGS_FRAGMENT")
                 .commit();
+    }
+
+    @Override
+    public void onNavigationFragmentShopClicked() {
+        Toast.makeText(MainActivity.this, "Shop Clicked", Toast.LENGTH_SHORT).show();
     }
 
     @Override
