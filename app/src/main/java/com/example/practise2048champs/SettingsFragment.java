@@ -1,5 +1,6 @@
 package com.example.practise2048champs;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -96,7 +97,21 @@ public class SettingsFragment extends Fragment {
         rateUsLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // TODO -> A dialog should open suggesting user to give 5 star rating
 
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW);
+                String packageName = "com.nerdcoredevelopment.game2048champsfinal";
+                Uri uriForApp = Uri.parse("market://details?id=" + packageName);
+                Uri uriForBrowser = Uri.parse("http://play.google.com/store/apps/details?id="
+                        + packageName);
+
+                try {
+                    browserIntent.setData(uriForApp);
+                    startActivity(browserIntent);
+                } catch (ActivityNotFoundException exception) {
+                    browserIntent.setData(uriForBrowser);
+                    startActivity(browserIntent);
+                }
             }
         });
         feedbackLinearLayout.setOnClickListener(new View.OnClickListener() {
