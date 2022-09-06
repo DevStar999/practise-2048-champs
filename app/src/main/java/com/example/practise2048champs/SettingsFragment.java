@@ -2,6 +2,7 @@ package com.example.practise2048champs;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,6 +16,11 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 
 public class SettingsFragment extends Fragment {
+    private final static String FACEBOOK_URL = "https://www.facebook.com/Nerdcore-Development-109351035183956";
+    private final static String FACEBOOK_PAGE_ID = "Nerdcore-Development-109351035183956";
+    private final static String INSTAGRAM_URL = "https://www.instagram.com/nerdcoredev";
+    private final static String TWITTER_USERNAME = "NerdcoreDev";
+    private Context context;
     private OnSettingsFragmentInteractionListener mListener;
     private AppCompatImageView backButton;
     private LinearLayout facebookLinearLayout;
@@ -32,6 +38,50 @@ public class SettingsFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    private String getFacebookPageURL(Context context) {
+        PackageManager packageManager = context.getPackageManager();
+        try {
+            int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
+            if (versionCode >= 3002850) { //newer versions of fb app
+                return "fb://facewebmodal/f?href=" + FACEBOOK_URL;
+            } else { //older versions of fb app
+                return "fb://page/" + FACEBOOK_PAGE_ID;
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            return FACEBOOK_URL; //normal web url
+        }
+    }
+
+    private Intent instagramProfileIntent(PackageManager packageManager) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        try {
+            if (packageManager.getPackageInfo("com.instagram.android", 0) != null) {
+                String username = SettingsFragment.INSTAGRAM_URL
+                        .substring(SettingsFragment.INSTAGRAM_URL.lastIndexOf("/") + 1);
+                intent.setData(Uri.parse("http://instagram.com/_u/" + username));
+                intent.setPackage("com.instagram.android");
+                return intent;
+            }
+        } catch (PackageManager.NameNotFoundException ignored) {
+        }
+        intent.setData(Uri.parse(SettingsFragment.INSTAGRAM_URL));
+        return intent;
+    }
+
+    private Intent twitterProfileIntent(PackageManager packageManager) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        try {
+            if (packageManager.getPackageInfo("com.twitter.android", 0) != null) {
+                intent.setData(Uri.parse("twitter://user?screen_name=" + TWITTER_USERNAME));
+                intent.setPackage("com.twitter.android");
+                return intent;
+            }
+        } catch (PackageManager.NameNotFoundException ignored) {
+        }
+        intent.setData(Uri.parse("https://twitter.com/#!/" + TWITTER_USERNAME));
+        return intent;
+    }
+
     private void settingOnClickListeners() {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,30 +91,26 @@ public class SettingsFragment extends Fragment {
                 }
             }
         });
-        // TODO -> Check if we get redirected to the fb page inside FB app as well
         facebookLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("https://www.facebook.com/Nerdcore-Development-109351035183956"));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW);
+                String facebookUrl = getFacebookPageURL(context);
+                browserIntent.setData(Uri.parse(facebookUrl));
                 startActivity(browserIntent);
             }
         });
-        // TODO -> Check if we get redirected to the ig handle inside IG app as well
         instagramLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("https://www.instagram.com/nerdcoredev/"));
+                Intent browserIntent = instagramProfileIntent(context.getPackageManager());
                 startActivity(browserIntent);
             }
         });
-        // TODO -> Check if we get redirected to the twitter handle inside Twitter app as well
         twitterLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("https://twitter.com/NerdcoreDev"));
+                Intent browserIntent = twitterProfileIntent(context.getPackageManager());
                 startActivity(browserIntent);
             }
         });
@@ -116,6 +162,7 @@ public class SettingsFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnSettingsFragmentInteractionListener");
         }
+        this.context = context;
     }
 
     @Override
