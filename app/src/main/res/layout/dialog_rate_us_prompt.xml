@@ -15,7 +15,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginHorizontal="16dp"
         android:letterSpacing="0.04"
-        android:text="🤩 Rate a 5-Star Review 🤩"
+        android:text="🤩 RATE 5 STARS 🤩"
         android:textAlignment="center"
         android:textColor="@color/game_text_color"
         android:textSize="16sp"
