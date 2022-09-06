@@ -1,5 +1,6 @@
 package com.example.practise2048champs;
 
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +24,9 @@ public class SettingsFragment extends Fragment {
     private final static String FACEBOOK_PAGE_ID = "Nerdcore-Development-109351035183956";
     private final static String INSTAGRAM_URL = "https://www.instagram.com/nerdcoredev";
     private final static String TWITTER_USERNAME = "NerdcoreDev";
+    private final static String DEVELOPER_MAIL_ID = "nerdcoredevelopment@gmail.com";
+    private final static String FEEDBACK_MAIL_SUBJECT = "Feedback - 2048 Champs";
+    private final static String FEEDBACK_MAIL_BODY = "Hi Nerdcore Team,\n";
     private Context context;
     private OnSettingsFragmentInteractionListener mListener;
     private AppCompatImageView backButton;
@@ -126,7 +130,13 @@ public class SettingsFragment extends Fragment {
         feedbackLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{DEVELOPER_MAIL_ID});
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, FEEDBACK_MAIL_SUBJECT);
+                emailIntent.putExtra(Intent.EXTRA_TEXT, FEEDBACK_MAIL_BODY);
+                emailIntent.setSelector(new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:")));
 
+                startActivity(Intent.createChooser(emailIntent, "Send email..."));
             }
         });
         facebookLinearLayout.setOnClickListener(new View.OnClickListener() {
