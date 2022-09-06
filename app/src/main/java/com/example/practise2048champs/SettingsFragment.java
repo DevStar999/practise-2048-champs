@@ -23,6 +23,8 @@ public class SettingsFragment extends Fragment {
     private Context context;
     private OnSettingsFragmentInteractionListener mListener;
     private AppCompatImageView backButton;
+    private LinearLayout rateUsLinearLayout;
+    private LinearLayout feedbackLinearLayout;
     private LinearLayout facebookLinearLayout;
     private LinearLayout instagramLinearLayout;
     private LinearLayout twitterLinearLayout;
@@ -91,6 +93,18 @@ public class SettingsFragment extends Fragment {
                 }
             }
         });
+        rateUsLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        feedbackLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         facebookLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -138,6 +152,8 @@ public class SettingsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
         backButton = view.findViewById(R.id.title_back_settings_fragment_button);
+        rateUsLinearLayout = view.findViewById(R.id.rate_us_linear_layout);
+        feedbackLinearLayout = view.findViewById(R.id.feedback_linear_layout);
         facebookLinearLayout = view.findViewById(R.id.facebook_linear_layout);
         instagramLinearLayout = view.findViewById(R.id.instagram_linear_layout);
         twitterLinearLayout = view.findViewById(R.id.twitter_linear_layout);
