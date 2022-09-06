@@ -16,6 +16,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 
+import com.example.practise2048champs.dialogs.RateUsPromptDialog;
+
 public class SettingsFragment extends Fragment {
     private final static String FACEBOOK_URL = "https://www.facebook.com/Nerdcore-Development-109351035183956";
     private final static String FACEBOOK_PAGE_ID = "Nerdcore-Development-109351035183956";
@@ -97,21 +99,28 @@ public class SettingsFragment extends Fragment {
         rateUsLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO -> A dialog should open suggesting user to give 5 star rating
+                RateUsPromptDialog rateUsPromptDialog = new RateUsPromptDialog(context);
+                rateUsPromptDialog.show();
+                rateUsPromptDialog.setRateUsPromptDialogListener(new RateUsPromptDialog.RateUsPromptDialogListener() {
+                    @Override
+                    public void getResponseOfRateUsDialog(boolean response) {
+                        if (response) {
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW);
+                            String packageName = "com.nerdcoredevelopment.game2048champsfinal";
+                            Uri uriForApp = Uri.parse("market://details?id=" + packageName);
+                            Uri uriForBrowser = Uri.parse("http://play.google.com/store/apps/details?id="
+                                    + packageName);
 
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW);
-                String packageName = "com.nerdcoredevelopment.game2048champsfinal";
-                Uri uriForApp = Uri.parse("market://details?id=" + packageName);
-                Uri uriForBrowser = Uri.parse("http://play.google.com/store/apps/details?id="
-                        + packageName);
-
-                try {
-                    browserIntent.setData(uriForApp);
-                    startActivity(browserIntent);
-                } catch (ActivityNotFoundException exception) {
-                    browserIntent.setData(uriForBrowser);
-                    startActivity(browserIntent);
-                }
+                            try {
+                                browserIntent.setData(uriForApp);
+                                startActivity(browserIntent);
+                            } catch (ActivityNotFoundException exception) {
+                                browserIntent.setData(uriForBrowser);
+                                startActivity(browserIntent);
+                            }
+                        }
+                    }
+                });
             }
         });
         feedbackLinearLayout.setOnClickListener(new View.OnClickListener() {
