@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.practise2048champs.AnnouncementsFragment;
+import com.example.practise2048champs.BlockDesignFragment;
 import com.example.practise2048champs.GameActivity;
 import com.example.practise2048champs.LogoLottieFragment;
 import com.example.practise2048champs.NavigationFragment;
@@ -28,7 +29,8 @@ public class MainActivity extends AppCompatActivity implements
         NavigationFragment.OnNavigationFragmentInteractionListener,
         PreGameFragment.OnPreGameFragmentInteractionListener,
         AnnouncementsFragment.OnAnnouncementsFragmentInteractionListener,
-        SettingsFragment.OnSettingsFragmentInteractionListener {
+        SettingsFragment.OnSettingsFragmentInteractionListener,
+        BlockDesignFragment.OnBlockDesignFragmentInteractionListener {
     private LogoLottieFragment logoLottieFragment;
     private NavigationFragment navigationFragment;
 
@@ -186,6 +188,18 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onSettingsFragmentInteractionBlockDesignClicked() {
-        Toast.makeText(MainActivity.this, "Block Design Clicked", Toast.LENGTH_LONG).show();
+        BlockDesignFragment fragment = new BlockDesignFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right,
+                R.anim.enter_from_right, R.anim.exit_to_right);
+        transaction.addToBackStack(null);
+        transaction.add(R.id.full_screen_fragment_container, fragment, "BLOCK_DESIGN_FRAGMENT")
+                .commit();
+    }
+
+    @Override
+    public void onBlockDesignFragmentInteractionBackClicked() {
+        onBackPressed();
     }
 }
