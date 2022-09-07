@@ -29,6 +29,7 @@ public class SettingsFragment extends Fragment {
     private Context context;
     private OnSettingsFragmentInteractionListener mListener;
     private AppCompatImageView backButton;
+    private LinearLayout blockDesignLinearLayout;
     private LinearLayout rateUsLinearLayout;
     private LinearLayout feedbackLinearLayout;
     private LinearLayout facebookLinearLayout;
@@ -96,6 +97,14 @@ public class SettingsFragment extends Fragment {
             public void onClick(View view) {
                 if (mListener != null) {
                     mListener.onSettingsFragmentInteractionBackClicked();
+                }
+            }
+        });
+        blockDesignLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mListener != null) {
+                    mListener.onSettingsFragmentInteractionBlockDesignClicked();
                 }
             }
         });
@@ -185,6 +194,7 @@ public class SettingsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
         backButton = view.findViewById(R.id.title_back_settings_fragment_button);
+        blockDesignLinearLayout = view.findViewById(R.id.block_design_linear_layout);
         rateUsLinearLayout = view.findViewById(R.id.rate_us_linear_layout);
         feedbackLinearLayout = view.findViewById(R.id.feedback_linear_layout);
         facebookLinearLayout = view.findViewById(R.id.facebook_linear_layout);
@@ -200,6 +210,7 @@ public class SettingsFragment extends Fragment {
 
     public interface OnSettingsFragmentInteractionListener {
         void onSettingsFragmentInteractionBackClicked();
+        void onSettingsFragmentInteractionBlockDesignClicked();
     }
 
     @Override

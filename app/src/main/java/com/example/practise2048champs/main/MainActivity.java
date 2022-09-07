@@ -183,4 +183,9 @@ public class MainActivity extends AppCompatActivity implements
     public void onSettingsFragmentInteractionBackClicked() {
         onBackPressed();
     }
+
+    @Override
+    public void onSettingsFragmentInteractionBlockDesignClicked() {
+        Toast.makeText(MainActivity.this, "Block Design Clicked", Toast.LENGTH_LONG).show();
+    }
 }
