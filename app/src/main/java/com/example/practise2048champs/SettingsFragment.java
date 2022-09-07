@@ -1,6 +1,5 @@
 package com.example.practise2048champs;
 
-import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
