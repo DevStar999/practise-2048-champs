@@ -29,6 +29,7 @@ public class SettingsFragment extends Fragment {
     private Context context;
     private OnSettingsFragmentInteractionListener mListener;
     private AppCompatImageView backButton;
+    private LinearLayout getPremiumLinearLayout;
     private LinearLayout blockDesignLinearLayout;
     private LinearLayout rateUsLinearLayout;
     private LinearLayout feedbackLinearLayout;
@@ -97,6 +98,14 @@ public class SettingsFragment extends Fragment {
             public void onClick(View view) {
                 if (mListener != null) {
                     mListener.onSettingsFragmentInteractionBackClicked();
+                }
+            }
+        });
+        getPremiumLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mListener != null) {
+                    mListener.onSettingsFragmentInteractionGetPremiumClicked();
                 }
             }
         });
@@ -194,6 +203,7 @@ public class SettingsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
         backButton = view.findViewById(R.id.title_back_settings_fragment_button);
+        getPremiumLinearLayout = view.findViewById(R.id.get_premium_linear_layout);
         blockDesignLinearLayout = view.findViewById(R.id.block_design_linear_layout);
         rateUsLinearLayout = view.findViewById(R.id.rate_us_linear_layout);
         feedbackLinearLayout = view.findViewById(R.id.feedback_linear_layout);
@@ -211,6 +221,7 @@ public class SettingsFragment extends Fragment {
     public interface OnSettingsFragmentInteractionListener {
         void onSettingsFragmentInteractionBackClicked();
         void onSettingsFragmentInteractionBlockDesignClicked();
+        void onSettingsFragmentInteractionGetPremiumClicked();
     }
 
     @Override

@@ -199,6 +199,11 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void onSettingsFragmentInteractionGetPremiumClicked() {
+        Toast.makeText(MainActivity.this, "Shop Clicked", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void onBlockDesignFragmentInteractionBackClicked() {
         onBackPressed();
     }
