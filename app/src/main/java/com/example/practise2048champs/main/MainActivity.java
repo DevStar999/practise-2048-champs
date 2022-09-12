@@ -211,6 +211,12 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void onSettingsFragmentInteractionCheckUpdatesClicked() {
+        // TODO -> Remove toast and implement the In-app updates functionality
+        Toast.makeText(MainActivity.this, "Check Updates", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void onBlockDesignFragmentInteractionBackClicked() {
         onBackPressed();
     }

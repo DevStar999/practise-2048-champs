@@ -33,6 +33,7 @@ public class SettingsFragment extends Fragment {
     private LinearLayout changeThemeLinearLayout;
     private LinearLayout blockDesignLinearLayout;
     private LinearLayout rateUsLinearLayout;
+    private LinearLayout checkUpdatesLinearLayout;
     private LinearLayout feedbackLinearLayout;
     private LinearLayout facebookLinearLayout;
     private LinearLayout instagramLinearLayout;
@@ -165,6 +166,14 @@ public class SettingsFragment extends Fragment {
                 startActivity(Intent.createChooser(emailIntent, "Send email..."));
             }
         });
+        checkUpdatesLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mListener != null) {
+                    mListener.onSettingsFragmentInteractionCheckUpdatesClicked();
+                }
+            }
+        });
         facebookLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -217,6 +226,7 @@ public class SettingsFragment extends Fragment {
         blockDesignLinearLayout = view.findViewById(R.id.block_design_linear_layout);
         rateUsLinearLayout = view.findViewById(R.id.rate_us_linear_layout);
         feedbackLinearLayout = view.findViewById(R.id.feedback_linear_layout);
+        checkUpdatesLinearLayout = view.findViewById(R.id.check_updates_linear_layout);
         facebookLinearLayout = view.findViewById(R.id.facebook_linear_layout);
         instagramLinearLayout = view.findViewById(R.id.instagram_linear_layout);
         twitterLinearLayout = view.findViewById(R.id.twitter_linear_layout);
@@ -233,6 +243,7 @@ public class SettingsFragment extends Fragment {
         void onSettingsFragmentInteractionGetPremiumClicked();
         void onSettingsFragmentInteractionChangeThemeClicked();
         void onSettingsFragmentInteractionBlockDesignClicked();
+        void onSettingsFragmentInteractionCheckUpdatesClicked();
     }
 
     @Override
