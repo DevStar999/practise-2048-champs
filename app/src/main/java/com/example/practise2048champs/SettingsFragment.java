@@ -31,6 +31,7 @@ public class SettingsFragment extends Fragment {
     private AppCompatImageView backButton;
     private LinearLayout getPremiumLinearLayout;
     private LinearLayout changeThemeLinearLayout;
+    private LinearLayout toggleRotatingLightLinearLayout;
     private LinearLayout blockDesignLinearLayout;
     private LinearLayout rateUsLinearLayout;
     private LinearLayout checkUpdatesLinearLayout;
@@ -116,6 +117,14 @@ public class SettingsFragment extends Fragment {
             public void onClick(View view) {
                 if (mListener != null) {
                     mListener.onSettingsFragmentInteractionChangeThemeClicked();
+                }
+            }
+        });
+        toggleRotatingLightLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mListener != null) {
+                    mListener.onSettingsFragmentInteractionToggleRotatingLightClicked();
                 }
             }
         });
@@ -223,6 +232,7 @@ public class SettingsFragment extends Fragment {
         backButton = view.findViewById(R.id.title_back_settings_fragment_button);
         getPremiumLinearLayout = view.findViewById(R.id.get_premium_linear_layout);
         changeThemeLinearLayout = view.findViewById(R.id.change_theme_linear_layout);
+        toggleRotatingLightLinearLayout = view.findViewById(R.id.toggle_rotating_light_linear_layout);
         blockDesignLinearLayout = view.findViewById(R.id.block_design_linear_layout);
         rateUsLinearLayout = view.findViewById(R.id.rate_us_linear_layout);
         feedbackLinearLayout = view.findViewById(R.id.feedback_linear_layout);
@@ -242,6 +252,7 @@ public class SettingsFragment extends Fragment {
         void onSettingsFragmentInteractionBackClicked();
         void onSettingsFragmentInteractionGetPremiumClicked();
         void onSettingsFragmentInteractionChangeThemeClicked();
+        void onSettingsFragmentInteractionToggleRotatingLightClicked();
         void onSettingsFragmentInteractionBlockDesignClicked();
         void onSettingsFragmentInteractionCheckUpdatesClicked();
     }
