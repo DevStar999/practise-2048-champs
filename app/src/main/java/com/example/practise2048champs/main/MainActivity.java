@@ -187,6 +187,18 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void onSettingsFragmentInteractionGetPremiumClicked() {
+        // TODO -> Remove toast and implement the ShopFragment
+        Toast.makeText(MainActivity.this, "Shop Clicked", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSettingsFragmentInteractionChangeThemeClicked() {
+        // TODO -> Remove toast and implement the ChangeThemeFragment
+        Toast.makeText(MainActivity.this, "Change Theme Clicked", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void onSettingsFragmentInteractionBlockDesignClicked() {
         BlockDesignFragment fragment = new BlockDesignFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -196,11 +208,6 @@ public class MainActivity extends AppCompatActivity implements
         transaction.addToBackStack(null);
         transaction.add(R.id.full_screen_fragment_container, fragment, "BLOCK_DESIGN_FRAGMENT")
                 .commit();
-    }
-
-    @Override
-    public void onSettingsFragmentInteractionGetPremiumClicked() {
-        Toast.makeText(MainActivity.this, "Shop Clicked", Toast.LENGTH_SHORT).show();
     }
 
     @Override
