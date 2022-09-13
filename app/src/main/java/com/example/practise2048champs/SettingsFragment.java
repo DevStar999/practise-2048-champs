@@ -1,19 +1,23 @@
 package com.example.practise2048champs;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.practise2048champs.dialogs.RateUsPromptDialog;
@@ -28,10 +32,12 @@ public class SettingsFragment extends Fragment {
     private final static String FEEDBACK_MAIL_BODY = "Hi Nerdcore Team,\n\n";
     private Context context;
     private OnSettingsFragmentInteractionListener mListener;
+    private SharedPreferences sharedPreferences;
     private AppCompatImageView backButton;
     private LinearLayout getPremiumLinearLayout;
     private LinearLayout changeThemeLinearLayout;
     private LinearLayout toggleRotatingLightLinearLayout;
+    private SwitchCompat toggleRotatingLightSwitch;
     private LinearLayout blockDesignLinearLayout;
     private LinearLayout rateUsLinearLayout;
     private LinearLayout checkUpdatesLinearLayout;
@@ -123,8 +129,32 @@ public class SettingsFragment extends Fragment {
         toggleRotatingLightLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (toggleRotatingLightSwitch.isChecked()) {
+                    toggleRotatingLightSwitch.setChecked(false);
+                    sharedPreferences.edit().putBoolean("toggleRotatingLight", false).apply();
+                } else {
+                    toggleRotatingLightSwitch.setChecked(true);
+                    sharedPreferences.edit().putBoolean("toggleRotatingLight", true).apply();
+                }
+
                 if (mListener != null) {
-                    mListener.onSettingsFragmentInteractionToggleRotatingLightClicked();
+                    mListener.onSettingsFragmentInteractionToggleRotatingLightClicked(
+                            sharedPreferences.getBoolean("toggleRotatingLight", true));
+                }
+            }
+        });
+        toggleRotatingLightSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    sharedPreferences.edit().putBoolean("toggleRotatingLight", true).apply();
+                } else {
+                    sharedPreferences.edit().putBoolean("toggleRotatingLight", false).apply();
+                }
+
+                if (mListener != null) {
+                    mListener.onSettingsFragmentInteractionToggleRotatingLightClicked(
+                            sharedPreferences.getBoolean("toggleRotatingLight", true));
                 }
             }
         });
@@ -227,12 +257,20 @@ public class SettingsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        sharedPreferences = context.getSharedPreferences("com.nerdcoredevelopment.game2048champsfinal", Context.MODE_PRIVATE);
+
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
         backButton = view.findViewById(R.id.title_back_settings_fragment_button);
         getPremiumLinearLayout = view.findViewById(R.id.get_premium_linear_layout);
         changeThemeLinearLayout = view.findViewById(R.id.change_theme_linear_layout);
         toggleRotatingLightLinearLayout = view.findViewById(R.id.toggle_rotating_light_linear_layout);
+        toggleRotatingLightSwitch = view.findViewById(R.id.toggle_rotating_light_switch);
+        if (sharedPreferences.getBoolean("toggleRotatingLight", true)) {
+            toggleRotatingLightSwitch.setChecked(true);
+        } else {
+            toggleRotatingLightSwitch.setChecked(false);
+        }
         blockDesignLinearLayout = view.findViewById(R.id.block_design_linear_layout);
         rateUsLinearLayout = view.findViewById(R.id.rate_us_linear_layout);
         feedbackLinearLayout = view.findViewById(R.id.feedback_linear_layout);
@@ -252,7 +290,7 @@ public class SettingsFragment extends Fragment {
         void onSettingsFragmentInteractionBackClicked();
         void onSettingsFragmentInteractionGetPremiumClicked();
         void onSettingsFragmentInteractionChangeThemeClicked();
-        void onSettingsFragmentInteractionToggleRotatingLightClicked();
+        void onSettingsFragmentInteractionToggleRotatingLightClicked(boolean isChecked);
         void onSettingsFragmentInteractionBlockDesignClicked();
         void onSettingsFragmentInteractionCheckUpdatesClicked();
     }

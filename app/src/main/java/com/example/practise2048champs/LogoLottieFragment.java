@@ -7,7 +7,10 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import com.airbnb.lottie.LottieAnimationView;
+
 public class LogoLottieFragment extends Fragment {
+    private LottieAnimationView gamePreviewSpotlightLottie;
 
     public LogoLottieFragment() {
         // Required empty public constructor
@@ -21,7 +24,18 @@ public class LogoLottieFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_logo_lottie, container, false);
+        View view = inflater.inflate(R.layout.fragment_logo_lottie, container, false);
+
+        gamePreviewSpotlightLottie = view.findViewById(R.id.game_preview_spotlight_lottie);
+
+        return view;
+    }
+
+    public void updateRotatingLightState(boolean isChecked) {
+        if (isChecked) {
+            gamePreviewSpotlightLottie.playAnimation();
+        } else {
+            gamePreviewSpotlightLottie.pauseAnimation();
+        }
     }
 }

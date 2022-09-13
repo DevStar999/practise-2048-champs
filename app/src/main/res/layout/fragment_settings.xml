@@ -185,6 +185,16 @@
                         android:textColor="@color/game_text_color"
                         android:textSize="16sp"
                         android:textStyle="normal" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/toggle_rotating_light_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|center_vertical"
+                        android:layout_marginEnd="14dp"
+                        android:checked="true"
+                        app:trackTint="@color/settings_switch_track"
+                        app:thumbTint="@color/settings_switch_thumb"/>
                 </LinearLayout>
 
                 <View

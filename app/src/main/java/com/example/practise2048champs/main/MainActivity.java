@@ -199,9 +199,8 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onSettingsFragmentInteractionToggleRotatingLightClicked() {
-        // TODO -> Remove toast and implement the toggle rotating light functionality
-        Toast.makeText(MainActivity.this, "Toggle Rotating Light Clicked", Toast.LENGTH_SHORT).show();
+    public void onSettingsFragmentInteractionToggleRotatingLightClicked(boolean isChecked) {
+        logoLottieFragment.updateRotatingLightState(isChecked);
     }
 
     @Override
