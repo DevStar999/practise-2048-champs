@@ -1,8 +1,10 @@
 package com.example.practise2048champs;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,7 +23,7 @@ import androidx.fragment.app.Fragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockDesignFragment extends Fragment implements View.OnClickListener {
+public class BlockDesignFragment extends Fragment {
     private Context context;
     private OnBlockDesignFragmentInteractionListener mListener;
     private SharedPreferences sharedPreferences;
@@ -39,13 +42,19 @@ public class BlockDesignFragment extends Fragment implements View.OnClickListene
 
     private int dpToPx(int dp) {
         float density = context.getResources().getDisplayMetrics().density;
-        return Math.round((float) dp *density);
+        return Math.round((float) dp * density);
     }
 
+    @SuppressLint("DefaultLocale")
     private void initialiseBlockDesignOptions(View layoutView) {
         LinearLayout blockDesignOptionsScrollViewChild = layoutView
                 .findViewById(R.id.block_design_options_scrollview_child_linear_layout);
 
+        List<AppCompatImageView> blockDesignOptionImageViewList = new ArrayList<>();
+        List<AppCompatImageView> blockDesignOptionSelectedBackgroundList = new ArrayList<>();
+        List<AppCompatImageView> blockDesignOptionSelectedImageViewList = new ArrayList<>();
+
+        // Programmatically filling up the block design options
         for (int i = 0; i < blockDesignDrawableResourceIds.size(); i += 3) {
             int rowNumber = (i / 3) + 1;
             RelativeLayout blockDesignOptionsRow = new RelativeLayout(context);
@@ -73,7 +82,8 @@ public class BlockDesignFragment extends Fragment implements View.OnClickListene
 
                 AppCompatImageView blockDesignOptionImageView = new AppCompatImageView(context);
                 blockDesignOptionImageView.setBackgroundResource(R.drawable.rounded_corner_block_design_option_image_view);
-                blockDesignOptionImageView.setTag("blockOption_row" + rowNumber + "_option" + optionNumber);
+                blockDesignOptionImageView.setTag("blockOption_row" + String.format("%03d", rowNumber)
+                        + "_option" + String.format("%03d", optionNumber));
                 blockDesignOptionImageView.setPadding(dpToPx(8), dpToPx(8), dpToPx(8), dpToPx(8));
                 blockDesignOptionImageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 blockDesignOptionImageView.setImageResource(blockDesignDrawableResourceIds.get(i + j).first);
@@ -94,24 +104,56 @@ public class BlockDesignFragment extends Fragment implements View.OnClickListene
                 FrameLayout.LayoutParams blockDesignOptionSelectedImageViewParams = new FrameLayout.LayoutParams(dpToPx(72), dpToPx(72));
                 blockDesignOptionSelectedImageView.setLayoutParams(blockDesignOptionSelectedImageViewParams);
 
-                if ((sharedPreferences.getInt("blockDrawableResourceId", R.drawable.block_cell_x)
-                        == blockDesignDrawableResourceIds.get(i+j).first)
-                && (sharedPreferences.getInt("blockDrawablePreviewResourceId", R.drawable.block_preview_cell_x)
-                        == blockDesignDrawableResourceIds.get(i+j).second)) {
-                    blockDesignOptionSelectedBackground.setVisibility(View.VISIBLE);
-                    blockDesignOptionSelectedImageView.setVisibility(View.VISIBLE);
-                    blockDesignOptionInUseImageView.setImageResource(blockDesignDrawableResourceIds.get(i+j).first);
-                    blockDesignPreviewImageView.setImageResource(blockDesignDrawableResourceIds.get(i+j).second);
-                }
-
                 blockDesignOption.addView(blockDesignOptionImageView);
                 blockDesignOption.addView(blockDesignOptionSelectedBackground);
                 blockDesignOption.addView(blockDesignOptionSelectedImageView);
 
                 blockDesignOptionsRow.addView(blockDesignOption);
+
+                if ((sharedPreferences.getInt("blockDrawableResourceId", R.drawable.block_cell_x)
+                        == blockDesignDrawableResourceIds.get(i + j).first)
+                        && (sharedPreferences.getInt("blockDrawablePreviewResourceId", R.drawable.block_preview_cell_x)
+                        == blockDesignDrawableResourceIds.get(i + j).second)) {
+                    blockDesignOptionImageView.setClickable(false);
+                    blockDesignOptionSelectedBackground.setVisibility(View.VISIBLE);
+                    blockDesignOptionSelectedImageView.setVisibility(View.VISIBLE);
+                    blockDesignOptionInUseImageView.setImageResource(blockDesignDrawableResourceIds.get(i + j).first);
+                    blockDesignPreviewImageView.setImageResource(blockDesignDrawableResourceIds.get(i + j).second);
+                }
+                blockDesignOptionImageViewList.add(blockDesignOptionImageView);
+                blockDesignOptionSelectedBackgroundList.add(blockDesignOptionSelectedBackground);
+                blockDesignOptionSelectedImageViewList.add(blockDesignOptionSelectedImageView);
             }
 
             blockDesignOptionsScrollViewChild.addView(blockDesignOptionsRow);
+        }
+
+        // Setting onClick listeners to the block design options
+        for (int i = 0; i < blockDesignDrawableResourceIds.size(); i++) {
+            int finalI = i;
+            blockDesignOptionImageViewList.get(i).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    blockDesignOptionImageViewList.get(finalI).setClickable(false);
+                    blockDesignOptionSelectedBackgroundList.get(finalI).setVisibility(View.VISIBLE);
+                    blockDesignOptionSelectedImageViewList.get(finalI).setVisibility(View.VISIBLE);
+                    blockDesignOptionInUseImageView.setImageResource(blockDesignDrawableResourceIds.get(finalI).first);
+                    blockDesignPreviewImageView.setImageResource(blockDesignDrawableResourceIds.get(finalI).second);
+
+                    for (int j = 0; j < blockDesignDrawableResourceIds.size(); j++) {
+                        if (finalI != j) {
+                            blockDesignOptionImageViewList.get(j).setClickable(true);
+                            blockDesignOptionSelectedBackgroundList.get(j).setVisibility(View.GONE);
+                            blockDesignOptionSelectedImageViewList.get(j).setVisibility(View.GONE);
+                        }
+                    }
+
+                    sharedPreferences.edit().putInt("blockDrawableResourceId",
+                            blockDesignDrawableResourceIds.get(finalI).first).apply();
+                    sharedPreferences.edit().putInt("blockDrawablePreviewResourceId",
+                            blockDesignDrawableResourceIds.get(finalI).second).apply();
+                }
+            });
         }
     }
 
@@ -137,8 +179,9 @@ public class BlockDesignFragment extends Fragment implements View.OnClickListene
         blockDesignPreviewImageView = view.findViewById(R.id.block_design_preview_image_view);
 
         blockDesignDrawableResourceIds = new ArrayList<>() {{
-            add(new Pair<>(R.drawable.block_alien, R.drawable.block_preview_alien));
+            // Keeping the first entry as the default block entry
             add(new Pair<>(R.drawable.block_cell_x, R.drawable.block_preview_cell_x));
+            add(new Pair<>(R.drawable.block_alien, R.drawable.block_preview_alien));
             add(new Pair<>(R.drawable.block_heart, R.drawable.block_preview_heart));
             add(new Pair<>(R.drawable.block_poop, R.drawable.block_preview_poop));
             add(new Pair<>(R.drawable.block_rock, R.drawable.block_preview_rock));
@@ -147,11 +190,6 @@ public class BlockDesignFragment extends Fragment implements View.OnClickListene
         initialiseBlockDesignOptions(view);
 
         return view;
-    }
-
-    @Override
-    public void onClick(View view) {
-
     }
 
 
