@@ -14,10 +14,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corner_fragment_title"
-        android:paddingVertical="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            app:srcCompat="@color/game_text_color_divider_line" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/title_block_design_fragment_text_view"
@@ -36,6 +41,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="start|center_vertical"
+            android:layout_marginVertical="8dp"
             android:layout_marginStart="16dp"
             android:alpha="1"
             android:background="@drawable/rounded_corner_button_small"
@@ -44,19 +50,57 @@
             app:srcCompat="@drawable/back_arrow" />
     </FrameLayout>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/temp_text_block_design_fragment_text_view"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal_guide_block_design_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="8"
-        android:text="Block Design Fragment"
-        android:textAlignment="center"
-        android:textColor="@color/game_text_color"
-        android:textSize="36sp"
-        android:textStyle="bold"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintGuide_percent="0.50"
+        app:layout_constraintTop_toBottomOf="@id/block_design_fragment_title_frame_layout" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/block_design_preview_constraint_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/game_text_color_divider_line"
+        app:layout_constraintBottom_toTopOf="@id/horizontal_guide_block_design_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/block_design_fragment_title_frame_layout">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_marginHorizontal="8dp"
+        android:background="@color/game_text_color"
+        app:layout_constraintBottom_toTopOf="@id/horizontal_guide_block_design_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/horizontal_guide_block_design_fragment" />
+
+    <ScrollView
+        android:id="@+id/block_design_options_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingHorizontal="32dp"
+        android:paddingVertical="24dp"
+        android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/block_design_fragment_title_frame_layout" />
+        app:layout_constraintTop_toBottomOf="@id/horizontal_guide_block_design_fragment">
+
+        <LinearLayout
+            android:id="@+id/block_design_options_scrollview_child_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@drawable/gap_vertical_block_options"
+            android:showDividers="middle"
+            android:orientation="vertical"/>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
