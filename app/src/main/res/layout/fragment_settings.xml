@@ -59,6 +59,7 @@
         android:layout_height="0dp"
         android:background="@color/black_translucent_film"
         android:scrollbars="none"
+        android:layout_marginVertical="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,7 +70,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="16dp"
             android:orientation="vertical">
 
             <LinearLayout
