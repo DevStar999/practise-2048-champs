@@ -1,8 +1,9 @@
 package com.example.practise2048champs;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,10 +20,13 @@ import androidx.fragment.app.Fragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockDesignFragment extends Fragment {
+public class BlockDesignFragment extends Fragment implements View.OnClickListener {
     private Context context;
     private OnBlockDesignFragmentInteractionListener mListener;
-    private List<Integer> blockDesignDrawableResourceIds;
+    private SharedPreferences sharedPreferences;
+    private List<Pair<Integer, Integer>> blockDesignDrawableResourceIds;
+    private AppCompatImageView blockDesignOptionInUseImageView;
+    private AppCompatImageView blockDesignPreviewImageView;
 
     public BlockDesignFragment() {
         // Required empty public constructor
@@ -73,7 +76,7 @@ public class BlockDesignFragment extends Fragment {
                 blockDesignOptionImageView.setTag("blockOption_row" + rowNumber + "_option" + optionNumber);
                 blockDesignOptionImageView.setPadding(dpToPx(8), dpToPx(8), dpToPx(8), dpToPx(8));
                 blockDesignOptionImageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                blockDesignOptionImageView.setImageResource(blockDesignDrawableResourceIds.get(i + j));
+                blockDesignOptionImageView.setImageResource(blockDesignDrawableResourceIds.get(i + j).first);
                 FrameLayout.LayoutParams blockDesignOptionImageViewParams = new FrameLayout.LayoutParams(dpToPx(72), dpToPx(72));
                 blockDesignOptionImageView.setLayoutParams(blockDesignOptionImageViewParams);
 
@@ -91,6 +94,16 @@ public class BlockDesignFragment extends Fragment {
                 FrameLayout.LayoutParams blockDesignOptionSelectedImageViewParams = new FrameLayout.LayoutParams(dpToPx(72), dpToPx(72));
                 blockDesignOptionSelectedImageView.setLayoutParams(blockDesignOptionSelectedImageViewParams);
 
+                if ((sharedPreferences.getInt("blockDrawableResourceId", R.drawable.block_cell_x)
+                        == blockDesignDrawableResourceIds.get(i+j).first)
+                && (sharedPreferences.getInt("blockDrawablePreviewResourceId", R.drawable.block_preview_cell_x)
+                        == blockDesignDrawableResourceIds.get(i+j).second)) {
+                    blockDesignOptionSelectedBackground.setVisibility(View.VISIBLE);
+                    blockDesignOptionSelectedImageView.setVisibility(View.VISIBLE);
+                    blockDesignOptionInUseImageView.setImageResource(blockDesignDrawableResourceIds.get(i+j).first);
+                    blockDesignPreviewImageView.setImageResource(blockDesignDrawableResourceIds.get(i+j).second);
+                }
+
                 blockDesignOption.addView(blockDesignOptionImageView);
                 blockDesignOption.addView(blockDesignOptionSelectedBackground);
                 blockDesignOption.addView(blockDesignOptionSelectedImageView);
@@ -105,6 +118,8 @@ public class BlockDesignFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        sharedPreferences = context.getSharedPreferences("com.nerdcoredevelopment.game2048champsfinal", Context.MODE_PRIVATE);
+
         View view = inflater.inflate(R.layout.fragment_block_design, container, false);
 
         // Back button in the title text of the fragment
@@ -118,18 +133,27 @@ public class BlockDesignFragment extends Fragment {
             }
         });
 
+        blockDesignOptionInUseImageView = view.findViewById(R.id.block_design_option_in_use_image_view);
+        blockDesignPreviewImageView = view.findViewById(R.id.block_design_preview_image_view);
+
         blockDesignDrawableResourceIds = new ArrayList<>() {{
-            add(R.drawable.block_alien);
-            add(R.drawable.block_cell_x);
-            add(R.drawable.block_heart);
-            add(R.drawable.block_poop);
-            add(R.drawable.block_rock);
+            add(new Pair<>(R.drawable.block_alien, R.drawable.block_preview_alien));
+            add(new Pair<>(R.drawable.block_cell_x, R.drawable.block_preview_cell_x));
+            add(new Pair<>(R.drawable.block_heart, R.drawable.block_preview_heart));
+            add(new Pair<>(R.drawable.block_poop, R.drawable.block_preview_poop));
+            add(new Pair<>(R.drawable.block_rock, R.drawable.block_preview_rock));
         }};
 
         initialiseBlockDesignOptions(view);
 
         return view;
     }
+
+    @Override
+    public void onClick(View view) {
+
+    }
+
 
     public interface OnBlockDesignFragmentInteractionListener {
         void onBlockDesignFragmentInteractionBackClicked();

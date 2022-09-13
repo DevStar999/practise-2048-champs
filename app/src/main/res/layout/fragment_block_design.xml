@@ -163,7 +163,7 @@
         android:id="@+id/block_design_options_scrollview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:paddingHorizontal="32dp"
+        android:paddingHorizontal="28dp"
         android:paddingVertical="24dp"
         android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
