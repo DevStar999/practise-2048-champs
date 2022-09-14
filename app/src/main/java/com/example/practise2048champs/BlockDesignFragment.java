@@ -185,6 +185,11 @@ public class BlockDesignFragment extends Fragment {
             add(new Pair<>(R.drawable.block_heart, R.drawable.block_preview_heart));
             add(new Pair<>(R.drawable.block_poop, R.drawable.block_preview_poop));
             add(new Pair<>(R.drawable.block_rock, R.drawable.block_preview_rock));
+            add(new Pair<>(R.drawable.block_cactus, R.drawable.block_preview_cactus));
+            add(new Pair<>(R.drawable.block_hurdle, R.drawable.block_preview_hurdle));
+            add(new Pair<>(R.drawable.block_ninja, R.drawable.block_preview_ninja));
+            add(new Pair<>(R.drawable.block_stormtrooper, R.drawable.block_preview_stormtrooper));
+            add(new Pair<>(R.drawable.block_vault, R.drawable.block_preview_vault));
         }};
 
         initialiseBlockDesignOptions(view);
