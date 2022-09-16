@@ -40,6 +40,7 @@ public class SettingsFragment extends Fragment {
     private SwitchCompat toggleRotatingLightSwitch;
     private LinearLayout blockDesignLinearLayout;
     private LinearLayout howToPlayLinearLayout;
+    private LinearLayout helpLinearLayout;
     private LinearLayout rateUsLinearLayout;
     private LinearLayout checkUpdatesLinearLayout;
     private LinearLayout feedbackLinearLayout;
@@ -175,6 +176,14 @@ public class SettingsFragment extends Fragment {
                 }
             }
         });
+        helpLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mListener != null) {
+                    mListener.onSettingsFragmentInteractionHelpClicked();
+                }
+            }
+        });
         rateUsLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -290,6 +299,7 @@ public class SettingsFragment extends Fragment {
         }
         blockDesignLinearLayout = view.findViewById(R.id.block_design_linear_layout);
         howToPlayLinearLayout = view.findViewById(R.id.how_to_play_linear_layout);
+        helpLinearLayout = view.findViewById(R.id.help_linear_layout);
         rateUsLinearLayout = view.findViewById(R.id.rate_us_linear_layout);
         feedbackLinearLayout = view.findViewById(R.id.feedback_linear_layout);
         checkUpdatesLinearLayout = view.findViewById(R.id.check_updates_linear_layout);
@@ -311,6 +321,7 @@ public class SettingsFragment extends Fragment {
         void onSettingsFragmentInteractionToggleRotatingLightClicked(boolean isChecked);
         void onSettingsFragmentInteractionBlockDesignClicked();
         void onSettingsFragmentInteractionHowToPlayClicked();
+        void onSettingsFragmentInteractionHelpClicked();
         void onSettingsFragmentInteractionCheckUpdatesClicked();
     }
 
