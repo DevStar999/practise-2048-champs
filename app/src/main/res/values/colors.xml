@@ -12,6 +12,8 @@
     <color name="orange_50_200">#FFCC80</color>
     <color name="orange_button">#F2B179</color>
     <color name="orange_button_dark">#F59563</color>
+    <color name="malachite_green">#0BDA51</color>
+    <color name="spotify_green">#1DB954</color>
 
     <color name="game_primary_background_color">#FBF8EF</color>
     <color name="game_primary_background_color_opacity_60_percent">#99FBF8EF</color>
