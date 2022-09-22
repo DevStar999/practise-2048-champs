@@ -44,6 +44,44 @@
             app:srcCompat="@drawable/back_arrow" />
     </FrameLayout>
 
+    <LinearLayout
+        android:id="@+id/coins_current_count_shop_fragment_linear_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/rounded_corner_current_coins"
+        android:paddingVertical="8dp"
+        android:paddingHorizontal="20dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/shop_scroll_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/shop_fragment_title_frame_layout">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/current_coins_shop_fragment_image_view"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="start|center_vertical"
+            android:layout_marginHorizontal="2dp"
+            android:scaleX="1.4"
+            android:scaleY="1.4"
+            app:srcCompat="@drawable/coin_symbol" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/current_coins_shop_fragment_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginHorizontal="2dp"
+            android:layout_weight="1"
+            android:text="N/A"
+            android:textColor="@color/game_primary_background_color"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
     <!-- Remember that a ScrollView can have only one child. Even
      still we have the liberty to have the child to be a complex
      layout in itself -->
@@ -52,18 +90,40 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:paddingHorizontal="16dp"
-        android:paddingTop="20dp"
-        android:scrollbars="none"
+        android:paddingVertical="4dp"
         app:layout_constraintBottom_toTopOf="@id/restore_purchases_shop_fragment_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/shop_fragment_title_frame_layout">
+        app:layout_constraintTop_toBottomOf="@id/coins_current_count_shop_fragment_linear_layout">
 
         <LinearLayout
             android:id="@+id/shop_scroll_view_container_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/shop_coins_level1_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginVertical="8dp"
+                android:background="@color/game_text_color_divider_line"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/shop_coins_level2_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginVertical="8dp"
+                android:background="@color/game_text_color_divider_line"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -75,7 +135,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/click_button"
-        android:layout_marginVertical="20dp"
+        android:layout_marginVertical="12dp"
         android:paddingHorizontal="12dp"
         android:contentDescription="Restore purchases button"
         android:text="Restore Purchases"
