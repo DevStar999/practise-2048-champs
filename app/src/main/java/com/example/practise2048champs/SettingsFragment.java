@@ -48,6 +48,7 @@ public class SettingsFragment extends Fragment {
     private LinearLayout twitterLinearLayout;
     private LinearLayout privacyLinearLayout;
     private LinearLayout termsLinearLayout;
+    private LinearLayout exitLinearLayout;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -263,6 +264,14 @@ public class SettingsFragment extends Fragment {
                 startActivity(browserIntent);
             }
         });
+        exitLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mListener != null) {
+                    mListener.onSettingsFragmentInteractionExitClicked();
+                }
+            }
+        });
     }
 
     @Nullable
@@ -299,6 +308,7 @@ public class SettingsFragment extends Fragment {
         twitterLinearLayout = view.findViewById(R.id.twitter_linear_layout);
         privacyLinearLayout = view.findViewById(R.id.privacy_policy_linear_layout);
         termsLinearLayout = view.findViewById(R.id.terms_of_service_linear_layout);
+        exitLinearLayout = view.findViewById(R.id.exit_game_linear_layout);
 
         settingOnClickListeners();
 
@@ -313,6 +323,7 @@ public class SettingsFragment extends Fragment {
         void onSettingsFragmentInteractionBlockDesignClicked();
         void onSettingsFragmentInteractionHowToPlayClicked();
         void onSettingsFragmentInteractionHelpClicked();
+        void onSettingsFragmentInteractionExitClicked();
     }
 
     @Override

@@ -101,17 +101,8 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
-            // Back button was pressed from activity
-            GameExitDialog gameExitDialog = new GameExitDialog(this);
-            gameExitDialog.show();
-            gameExitDialog.setGameExitDialogListener(new GameExitDialog.GameExitDialogListener() {
-                @Override
-                public void getResponseOfExitDialog(boolean response) {
-                    if (response) {
-                        MainActivity.super.onBackPressed();
-                    }
-                }
-            });
+            // Back button was pressed from activity, do nothing as we want to eliminate this option
+            // to exit from the homepage
         } else {
             // Back button was pressed from fragment
             getSupportFragmentManager().popBackStack();
@@ -246,6 +237,20 @@ public class MainActivity extends AppCompatActivity implements
     public void onSettingsFragmentInteractionHelpClicked() {
         // TODO -> Remove toast and implement the 'Help' fragment where we would answer FAQs
         Toast.makeText(MainActivity.this, "'Help' button clicked", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSettingsFragmentInteractionExitClicked() {
+        GameExitDialog gameExitDialog = new GameExitDialog(this);
+        gameExitDialog.show();
+        gameExitDialog.setGameExitDialogListener(new GameExitDialog.GameExitDialogListener() {
+            @Override
+            public void getResponseOfExitDialog(boolean response) {
+                if (response) {
+                    MainActivity.this.finish();
+                }
+            }
+        });
     }
 
     @Override
