@@ -21,6 +21,7 @@ import com.example.practise2048champs.LogoLottieFragment;
 import com.example.practise2048champs.NavigationFragment;
 import com.example.practise2048champs.R;
 import com.example.practise2048champs.SettingsFragment;
+import com.example.practise2048champs.ShopFragment;
 import com.example.practise2048champs.dialogs.ArrivingFeatureDialog;
 import com.example.practise2048champs.dialogs.GameExitDialog;
 import com.example.practise2048champs.pregame.PreGameFragment;
@@ -30,7 +31,8 @@ public class MainActivity extends AppCompatActivity implements
         PreGameFragment.OnPreGameFragmentInteractionListener,
         AnnouncementsFragment.OnAnnouncementsFragmentInteractionListener,
         SettingsFragment.OnSettingsFragmentInteractionListener,
-        BlockDesignFragment.OnBlockDesignFragmentInteractionListener {
+        BlockDesignFragment.OnBlockDesignFragmentInteractionListener,
+        ShopFragment.OnShopFragmentInteractionListener {
     private LogoLottieFragment logoLottieFragment;
     private NavigationFragment navigationFragment;
 
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements
 
         // To hide the navigation bar as default i.e. it will hide by itself if left unused or unattended
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
@@ -88,8 +91,11 @@ public class MainActivity extends AppCompatActivity implements
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
-                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     }
 
     @Override
@@ -155,7 +161,14 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onNavigationFragmentShopClicked() {
-        Toast.makeText(MainActivity.this, "Shop Clicked", Toast.LENGTH_SHORT).show();
+        ShopFragment fragment = new ShopFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right,
+                R.anim.enter_from_right, R.anim.exit_to_right);
+        transaction.addToBackStack(null);
+        transaction.add(R.id.full_screen_fragment_container, fragment,
+                "SHOP_FRAGMENT").commit();
     }
 
     @Override
@@ -190,8 +203,14 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onSettingsFragmentInteractionGetPremiumClicked() {
-        // TODO -> Remove toast and implement the ShopFragment
-        Toast.makeText(MainActivity.this, "Shop Clicked", Toast.LENGTH_SHORT).show();
+        ShopFragment fragment = new ShopFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right,
+                R.anim.enter_from_right, R.anim.exit_to_right);
+        transaction.addToBackStack(null);
+        transaction.add(R.id.full_screen_fragment_container, fragment,
+                        "SHOP_FRAGMENT").commit();
     }
 
     @Override
@@ -231,6 +250,11 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onBlockDesignFragmentInteractionBackClicked() {
+        onBackPressed();
+    }
+
+    @Override
+    public void onShopFragmentInteractionBackClicked() {
         onBackPressed();
     }
 }

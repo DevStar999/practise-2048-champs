@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/game_primary_background_color"
+    android:background="@drawable/background_with_black_film"
     android:clickable="true"
     android:focusable="true"
     tools:context=".SettingsFragment">
@@ -17,12 +17,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            app:srcCompat="@color/black_translucent_film" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/title_settings_fragment_text_view"
@@ -57,17 +51,16 @@
         android:id="@+id/settings_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/black_translucent_film"
-        android:scrollbars="none"
-        android:paddingVertical="20dp"
         android:paddingHorizontal="16dp"
+        android:paddingVertical="20dp"
+        android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/settings_fragment_title_frame_layout">
 
         <LinearLayout
-            android:id="@+id/scroll_view_container_linear_layout"
+            android:id="@+id/settings_scroll_view_container_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -83,8 +76,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/click_settings_buttons_top_and_bottom"
-                    android:padding="16dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="16dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/get_premium_icon_image_view"
@@ -121,10 +114,10 @@
                     android:id="@+id/change_theme_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
                     android:background="@drawable/click_settings_buttons_top"
+                    android:orientation="horizontal"
                     android:padding="16dp"
-                    android:orientation="horizontal">
+                    android:visibility="gone">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/change_theme_icon_image_view"
@@ -160,17 +153,17 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:visibility="gone"
                     android:layout_marginHorizontal="8dp"
-                    android:background="@color/game_text_color_divider_line" />
+                    android:background="@color/game_text_color_divider_line"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:id="@+id/toggle_rotating_light_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/click_settings_buttons_top"
-                    android:padding="16dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="16dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/toggle_rotating_light_icon_image_view"
@@ -199,8 +192,8 @@
                         android:layout_gravity="end|center_vertical"
                         android:layout_marginEnd="14dp"
                         android:checked="true"
-                        app:trackTint="@color/settings_switch_track"
-                        app:thumbTint="@color/settings_switch_thumb"/>
+                        app:thumbTint="@color/settings_switch_thumb"
+                        app:trackTint="@color/settings_switch_track" />
                 </LinearLayout>
 
                 <View
@@ -214,8 +207,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/click_settings_buttons_bottom"
-                    android:padding="16dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="16dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/block_design_icon_image_view"
@@ -251,9 +244,9 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:visibility="gone"
                     android:layout_marginHorizontal="8dp"
-                    android:background="@color/game_text_color_divider_line" />
+                    android:background="@color/game_text_color_divider_line"
+                    android:visibility="gone" />
 
                 <!-- TODO -> Change 'android:visibility' after
                              implementing the following -->
@@ -261,10 +254,10 @@
                     android:id="@+id/how_to_play_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
                     android:background="@drawable/click_settings_buttons_middle"
+                    android:orientation="horizontal"
                     android:padding="16dp"
-                    android:orientation="horizontal">
+                    android:visibility="gone">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/how_to_play_icon_image_view"
@@ -300,9 +293,9 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:visibility="gone"
                     android:layout_marginHorizontal="8dp"
-                    android:background="@color/game_text_color_divider_line" />
+                    android:background="@color/game_text_color_divider_line"
+                    android:visibility="gone" />
 
 
                 <!-- TODO -> Change 'android:visibility' after
@@ -311,10 +304,10 @@
                     android:id="@+id/help_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
                     android:background="@drawable/click_settings_buttons_bottom"
+                    android:orientation="horizontal"
                     android:padding="16dp"
-                    android:orientation="horizontal">
+                    android:visibility="gone">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/help_icon_image_view"
@@ -358,8 +351,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/click_settings_buttons_top"
-                    android:padding="16dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="16dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/rate_us_icon_image_view"
@@ -393,8 +386,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/click_settings_buttons_bottom"
-                    android:padding="16dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="16dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/feedback_icon_image_view"
@@ -432,8 +425,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/click_settings_buttons_top"
-                    android:padding="16dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="16dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/facebook_icon_image_view"
@@ -467,8 +460,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/click_settings_buttons_middle"
-                    android:padding="16dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="16dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/instagram_icon_image_view"
@@ -504,8 +497,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/click_settings_buttons_bottom"
-                    android:padding="16dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="16dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/twitter_icon_image_view"
@@ -541,8 +534,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/click_settings_buttons_top"
-                    android:padding="16dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="16dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/privacy_policy_icon_image_view"
@@ -576,8 +569,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/click_settings_buttons_bottom"
-                    android:padding="16dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="16dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/terms_of_service_icon_image_view"
