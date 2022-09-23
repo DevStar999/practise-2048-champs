@@ -201,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements
                 R.anim.enter_from_right, R.anim.exit_to_right);
         transaction.addToBackStack(null);
         transaction.add(R.id.full_screen_fragment_container, fragment,
-                        "SHOP_FRAGMENT").commit();
+                "SHOP_FRAGMENT").commit();
     }
 
     @Override
@@ -261,5 +261,36 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onShopFragmentInteractionBackClicked() {
         onBackPressed();
+    }
+
+    @Override
+    public void onShopFragmentInteractionRestorePurchaseClicked() {
+        Toast.makeText(MainActivity.this, "Restore Purchases Clicked", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onShopFragmentInteractionPurchaseOptionClicked(int purchaseOptionViewId) {
+        if (purchaseOptionViewId == R.id.shop_coins_level1_constraint_layout
+                || purchaseOptionViewId == R.id.shop_coins_level1_purchase_button) {
+            Toast.makeText(MainActivity.this, "Shop Option 1 Clicked", Toast.LENGTH_SHORT).show();
+        } else if (purchaseOptionViewId == R.id.shop_coins_level2_constraint_layout
+                || purchaseOptionViewId == R.id.shop_coins_level2_purchase_button) {
+            Toast.makeText(MainActivity.this, "Shop Option 2 Clicked", Toast.LENGTH_SHORT).show();
+        } else if (purchaseOptionViewId == R.id.shop_coins_level3_constraint_layout
+                || purchaseOptionViewId == R.id.shop_coins_level3_purchase_button) {
+            Toast.makeText(MainActivity.this, "Shop Option 3 Clicked", Toast.LENGTH_SHORT).show();
+        } else if (purchaseOptionViewId == R.id.shop_coins_level4_constraint_layout
+                || purchaseOptionViewId == R.id.shop_coins_level4_purchase_button) {
+            Toast.makeText(MainActivity.this, "Shop Option 4 Clicked", Toast.LENGTH_SHORT).show();
+        } else if (purchaseOptionViewId == R.id.shop_coins_level5_constraint_layout
+                || purchaseOptionViewId == R.id.shop_coins_level5_purchase_button) {
+            Toast.makeText(MainActivity.this, "Shop Option 5 Clicked", Toast.LENGTH_SHORT).show();
+        } else if (purchaseOptionViewId == R.id.shop_coins_level6_constraint_layout
+                || purchaseOptionViewId == R.id.shop_coins_level6_purchase_button) {
+            Toast.makeText(MainActivity.this, "Shop Option 6 Clicked", Toast.LENGTH_SHORT).show();
+        } else if (purchaseOptionViewId == R.id.shop_coins_level7_constraint_layout
+                || purchaseOptionViewId == R.id.shop_coins_level7_purchase_button) {
+            Toast.makeText(MainActivity.this, "Shop Option 7 Clicked", Toast.LENGTH_SHORT).show();
+        }
     }
 }
