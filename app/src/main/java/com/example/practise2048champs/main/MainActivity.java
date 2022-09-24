@@ -117,8 +117,8 @@ public class MainActivity extends AppCompatActivity implements
         transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right,
                 R.anim.enter_from_right, R.anim.exit_to_right);
         transaction.addToBackStack(null);
-        transaction.replace(R.id.full_screen_fragment_container, fragment, "PREGAME_FRAGMENT")
-                .commit();
+        transaction.replace(R.id.main_activity_full_screen_fragment_container,
+                        fragment, "PREGAME_FRAGMENT").commit();
     }
 
     @Override
@@ -129,8 +129,8 @@ public class MainActivity extends AppCompatActivity implements
         transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right,
                 R.anim.enter_from_right, R.anim.exit_to_right);
         transaction.addToBackStack(null);
-        transaction.replace(R.id.full_screen_fragment_container, fragment, "ANNOUNCEMENTS_FRAGMENT")
-                .commit();
+        transaction.replace(R.id.main_activity_full_screen_fragment_container,
+                        fragment, "ANNOUNCEMENTS_FRAGMENT").commit();
     }
 
     @Override
@@ -146,8 +146,8 @@ public class MainActivity extends AppCompatActivity implements
         transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right,
                 R.anim.enter_from_right, R.anim.exit_to_right);
         transaction.addToBackStack(null);
-        transaction.replace(R.id.full_screen_fragment_container, fragment, "SETTINGS_FRAGMENT")
-                .commit();
+        transaction.replace(R.id.main_activity_full_screen_fragment_container,
+                        fragment, "SETTINGS_FRAGMENT").commit();
     }
 
     @Override
@@ -158,8 +158,8 @@ public class MainActivity extends AppCompatActivity implements
         transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right,
                 R.anim.enter_from_right, R.anim.exit_to_right);
         transaction.addToBackStack(null);
-        transaction.add(R.id.full_screen_fragment_container, fragment,
-                "SHOP_FRAGMENT").commit();
+        transaction.add(R.id.main_activity_full_screen_fragment_container,
+                fragment, "SHOP_FRAGMENT").commit();
     }
 
     @Override
@@ -200,8 +200,8 @@ public class MainActivity extends AppCompatActivity implements
         transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right,
                 R.anim.enter_from_right, R.anim.exit_to_right);
         transaction.addToBackStack(null);
-        transaction.add(R.id.full_screen_fragment_container, fragment,
-                "SHOP_FRAGMENT").commit();
+        transaction.add(R.id.main_activity_full_screen_fragment_container,
+                fragment, "SHOP_FRAGMENT").commit();
     }
 
     @Override
@@ -223,8 +223,8 @@ public class MainActivity extends AppCompatActivity implements
         transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right,
                 R.anim.enter_from_right, R.anim.exit_to_right);
         transaction.addToBackStack(null);
-        transaction.add(R.id.full_screen_fragment_container, fragment, "BLOCK_DESIGN_FRAGMENT")
-                .commit();
+        transaction.add(R.id.main_activity_full_screen_fragment_container,
+                        fragment, "BLOCK_DESIGN_FRAGMENT").commit();
     }
 
     @Override
