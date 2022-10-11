@@ -72,22 +72,6 @@ public class SettingsFragment extends Fragment {
         }
     }
 
-    private Intent instagramProfileIntent(PackageManager packageManager) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        try {
-            if (packageManager.getPackageInfo("com.instagram.android", 0) != null) {
-                String username = SettingsFragment.INSTAGRAM_URL
-                        .substring(SettingsFragment.INSTAGRAM_URL.lastIndexOf("/") + 1);
-                intent.setData(Uri.parse("http://instagram.com/_u/" + username));
-                intent.setPackage("com.instagram.android");
-                return intent;
-            }
-        } catch (PackageManager.NameNotFoundException ignored) {
-        }
-        intent.setData(Uri.parse(SettingsFragment.INSTAGRAM_URL));
-        return intent;
-    }
-
     private Intent twitterProfileIntent(PackageManager packageManager) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         try {
@@ -236,8 +220,19 @@ public class SettingsFragment extends Fragment {
         instagramLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent browserIntent = instagramProfileIntent(context.getPackageManager());
-                startActivity(browserIntent);
+                String username = SettingsFragment.INSTAGRAM_URL
+                        .substring(SettingsFragment.INSTAGRAM_URL.lastIndexOf("/") + 1);
+                Uri uri = Uri.parse("http://instagram.com/_u/" + username);
+
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                intent.setPackage("com.instagram.android");
+
+                try {
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("http://instagram.com/" + username)));
+                }
             }
         });
         twitterLinearLayout.setOnClickListener(new View.OnClickListener() {
