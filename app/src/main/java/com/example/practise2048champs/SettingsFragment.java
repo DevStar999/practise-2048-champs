@@ -59,21 +59,6 @@ public class SettingsFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-
-    private Intent twitterProfileIntent(PackageManager packageManager) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        try {
-            if (packageManager.getPackageInfo("com.twitter.android", 0) != null) {
-                intent.setData(Uri.parse("twitter://user?screen_name=" + TWITTER_USERNAME));
-                intent.setPackage("com.twitter.android");
-                return intent;
-            }
-        } catch (PackageManager.NameNotFoundException ignored) {
-        }
-        intent.setData(Uri.parse("https://twitter.com/#!/" + TWITTER_USERNAME));
-        return intent;
-    }
-
     private void settingOnClickListeners() {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -239,8 +224,16 @@ public class SettingsFragment extends Fragment {
         twitterLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent browserIntent = twitterProfileIntent(context.getPackageManager());
-                startActivity(browserIntent);
+                Uri uri = Uri.parse("twitter://user?screen_name=" + TWITTER_USERNAME);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                intent.setPackage("com.twitter.android");
+
+                try {
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("https://twitter.com/#!/" + TWITTER_USERNAME)));
+                }
             }
         });
         privacyLinearLayout.setOnClickListener(new View.OnClickListener() {
