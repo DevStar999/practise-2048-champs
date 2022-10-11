@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -58,19 +59,6 @@ public class SettingsFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    private String getFacebookPageURL(Context context) {
-        PackageManager packageManager = context.getPackageManager();
-        try {
-            int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
-            if (versionCode >= 3002850) { //newer versions of fb app
-                return "fb://facewebmodal/f?href=" + FACEBOOK_URL;
-            } else { //older versions of fb app
-                return "fb://page/" + FACEBOOK_PAGE_ID;
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            return FACEBOOK_URL; //normal web url
-        }
-    }
 
     private Intent twitterProfileIntent(PackageManager packageManager) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -211,10 +199,23 @@ public class SettingsFragment extends Fragment {
         facebookLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW);
-                String facebookUrl = getFacebookPageURL(context);
-                browserIntent.setData(Uri.parse(facebookUrl));
-                startActivity(browserIntent);
+                String uriFacebook = "";
+                PackageManager packageManager = context.getPackageManager();
+                try {
+                    ApplicationInfo applicationInfo = packageManager.getApplicationInfo("com.facebook.katana", 0);
+
+                    if (applicationInfo.enabled) {
+                        int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
+                        if (versionCode >= 3002850) { // newer versions of fb app
+                            uriFacebook = "fb://facewebmodal/f?href=" + FACEBOOK_URL;
+                        } else { // older versions of fb app
+                            uriFacebook = "fb://page/" + FACEBOOK_PAGE_ID;
+                        }
+                    }
+                } catch (Exception e) {
+                    uriFacebook = FACEBOOK_URL; // normal web url
+                }
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uriFacebook)));
             }
         });
         instagramLinearLayout.setOnClickListener(new View.OnClickListener() {
