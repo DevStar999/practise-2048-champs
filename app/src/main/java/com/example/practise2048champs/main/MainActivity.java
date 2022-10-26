@@ -24,6 +24,7 @@ import com.example.practise2048champs.fragments.SettingsFragment;
 import com.example.practise2048champs.fragments.ShopFragment;
 import com.example.practise2048champs.dialogs.ArrivingFeatureDialog;
 import com.example.practise2048champs.dialogs.GameExitDialog;
+import com.example.practise2048champs.fragments.ThemesFragment;
 import com.example.practise2048champs.pregame.PreGameFragment;
 
 public class MainActivity extends AppCompatActivity implements
@@ -32,7 +33,8 @@ public class MainActivity extends AppCompatActivity implements
         AnnouncementsFragment.OnAnnouncementsFragmentInteractionListener,
         SettingsFragment.OnSettingsFragmentInteractionListener,
         BlockDesignFragment.OnBlockDesignFragmentInteractionListener,
-        ShopFragment.OnShopFragmentInteractionListener {
+        ShopFragment.OnShopFragmentInteractionListener,
+        ThemesFragment.OnThemesFragmentInteractionListener {
     private LogoLottieFragment logoLottieFragment;
     private NavigationFragment navigationFragment;
 
@@ -208,8 +210,14 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onSettingsFragmentInteractionChangeThemeClicked() {
-        // TODO -> Remove toast and implement the ChangeThemeFragment
-        Toast.makeText(MainActivity.this, "Change Theme Clicked", Toast.LENGTH_SHORT).show();
+        ThemesFragment fragment = new ThemesFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right,
+                R.anim.enter_from_right, R.anim.exit_to_right);
+        transaction.addToBackStack(null);
+        transaction.add(R.id.main_activity_full_screen_fragment_container,
+                fragment, "THEMES_FRAGMENT").commit();
     }
 
     @Override
@@ -294,5 +302,10 @@ public class MainActivity extends AppCompatActivity implements
                 || purchaseOptionViewId == R.id.shop_coins_level7_purchase_button) {
             Toast.makeText(MainActivity.this, "Shop Option 7 Clicked", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onThemesFragmentInteractionBackClicked() {
+        onBackPressed();
     }
 }
