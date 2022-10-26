@@ -1,4 +1,4 @@
-package com.example.practise2048champs;
+package com.example.practise2048champs.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 
+import com.example.practise2048champs.R;
+import com.example.practise2048champs.SliderAdapter;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 

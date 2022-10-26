@@ -1,4 +1,4 @@
-package com.example.practise2048champs;
+package com.example.practise2048champs.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -14,6 +14,8 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+
+import com.example.practise2048champs.R;
 
 import java.text.DecimalFormat;
 

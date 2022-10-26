@@ -1,4 +1,4 @@
-package com.example.practise2048champs;
+package com.example.practise2048champs.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -17,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
+
+import com.example.practise2048champs.R;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.practise2048champs;
+package com.example.practise2048champs.fragments;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -20,6 +20,8 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.practise2048champs.BuildConfig;
+import com.example.practise2048champs.R;
 import com.example.practise2048champs.dialogs.RateUsPromptDialog;
 
 public class SettingsFragment extends Fragment {

@@ -1,4 +1,4 @@
-package com.example.practise2048champs;
+package com.example.practise2048champs.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import androidx.fragment.app.Fragment;
+
+import com.example.practise2048champs.R;
 
 public class NavigationFragment extends Fragment {
     private OnNavigationFragmentInteractionListener mListener;
