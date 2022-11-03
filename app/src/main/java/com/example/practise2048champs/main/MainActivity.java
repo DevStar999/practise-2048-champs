@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -27,6 +28,9 @@ import com.example.practise2048champs.dialogs.GameExitDialog;
 import com.example.practise2048champs.fragments.ThemesFragment;
 import com.example.practise2048champs.pregame.PreGameFragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements
         NavigationFragment.OnNavigationFragmentInteractionListener,
         PreGameFragment.OnPreGameFragmentInteractionListener,
@@ -35,12 +39,7 @@ public class MainActivity extends AppCompatActivity implements
         BlockDesignFragment.OnBlockDesignFragmentInteractionListener,
         ShopFragment.OnShopFragmentInteractionListener,
         ThemesFragment.OnThemesFragmentInteractionListener {
-    private LogoLottieFragment logoLottieFragment;
-    private NavigationFragment navigationFragment;
-
     private void initialise() {
-        logoLottieFragment = new LogoLottieFragment();
-        navigationFragment = new NavigationFragment();
     }
 
     @SuppressLint("SourceLockedOrientationActivity")
@@ -77,9 +76,11 @@ public class MainActivity extends AppCompatActivity implements
 
         initialise();
 
+        LogoLottieFragment logoLottieFragment = new LogoLottieFragment();
+        NavigationFragment navigationFragment = new NavigationFragment();
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.logo_lottie_fragment_container, logoLottieFragment)
-                .replace(R.id.navigation_fragment_container, navigationFragment)
+                .replace(R.id.logo_lottie_fragment_container, logoLottieFragment, "LOGO_LOTTIE_FRAGMENT")
+                .replace(R.id.navigation_fragment_container, navigationFragment, "NAVIGATION_FRAGMENT")
                 .commit();
     }
 
@@ -222,7 +223,16 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onSettingsFragmentInteractionToggleRotatingLightClicked(boolean isChecked) {
-        logoLottieFragment.updateRotatingLightState(isChecked);
+        List<Fragment> fragments = new ArrayList<>(getSupportFragmentManager().getFragments());
+        for (int index = 0; index < fragments.size(); index++) {
+            Fragment currentFragment = fragments.get(index);
+            if (currentFragment != null && currentFragment.getTag() != null
+                    && !currentFragment.getTag().isEmpty()) {
+                if (currentFragment.getTag().equals("LOGO_LOTTIE_FRAGMENT")) {
+                    ((LogoLottieFragment) currentFragment).updateRotatingLightState(isChecked);
+                }
+            }
+        }
     }
 
     @Override
