@@ -98,8 +98,7 @@ public class ShopFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_shop, container, false);
 
         currentCoinsTextView = view.findViewById(R.id.current_coins_shop_fragment_text_view);
-        DecimalFormat formatter = new DecimalFormat("#,###");
-        currentCoinsTextView.setText(formatter.format(sharedPreferences.getInt("currentCoins", 2000)));
+        currentCoinsTextView.setText(String.valueOf(sharedPreferences.getInt("currentCoins", 2000)));
         backButton = view.findViewById(R.id.title_back_shop_fragment_button);
         restorePurchase = view.findViewById(R.id.restore_purchases_shop_fragment_button);
 
