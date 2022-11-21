@@ -1,7 +1,9 @@
 package com.example.practise2048champs.main;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
@@ -39,7 +41,24 @@ public class MainActivity extends AppCompatActivity implements
         BlockDesignFragment.OnBlockDesignFragmentInteractionListener,
         ShopFragment.OnShopFragmentInteractionListener,
         ThemesFragment.OnThemesFragmentInteractionListener {
+    private SharedPreferences sharedPreferences;
+
     private void initialise() {
+        sharedPreferences = getSharedPreferences("com.nerdcoredevelopment.game2048champsfinal", Context.MODE_PRIVATE);
+    }
+
+    private void updateCoins(int currentCoins) {
+        sharedPreferences.edit().putInt("currentCoins", currentCoins).apply();
+        List<Fragment> fragments = new ArrayList<>(getSupportFragmentManager().getFragments());
+        for (int index = 0; index < fragments.size(); index++) {
+            Fragment currentFragment = fragments.get(index);
+            if (currentFragment != null && currentFragment.getTag() != null
+                    && !currentFragment.getTag().isEmpty()) {
+                if (currentFragment.getTag().equals("SHOP_FRAGMENT")) {
+                    ((ShopFragment) currentFragment).updateCoinsShopFragment(currentCoins);
+                }
+            }
+        }
     }
 
     @SuppressLint("SourceLockedOrientationActivity")
@@ -359,29 +378,8 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onShopFragmentInteractionPurchaseOptionClicked(int purchaseOptionViewId) {
-        if (purchaseOptionViewId == R.id.shop_coins_level1_constraint_layout
-                || purchaseOptionViewId == R.id.shop_coins_level1_purchase_button) {
-            Toast.makeText(MainActivity.this, "Shop Option 1 Clicked", Toast.LENGTH_SHORT).show();
-        } else if (purchaseOptionViewId == R.id.shop_coins_level2_constraint_layout
-                || purchaseOptionViewId == R.id.shop_coins_level2_purchase_button) {
-            Toast.makeText(MainActivity.this, "Shop Option 2 Clicked", Toast.LENGTH_SHORT).show();
-        } else if (purchaseOptionViewId == R.id.shop_coins_level3_constraint_layout
-                || purchaseOptionViewId == R.id.shop_coins_level3_purchase_button) {
-            Toast.makeText(MainActivity.this, "Shop Option 3 Clicked", Toast.LENGTH_SHORT).show();
-        } else if (purchaseOptionViewId == R.id.shop_coins_level4_constraint_layout
-                || purchaseOptionViewId == R.id.shop_coins_level4_purchase_button) {
-            Toast.makeText(MainActivity.this, "Shop Option 4 Clicked", Toast.LENGTH_SHORT).show();
-        } else if (purchaseOptionViewId == R.id.shop_coins_level5_constraint_layout
-                || purchaseOptionViewId == R.id.shop_coins_level5_purchase_button) {
-            Toast.makeText(MainActivity.this, "Shop Option 5 Clicked", Toast.LENGTH_SHORT).show();
-        } else if (purchaseOptionViewId == R.id.shop_coins_level6_constraint_layout
-                || purchaseOptionViewId == R.id.shop_coins_level6_purchase_button) {
-            Toast.makeText(MainActivity.this, "Shop Option 6 Clicked", Toast.LENGTH_SHORT).show();
-        } else if (purchaseOptionViewId == R.id.shop_coins_level7_constraint_layout
-                || purchaseOptionViewId == R.id.shop_coins_level7_purchase_button) {
-            Toast.makeText(MainActivity.this, "Shop Option 7 Clicked", Toast.LENGTH_SHORT).show();
-        }
+    public void onShopFragmentInteractionUpdateCoins(int currentCoins) {
+        updateCoins(currentCoins);
     }
 
     @Override
