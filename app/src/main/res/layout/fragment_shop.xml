@@ -1021,7 +1021,7 @@
     <!-- TODO -> Make a decision later, whether to keep this 'Restore
                  Purchases' button or not as more number of apps do not
                  have it compared to the number of those who have
-                 implemented this button -->
+                 implemented this button (Noted in Main Project) -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/restore_purchases_shop_fragment_button"
         android:layout_width="wrap_content"

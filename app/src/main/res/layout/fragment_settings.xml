@@ -109,7 +109,8 @@
                 android:orientation="vertical">
 
                 <!-- TODO -> Change 'android:visibility' after
-                             implementing the following -->
+                             implementing the following
+                             (Noted in Main Project) -->
                 <LinearLayout
                     android:id="@+id/change_theme_linear_layout"
                     android:layout_width="match_parent"
@@ -149,7 +150,8 @@
                 </LinearLayout>
 
                 <!-- TODO -> Change 'android:visibility' after
-                             implementing the following -->
+                             implementing the following
+                             (Noted in Main Project) -->
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -240,7 +242,8 @@
                 </LinearLayout>
 
                 <!-- TODO -> Change 'android:visibility' after
-                             implementing the following -->
+                             implementing the following
+                             (Noted in Main Project) -->
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -249,7 +252,8 @@
                     android:visibility="gone" />
 
                 <!-- TODO -> Change 'android:visibility' after
-                             implementing the following -->
+                             implementing the following
+                             (Noted in Main Project) -->
                 <LinearLayout
                     android:id="@+id/how_to_play_linear_layout"
                     android:layout_width="match_parent"
@@ -289,7 +293,8 @@
                 </LinearLayout>
 
                 <!-- TODO -> Change 'android:visibility' after
-                             implementing the following -->
+                             implementing the following
+                             (Noted in Main Project) -->
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -299,7 +304,8 @@
 
 
                 <!-- TODO -> Change 'android:visibility' after
-                             implementing the following -->
+                             implementing the following
+                             (Noted in Main Project) -->
                 <LinearLayout
                     android:id="@+id/help_linear_layout"
                     android:layout_width="match_parent"

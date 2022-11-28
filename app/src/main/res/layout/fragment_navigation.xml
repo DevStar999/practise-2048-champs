@@ -41,8 +41,8 @@
         android:layout_gravity="center_horizontal"
         android:orientation="horizontal">
 
-        <!-- TODO -> Enable Announcements in game and set the visibility to
-                     VISIBLE -->
+        <!-- TODO -> Enable 'Announcements' in game and set the visibility to
+                     VISIBLE (Noted in Main Project) -->
         <FrameLayout
             android:id="@+id/fragment_navigation_announcements_linear_layout"
             android:visibility="gone"
@@ -67,15 +67,15 @@
                 android:layout_gravity="center_horizontal|bottom"
                 android:layout_marginBottom="4dp"
                 android:background="@color/game_primary_background_color"
-                android:text="ANNOUCEMENTS"
+                android:text="ANNOUNCEMENTS"
                 android:textAlignment="center"
                 android:textColor="@color/game_text_color"
                 android:textSize="12sp"
                 android:textStyle="bold" />
         </FrameLayout>
 
-        <!-- TODO -> Enable leaderboards in game and set the visibility to
-                     VISIBLE -->
+        <!-- TODO -> Enable 'Leaderboards' in game and set the visibility to
+                     VISIBLE (Noted in Main Project) -->
         <FrameLayout
             android:id="@+id/fragment_navigation_leaderboards_linear_layout"
             android:visibility="gone"
