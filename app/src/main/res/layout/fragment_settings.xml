@@ -108,13 +108,16 @@
                 android:layout_marginVertical="8dp"
                 android:orientation="vertical">
 
+                <!-- TODO -> Change 'android:visibility' after
+                             implementing the following -->
                 <LinearLayout
                     android:id="@+id/change_theme_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/click_settings_buttons_top"
                     android:orientation="horizontal"
-                    android:padding="16dp">
+                    android:padding="16dp"
+                    android:visibility="gone">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/change_theme_icon_image_view"
@@ -145,17 +148,20 @@
                         app:srcCompat="@drawable/settings_redirect" />
                 </LinearLayout>
 
+                <!-- TODO -> Change 'android:visibility' after
+                             implementing the following -->
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginHorizontal="8dp"
-                    android:background="@color/game_text_color_divider_line" />
+                    android:background="@color/game_text_color_divider_line"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:id="@+id/toggle_rotating_light_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/click_settings_buttons_middle"
+                    android:background="@drawable/click_settings_buttons_top"
                     android:orientation="horizontal"
                     android:padding="16dp">
 
