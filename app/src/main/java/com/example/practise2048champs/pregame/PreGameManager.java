@@ -8,7 +8,7 @@ import android.view.View;
 import androidx.appcompat.widget.AppCompatImageView;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.example.practise2048champs.AnimationUtility;
+import com.example.practise2048champs.AnimationsUtility;
 import com.example.practise2048champs.R;
 
 import java.io.IOException;
@@ -75,7 +75,7 @@ public class PreGameManager {
     }
 
     public void updatePreview(String gamePreviewAssetFileName) {
-        AnimationUtility.gamePreviewShrinkAnimation(rotatingLightView, gamePreviewImage,
+        AnimationsUtility.gamePreviewShrinkAnimation(rotatingLightView, gamePreviewImage,
                 modeLeft, modeRight, sizeLeft, sizeRight,
                 250, gamePreviewAnimationsDone);
 
@@ -100,7 +100,7 @@ public class PreGameManager {
                     }
 
                     // Start Second Phase Animation
-                    AnimationUtility.gamePreviewEmergeAnimation(rotatingLightView, gamePreviewImage,
+                    AnimationsUtility.gamePreviewEmergeAnimation(rotatingLightView, gamePreviewImage,
                             modeLeft, modeRight, sizeLeft, sizeRight,
                             250, gamePreviewAnimationsDone);
 

@@ -42,7 +42,7 @@
         android:orientation="horizontal">
 
         <!-- TODO -> Enable 'Announcements' in game and set the visibility to
-                     VISIBLE (Noted in Main Project) -->
+                     VISIBLE -->
         <FrameLayout
             android:id="@+id/fragment_navigation_announcements_linear_layout"
             android:visibility="gone"
@@ -75,7 +75,7 @@
         </FrameLayout>
 
         <!-- TODO -> Enable 'Leaderboards' in game and set the visibility to
-                     VISIBLE (Noted in Main Project) -->
+                     VISIBLE -->
         <FrameLayout
             android:id="@+id/fragment_navigation_leaderboards_linear_layout"
             android:visibility="gone"

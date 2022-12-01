@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(R.style.Theme_Practise2048Champs);
 
         /*
         Following lines of code hide the status bar at the very top of the screen which battery
@@ -152,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements
                 R.anim.enter_from_right, R.anim.exit_to_right);
         transaction.addToBackStack(null);
         transaction.add(R.id.main_activity_full_screen_fragment_container,
-                        fragment, "PREGAME_FRAGMENT").commit();
+                fragment, "PREGAME_FRAGMENT").commit();
     }
 
     @Override
@@ -174,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements
                 R.anim.enter_from_right, R.anim.exit_to_right);
         transaction.addToBackStack(null);
         transaction.replace(R.id.main_activity_full_screen_fragment_container,
-                        fragment, "ANNOUNCEMENTS_FRAGMENT").commit();
+                fragment, "ANNOUNCEMENTS_FRAGMENT").commit();
     }
 
     @Override
@@ -201,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements
                 R.anim.enter_from_right, R.anim.exit_to_right);
         transaction.addToBackStack(null);
         transaction.replace(R.id.main_activity_full_screen_fragment_container,
-                        fragment, "SETTINGS_FRAGMENT").commit();
+                fragment, "SETTINGS_FRAGMENT").commit();
     }
 
     @Override
@@ -333,18 +332,18 @@ public class MainActivity extends AppCompatActivity implements
                 R.anim.enter_from_right, R.anim.exit_to_right);
         transaction.addToBackStack(null);
         transaction.add(R.id.main_activity_full_screen_fragment_container,
-                        fragment, "BLOCK_DESIGN_FRAGMENT").commit();
+                fragment, "BLOCK_DESIGN_FRAGMENT").commit();
     }
 
     @Override
     public void onSettingsFragmentInteractionHowToPlayClicked() {
-        // TODO -> Remove toast and implement the 'How To Play' fragment (Noted in Main Project)
+        // TODO -> Remove toast and implement the 'How To Play' fragment
         Toast.makeText(MainActivity.this, "'How To Play' button clicked", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onSettingsFragmentInteractionHelpClicked() {
-        // TODO -> Remove toast and implement the 'Help' fragment where we would answer FAQs (Noted in Main Project)
+        // TODO -> Remove toast and implement the 'Help' fragment where we would answer FAQs
         Toast.makeText(MainActivity.this, "'Help' button clicked", Toast.LENGTH_SHORT).show();
     }
 

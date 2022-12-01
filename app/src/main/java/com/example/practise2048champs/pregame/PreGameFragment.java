@@ -29,7 +29,7 @@ public class PreGameFragment extends Fragment {
 
     // Root layout of the fragment
     private ConstraintLayout rootLayout;
-    
+
     // Interaction listener of this fragment
     private OnPreGameFragmentInteractionListener mListener;
 
@@ -62,7 +62,7 @@ public class PreGameFragment extends Fragment {
     private AppCompatImageView modeRight;
     private AppCompatImageView sizeLeft;
     private AppCompatImageView sizeRight;
-    
+
     public PreGameFragment() {
         // Required empty public constructor
     }
@@ -134,7 +134,7 @@ public class PreGameFragment extends Fragment {
         // Updating the preview accordingly
         preGameManager.updatePreview(currentGameMode.getGamePreviewAssetFileName());
     }
-    
+
     private void settingsOnClickListenerForStartButton() {
         startGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -282,7 +282,7 @@ public class PreGameFragment extends Fragment {
             }
         });
     }
-    
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -303,7 +303,7 @@ public class PreGameFragment extends Fragment {
         settingOnClickListenersForModeButtons();
 
         settingOnClickListenersForSizeButtons();
-        
+
         return view;
     }
 
@@ -319,8 +319,7 @@ public class PreGameFragment extends Fragment {
         if (context instanceof OnPreGameFragmentInteractionListener) {
             mListener = (OnPreGameFragmentInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnPreGameFragmentInteractionListener");
+            throw new RuntimeException(context + " must implement OnPreGameFragmentInteractionListener");
         }
         this.parentActivity = (Activity) context;
     }

@@ -11,7 +11,7 @@ import com.airbnb.lottie.LottieAnimationView;
 
 import java.util.List;
 
-public class AnimationUtility {
+public class AnimationsUtility {
     public static void gamePreviewShrinkAnimation(LottieAnimationView rotatingLightView, AppCompatImageView gameImage,
                                                   AppCompatImageView modeLeft, AppCompatImageView modeRight,
                                                   AppCompatImageView sizeLeft, AppCompatImageView sizeRight,

@@ -159,9 +159,9 @@ public class ShopFragment extends Fragment {
         currentCoins = sharedPreferences.getInt("currentCoins", 2000);
         currentCoinsTextView.setText(String.valueOf(currentCoins));
         coinsReward = new HashMap<>() {{
-           put("coins_level1", 1000); put("coins_level2", 3000); put("coins_level3", 5000);
-           put("coins_level4", 10000); put("coins_level5", 25000);
-           put("coins_level6", 50000); put("coins_level7", 100000);
+            put("coins_level1", 1000); put("coins_level2", 3000); put("coins_level3", 5000);
+            put("coins_level4", 10000); put("coins_level5", 25000);
+            put("coins_level6", 50000); put("coins_level7", 100000);
         }};
 
         settingOnClickListeners();
@@ -190,8 +190,7 @@ public class ShopFragment extends Fragment {
         if (context instanceof OnShopFragmentInteractionListener) {
             mListener = (OnShopFragmentInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnShopFragmentInteractionListener");
+            throw new RuntimeException(context + " must implement OnShopFragmentInteractionListener");
         }
         this.context = context;
     }
