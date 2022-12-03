@@ -11,6 +11,9 @@
         android:id="@+id/fragment_navigation_pregame_frame_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/click_navigation_button"
+        android:paddingBottom="4dp"
+        android:paddingHorizontal="8dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="64dp">
 
@@ -48,6 +51,7 @@
             android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/click_navigation_button"
             android:layout_marginHorizontal="12dp">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -81,6 +85,7 @@
             android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/click_navigation_button"
             android:layout_marginHorizontal="12dp">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -111,6 +116,7 @@
             android:id="@+id/fragment_navigation_settings_linear_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/click_navigation_button"
             android:layout_marginHorizontal="12dp">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -141,6 +147,7 @@
             android:id="@+id/fragment_navigation_shop_linear_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/click_navigation_button"
             android:layout_marginHorizontal="12dp">
 
             <androidx.appcompat.widget.AppCompatImageView

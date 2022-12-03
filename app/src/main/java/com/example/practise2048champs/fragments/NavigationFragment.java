@@ -36,13 +36,13 @@ public class NavigationFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_navigation, container, false);
 
-        FrameLayout pregameLinearLayout = view.findViewById(R.id.fragment_navigation_pregame_frame_layout);
-        FrameLayout announcementsLinearLayout = view.findViewById(R.id.fragment_navigation_announcements_linear_layout);
-        FrameLayout leaderboardsLinearLayout = view.findViewById(R.id.fragment_navigation_leaderboards_linear_layout);
-        FrameLayout settingsLinearLayout = view.findViewById(R.id.fragment_navigation_settings_linear_layout);
-        FrameLayout shopLinearLayout = view.findViewById(R.id.fragment_navigation_shop_linear_layout);
+        FrameLayout pregameFrameLayout = view.findViewById(R.id.fragment_navigation_pregame_frame_layout);
+        FrameLayout announcementsFrameLayout = view.findViewById(R.id.fragment_navigation_announcements_linear_layout);
+        FrameLayout leaderboardsFrameLayout = view.findViewById(R.id.fragment_navigation_leaderboards_linear_layout);
+        FrameLayout settingsFrameLayout = view.findViewById(R.id.fragment_navigation_settings_linear_layout);
+        FrameLayout shopFrameLayout = view.findViewById(R.id.fragment_navigation_shop_linear_layout);
 
-        pregameLinearLayout.setOnClickListener(new View.OnClickListener() {
+        pregameFrameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mListener != null) {
@@ -50,7 +50,7 @@ public class NavigationFragment extends Fragment {
                 }
             }
         });
-        announcementsLinearLayout.setOnClickListener(new View.OnClickListener() {
+        announcementsFrameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mListener != null) {
@@ -58,7 +58,7 @@ public class NavigationFragment extends Fragment {
                 }
             }
         });
-        leaderboardsLinearLayout.setOnClickListener(new View.OnClickListener() {
+        leaderboardsFrameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mListener != null) {
@@ -66,7 +66,7 @@ public class NavigationFragment extends Fragment {
                 }
             }
         });
-        settingsLinearLayout.setOnClickListener(new View.OnClickListener() {
+        settingsFrameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mListener != null) {
@@ -74,7 +74,7 @@ public class NavigationFragment extends Fragment {
                 }
             }
         });
-        shopLinearLayout.setOnClickListener(new View.OnClickListener() {
+        shopFrameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mListener != null) {
