@@ -372,11 +372,6 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onShopFragmentInteractionRestorePurchaseClicked() {
-        Toast.makeText(MainActivity.this, "Restore Purchases Clicked", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
     public void onShopFragmentInteractionUpdateCoins(int currentCoins) {
         updateCoins(currentCoins);
     }
