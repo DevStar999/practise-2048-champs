@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="24dp"
         android:letterSpacing="0.04"
-        android:text="DO YOU WANT TO LEAVE?"
+        android:text="Do you want to leave?"
         android:textAlignment="center"
         android:textColor="@color/game_text_color"
         android:textSize="16sp"
