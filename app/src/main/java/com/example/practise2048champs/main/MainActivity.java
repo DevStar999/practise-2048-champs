@@ -337,13 +337,11 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onSettingsFragmentInteractionHowToPlayClicked() {
-        // TODO -> Remove toast and implement the 'How To Play' fragment
         Toast.makeText(MainActivity.this, "'How To Play' button clicked", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onSettingsFragmentInteractionHelpClicked() {
-        // TODO -> Remove toast and implement the 'Help' fragment where we would answer FAQs
         Toast.makeText(MainActivity.this, "'Help' button clicked", Toast.LENGTH_SHORT).show();
     }
 
