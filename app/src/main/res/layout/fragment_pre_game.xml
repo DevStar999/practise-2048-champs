@@ -113,22 +113,59 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/game_preview_pregame_fragment_frame_layout">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/start_game_pregame_fragment_button"
+        <!-- TODO -> Update this simple Linear Layout to display high score
+             in the same way it is shown in the GameActivity at the top -->
+        <LinearLayout
+            android:id="@+id/high_score_linear_layout_pregame_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/click_button"
-            android:contentDescription="Game mode display button"
-            android:minEms="10"
-            android:textColor="@color/white"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/game_options_pregame_fragment_linear_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/game_preview_pregame_fragment_frame_layout">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/high_score_description_text_view_pregame_fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="High Score"
+                android:textColor="@color/game_text_color"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:scrollHorizontally="false" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/high_score_mid_colon_text_view_pregame_fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_gravity="center_vertical"
+                android:text=":"
+                android:textColor="@color/game_text_color"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/high_score_text_view_pregame_fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textAlignment="viewStart"
+                android:textColor="@color/game_text_color"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:scrollHorizontally="false" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/game_mode_options_pregame_fragment_linear_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
             android:layout_gravity="center_horizontal"
             android:layout_margin="8dp"
             android:orientation="horizontal">
@@ -172,6 +209,7 @@
             android:id="@+id/game_size_options_pregame_fragment_linear_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginHorizontal="8dp"
             android:orientation="horizontal">
@@ -210,6 +248,18 @@
                 app:srcCompat="@drawable/arrow_right" />
 
         </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/start_game_pregame_fragment_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/click_button"
+            android:contentDescription="Game mode display button"
+            android:minEms="10"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
