@@ -90,6 +90,8 @@ public class BlockDesignFragment extends Fragment {
                 blockDesignOptionImageView.setImageResource(blockDesignsList.get(i + j).getBlockDrawableResourceId());
                 blockDesignOptionImageView.setScaleX(blockDesignsList.get(i + j).getBlockDrawableScaleX());
                 blockDesignOptionImageView.setScaleY(blockDesignsList.get(i + j).getBlockDrawableScaleY());
+                blockDesignOptionImageView.setRotationX(blockDesignsList.get(i + j).getBlockDrawableRotationX());
+                blockDesignOptionImageView.setRotationY(blockDesignsList.get(i + j).getBlockDrawableRotationY());
                 FrameLayout.LayoutParams blockDesignOptionImageViewParams = new FrameLayout.LayoutParams(dpToPx(72), dpToPx(72));
                 blockDesignOptionImageView.setLayoutParams(blockDesignOptionImageViewParams);
 
@@ -113,16 +115,6 @@ public class BlockDesignFragment extends Fragment {
 
                 blockDesignOptionsRow.addView(blockDesignOption);
 
-                /*
-                if ((sharedPreferences.getInt("blockDrawableResourceId", R.drawable.block_cell_x)
-                        == blockDesignsList.get(i + j).getBlockDrawableResourceId())
-                        && (sharedPreferences.getInt("blockDrawablePreviewResourceId", R.drawable.block_preview_cell_x)
-                        == blockDesignsList.get(i + j).getBlockPreviewResourceId())
-                        && (sharedPreferences.getFloat("blockDrawableScaleX", 1f)
-                        == blockDesignsList.get(i + j).getBlockDrawableScaleX())
-                        && (sharedPreferences.getFloat("blockDrawableScaleY", 1f)
-                        == blockDesignsList.get(i + j).getBlockDrawableScaleY())) {
-                 */
                 if (sharedPreferences.getString("selectedBlockDrawableEnumName", BlockDesigns.BLOCK_CELL_X.name())
                         .equals(blockDesignsList.get(i + j).name())) {
                     isSelectionDone = true;
@@ -132,6 +124,8 @@ public class BlockDesignFragment extends Fragment {
                     blockDesignOptionInUseImageView.setImageResource(blockDesignsList.get(i + j).getBlockDrawableResourceId());
                     blockDesignOptionInUseImageView.setScaleX(blockDesignsList.get(i + j).getBlockDrawableScaleX());
                     blockDesignOptionInUseImageView.setScaleY(blockDesignsList.get(i + j).getBlockDrawableScaleY());
+                    blockDesignOptionInUseImageView.setRotationX(blockDesignsList.get(i + j).getBlockDrawableRotationX());
+                    blockDesignOptionInUseImageView.setRotationY(blockDesignsList.get(i + j).getBlockDrawableRotationY());
                     blockDesignPreviewImageView.setImageResource(blockDesignsList.get(i + j).getBlockPreviewResourceId());
                 }
                 blockDesignOptionImageViewList.add(blockDesignOptionImageView);
@@ -149,6 +143,8 @@ public class BlockDesignFragment extends Fragment {
             blockDesignOptionInUseImageView.setImageResource(blockDesignsList.get(0).getBlockDrawableResourceId());
             blockDesignOptionInUseImageView.setScaleX(blockDesignsList.get(0).getBlockDrawableScaleX());
             blockDesignOptionInUseImageView.setScaleY(blockDesignsList.get(0).getBlockDrawableScaleY());
+            blockDesignOptionInUseImageView.setRotationX(blockDesignsList.get(0).getBlockDrawableRotationX());
+            blockDesignOptionInUseImageView.setRotationY(blockDesignsList.get(0).getBlockDrawableRotationY());
             blockDesignPreviewImageView.setImageResource(blockDesignsList.get(0).getBlockPreviewResourceId());
         }
 
@@ -164,6 +160,8 @@ public class BlockDesignFragment extends Fragment {
                     blockDesignOptionInUseImageView.setImageResource(blockDesignsList.get(finalI).getBlockDrawableResourceId());
                     blockDesignOptionInUseImageView.setScaleX(blockDesignsList.get(finalI).getBlockDrawableScaleX());
                     blockDesignOptionInUseImageView.setScaleY(blockDesignsList.get(finalI).getBlockDrawableScaleY());
+                    blockDesignOptionInUseImageView.setRotationX(blockDesignsList.get(finalI).getBlockDrawableRotationX());
+                    blockDesignOptionInUseImageView.setRotationY(blockDesignsList.get(finalI).getBlockDrawableRotationY());
                     blockDesignPreviewImageView.setImageResource(blockDesignsList.get(finalI).getBlockPreviewResourceId());
 
                     for (int j = 0; j < blockDesignsList.size(); j++) {
