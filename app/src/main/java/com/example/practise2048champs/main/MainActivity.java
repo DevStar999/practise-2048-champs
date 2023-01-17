@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,13 +71,9 @@ public class MainActivity extends AppCompatActivity implements
         the line -> setContentView(R.layout.activity_main);
         */
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_main);
-
-        // To Disable screen rotation and keep the device in Portrait mode
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         // To set the app theme to 'LIGHT' (even if 'DARK' theme is selected, however if user in their
         // settings enables 'DARK' theme for our individual app, then it will override the following line
@@ -102,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements
                 .commit();
     }
 
-    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onResume() {
         super.onResume();
@@ -112,7 +106,6 @@ public class MainActivity extends AppCompatActivity implements
         */
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
