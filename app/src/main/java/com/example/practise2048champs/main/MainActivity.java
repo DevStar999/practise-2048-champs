@@ -1,10 +1,8 @@
 package com.example.practise2048champs.main;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -12,22 +10,20 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.practise2048champs.fragments.AnnouncementsFragment;
-import com.example.practise2048champs.fragments.BlockDesignFragment;
 import com.example.practise2048champs.GameActivity;
-import com.example.practise2048champs.fragments.LogoLottieFragment;
-import com.example.practise2048champs.fragments.NavigationFragment;
 import com.example.practise2048champs.R;
-import com.example.practise2048champs.fragments.SettingsFragment;
-import com.example.practise2048champs.fragments.ShopFragment;
 import com.example.practise2048champs.dialogs.ArrivingFeatureDialog;
 import com.example.practise2048champs.dialogs.GameExitDialog;
-import com.example.practise2048champs.fragments.ThemesFragment;
+import com.example.practise2048champs.fragments.AnnouncementsFragment;
+import com.example.practise2048champs.fragments.BlockDesignFragment;
+import com.example.practise2048champs.fragments.LogoLottieFragment;
+import com.example.practise2048champs.fragments.NavigationFragment;
+import com.example.practise2048champs.fragments.SettingsFragment;
+import com.example.practise2048champs.fragments.ShopFragment;
 import com.example.practise2048champs.pregame.PreGameFragment;
 
 import java.util.ArrayList;
@@ -39,8 +35,7 @@ public class MainActivity extends AppCompatActivity implements
         AnnouncementsFragment.OnAnnouncementsFragmentInteractionListener,
         SettingsFragment.OnSettingsFragmentInteractionListener,
         BlockDesignFragment.OnBlockDesignFragmentInteractionListener,
-        ShopFragment.OnShopFragmentInteractionListener,
-        ThemesFragment.OnThemesFragmentInteractionListener {
+        ShopFragment.OnShopFragmentInteractionListener {
     private SharedPreferences sharedPreferences;
 
     private void initialise() {
@@ -265,28 +260,6 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onSettingsFragmentInteractionChangeThemeClicked() {
-        // If ThemesFragment was opened and is currently on top, then return
-        int countOfFragments = getSupportFragmentManager().getFragments().size();
-        if (countOfFragments > 0) {
-            Fragment topMostFragment = getSupportFragmentManager().getFragments().get(countOfFragments-1);
-            if (topMostFragment != null && topMostFragment.getTag() != null && !topMostFragment.getTag().isEmpty()
-                    && topMostFragment.getTag().equals("THEMES_FRAGMENT")) {
-                return;
-            }
-        }
-
-        ThemesFragment fragment = new ThemesFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right,
-                R.anim.enter_from_right, R.anim.exit_to_right);
-        transaction.addToBackStack(null);
-        transaction.add(R.id.main_activity_full_screen_fragment_container,
-                fragment, "THEMES_FRAGMENT").commit();
-    }
-
-    @Override
     public void onSettingsFragmentInteractionToggleRotatingLightClicked(boolean isChecked) {
         List<Fragment> fragments = new ArrayList<>(getSupportFragmentManager().getFragments());
         for (int index = 0; index < fragments.size(); index++) {
@@ -359,10 +332,5 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onShopFragmentInteractionUpdateCoins(int currentCoins) {
         updateCoins(currentCoins);
-    }
-
-    @Override
-    public void onThemesFragmentInteractionBackClicked() {
-        onBackPressed();
     }
 }

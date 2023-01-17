@@ -37,7 +37,6 @@ public class SettingsFragment extends Fragment {
     private SharedPreferences sharedPreferences;
     private AppCompatImageView backButton;
     private LinearLayout getPremiumLinearLayout;
-    private LinearLayout changeThemeLinearLayout;
     private LinearLayout toggleRotatingLightLinearLayout;
     private SwitchCompat toggleRotatingLightSwitch;
     private LinearLayout blockDesignLinearLayout;
@@ -75,14 +74,6 @@ public class SettingsFragment extends Fragment {
             public void onClick(View view) {
                 if (mListener != null) {
                     mListener.onSettingsFragmentInteractionGetPremiumClicked();
-                }
-            }
-        });
-        changeThemeLinearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mListener != null) {
-                    mListener.onSettingsFragmentInteractionChangeThemeClicked();
                 }
             }
         });
@@ -279,7 +270,6 @@ public class SettingsFragment extends Fragment {
 
         backButton = view.findViewById(R.id.title_back_settings_fragment_button);
         getPremiumLinearLayout = view.findViewById(R.id.get_premium_linear_layout);
-        changeThemeLinearLayout = view.findViewById(R.id.change_theme_linear_layout);
         toggleRotatingLightLinearLayout = view.findViewById(R.id.toggle_rotating_light_linear_layout);
         toggleRotatingLightSwitch = view.findViewById(R.id.toggle_rotating_light_switch);
         toggleRotatingLightSwitch.setChecked(sharedPreferences.getBoolean("toggleRotatingLight", true));
@@ -303,7 +293,6 @@ public class SettingsFragment extends Fragment {
     public interface OnSettingsFragmentInteractionListener {
         void onSettingsFragmentInteractionBackClicked();
         void onSettingsFragmentInteractionGetPremiumClicked();
-        void onSettingsFragmentInteractionChangeThemeClicked();
         void onSettingsFragmentInteractionToggleRotatingLightClicked(boolean isChecked);
         void onSettingsFragmentInteractionBlockDesignClicked();
         void onSettingsFragmentInteractionHowToPlayClicked();
