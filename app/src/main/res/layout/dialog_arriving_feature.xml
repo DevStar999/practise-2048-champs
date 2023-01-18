@@ -33,7 +33,7 @@
         android:letterSpacing="0.04"
         android:text="This game mode is arriving soon, so stay tuned for updates !!"
         android:textAlignment="center"
-        android:textColor="@color/game_text_color"
+        android:textColor="@color/text_color"
         android:textSize="20sp"
         android:textStyle="bold"
         android:visibility="invisible"
