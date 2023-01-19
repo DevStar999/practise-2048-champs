@@ -18,7 +18,6 @@ import com.example.practise2048champs.GameActivity;
 import com.example.practise2048champs.R;
 import com.example.practise2048champs.dialogs.ArrivingFeatureDialog;
 import com.example.practise2048champs.dialogs.GameExitDialog;
-import com.example.practise2048champs.fragments.AnnouncementsFragment;
 import com.example.practise2048champs.fragments.BlockDesignFragment;
 import com.example.practise2048champs.fragments.LogoLottieFragment;
 import com.example.practise2048champs.fragments.NavigationFragment;
@@ -32,7 +31,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements
         NavigationFragment.OnNavigationFragmentInteractionListener,
         PreGameFragment.OnPreGameFragmentInteractionListener,
-        AnnouncementsFragment.OnAnnouncementsFragmentInteractionListener,
         SettingsFragment.OnSettingsFragmentInteractionListener,
         BlockDesignFragment.OnBlockDesignFragmentInteractionListener,
         ShopFragment.OnShopFragmentInteractionListener {
@@ -137,28 +135,6 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onNavigationFragmentAnnouncementsClicked() {
-        // If AnnouncementsFragment was opened and is currently on top, then return
-        int countOfFragments = getSupportFragmentManager().getFragments().size();
-        if (countOfFragments > 0) {
-            Fragment topMostFragment = getSupportFragmentManager().getFragments().get(countOfFragments-1);
-            if (topMostFragment != null && topMostFragment.getTag() != null && !topMostFragment.getTag().isEmpty()
-                    && topMostFragment.getTag().equals("ANNOUNCEMENTS_FRAGMENT")) {
-                return;
-            }
-        }
-
-        AnnouncementsFragment fragment = new AnnouncementsFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right,
-                R.anim.enter_from_right, R.anim.exit_to_right);
-        transaction.addToBackStack(null);
-        transaction.replace(R.id.main_activity_full_screen_fragment_container,
-                fragment, "ANNOUNCEMENTS_FRAGMENT").commit();
-    }
-
-    @Override
     public void onNavigationFragmentLeaderboardsClicked() {
         Toast.makeText(MainActivity.this, "Leaderboards Clicked", Toast.LENGTH_SHORT).show();
     }
@@ -225,11 +201,6 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onPreGameFragmentInteractionShowArrivingFeatureDialog() {
         new ArrivingFeatureDialog(this).show();
-    }
-
-    @Override
-    public void onAnnouncementsFragmentInteractionBackClicked() {
-        onBackPressed();
     }
 
     @Override

@@ -29,10 +29,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
-            android:background="@color/game_primary_background_color"
+            android:background="@color/primary_background_color"
             android:text="PLAY GAME"
             android:textAlignment="center"
-            android:textColor="@color/game_text_color"
+            android:textColor="@color/text_color"
             android:textSize="14sp"
             android:textStyle="bold" />
     </FrameLayout>
@@ -43,40 +43,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:orientation="horizontal">
-
-        <!-- TODO -> Enable 'Announcements' in game and set the visibility to
-                     VISIBLE -->
-        <FrameLayout
-            android:id="@+id/fragment_navigation_announcements_linear_layout"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/click_navigation_button"
-            android:layout_marginHorizontal="12dp">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/fragment_navigation_announcements_image_view"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginBottom="10dp"
-                android:layout_gravity="center_horizontal"
-                android:scaleX="0.8"
-                android:scaleY="0.8"
-                app:srcCompat="@drawable/navigation_announcements" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/fragment_navigation_announcements_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|bottom"
-                android:layout_marginBottom="4dp"
-                android:background="@color/game_primary_background_color"
-                android:text="ANNOUNCEMENTS"
-                android:textAlignment="center"
-                android:textColor="@color/game_text_color"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-        </FrameLayout>
 
         <!-- TODO -> Enable 'Leaderboards' in game and set the visibility to
                      VISIBLE -->
@@ -104,10 +70,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|bottom"
                 android:layout_marginBottom="4dp"
-                android:background="@color/game_primary_background_color"
+                android:background="@color/primary_background_color"
                 android:text="LEADERBOARDS"
                 android:textAlignment="center"
-                android:textColor="@color/game_text_color"
+                android:textColor="@color/text_color"
                 android:textSize="12sp"
                 android:textStyle="bold" />
         </FrameLayout>
@@ -135,10 +101,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|bottom"
                 android:layout_marginBottom="4dp"
-                android:background="@color/game_primary_background_color"
+                android:background="@color/primary_background_color"
                 android:text="SETTINGS"
                 android:textAlignment="center"
-                android:textColor="@color/game_text_color"
+                android:textColor="@color/text_color"
                 android:textSize="12sp"
                 android:textStyle="bold" />
         </FrameLayout>
@@ -166,10 +132,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|bottom"
                 android:layout_marginBottom="4dp"
-                android:background="@color/game_primary_background_color"
+                android:background="@color/primary_background_color"
                 android:text="SHOP"
                 android:textAlignment="center"
-                android:textColor="@color/game_text_color"
+                android:textColor="@color/text_color"
                 android:textSize="12sp"
                 android:textStyle="bold" />
         </FrameLayout>

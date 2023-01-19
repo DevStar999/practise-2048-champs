@@ -37,7 +37,6 @@ public class NavigationFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_navigation, container, false);
 
         FrameLayout pregameFrameLayout = view.findViewById(R.id.fragment_navigation_pregame_frame_layout);
-        FrameLayout announcementsFrameLayout = view.findViewById(R.id.fragment_navigation_announcements_linear_layout);
         FrameLayout leaderboardsFrameLayout = view.findViewById(R.id.fragment_navigation_leaderboards_linear_layout);
         FrameLayout settingsFrameLayout = view.findViewById(R.id.fragment_navigation_settings_linear_layout);
         FrameLayout shopFrameLayout = view.findViewById(R.id.fragment_navigation_shop_linear_layout);
@@ -47,14 +46,6 @@ public class NavigationFragment extends Fragment {
             public void onClick(View view) {
                 if (mListener != null) {
                     mListener.onNavigationFragmentPreGameClicked();
-                }
-            }
-        });
-        announcementsFrameLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mListener != null) {
-                    mListener.onNavigationFragmentAnnouncementsClicked();
                 }
             }
         });
@@ -88,7 +79,6 @@ public class NavigationFragment extends Fragment {
 
     public interface OnNavigationFragmentInteractionListener {
         void onNavigationFragmentPreGameClicked();
-        void onNavigationFragmentAnnouncementsClicked();
         void onNavigationFragmentLeaderboardsClicked();
         void onNavigationFragmentSettingsClicked();
         void onNavigationFragmentShopClicked();
