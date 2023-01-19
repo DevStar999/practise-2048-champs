@@ -20,6 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
+        app:lottie_speed="0.75"
         app:lottie_rawRes="@raw/arriving_feature"
         app:lottie_repeatCount="4"
         app:lottie_repeatMode="restart" />
