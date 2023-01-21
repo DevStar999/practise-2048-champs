@@ -2,28 +2,51 @@ package com.example.practise2048champs.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.practise2048champs.BuildConfig;
 import com.example.practise2048champs.GameActivity;
 import com.example.practise2048champs.R;
 import com.example.practise2048champs.dialogs.ArrivingFeatureDialog;
+import com.example.practise2048champs.dialogs.ErrorOccurredDialog;
 import com.example.practise2048champs.dialogs.GameExitDialog;
+import com.example.practise2048champs.dialogs.UpdateAppStaticAvailableDialog;
+import com.example.practise2048champs.dialogs.UpdateAppStaticUnavailableDialog;
 import com.example.practise2048champs.fragments.BlockDesignFragment;
 import com.example.practise2048champs.fragments.LogoLottieFragment;
 import com.example.practise2048champs.fragments.NavigationFragment;
 import com.example.practise2048champs.fragments.SettingsFragment;
 import com.example.practise2048champs.fragments.ShopFragment;
 import com.example.practise2048champs.pregame.PreGameFragment;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.play.core.appupdate.AppUpdateInfo;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.install.InstallStateUpdatedListener;
+import com.google.android.play.core.install.model.AppUpdateType;
+import com.google.android.play.core.install.model.InstallStatus;
+import com.google.android.play.core.install.model.UpdateAvailability;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +58,11 @@ public class MainActivity extends AppCompatActivity implements
         BlockDesignFragment.OnBlockDesignFragmentInteractionListener,
         ShopFragment.OnShopFragmentInteractionListener {
     private SharedPreferences sharedPreferences;
+
+    // Attributes required for In app updates feature
+    public static final int UPDATE_REQUEST_CODE = 100;
+    private AppUpdateManager appUpdateManager;
+    private InstallStateUpdatedListener installStateUpdatedListener;
 
     private void initialise() {
         sharedPreferences = getSharedPreferences("com.nerdcoredevelopment.game2048champsfinal", Context.MODE_PRIVATE);
@@ -69,6 +97,8 @@ public class MainActivity extends AppCompatActivity implements
                 .replace(R.id.logo_lottie_fragment_container, logoLottieFragment, "LOGO_LOTTIE_FRAGMENT")
                 .replace(R.id.navigation_fragment_container, navigationFragment, "NAVIGATION_FRAGMENT")
                 .commit();
+
+        setupInAppUpdate();
     }
 
     @Override
@@ -96,6 +126,118 @@ public class MainActivity extends AppCompatActivity implements
             // Back button was pressed from fragment
             getSupportFragmentManager().popBackStack();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (appUpdateManager != null) {
+            appUpdateManager.unregisterListener(installStateUpdatedListener);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == UPDATE_REQUEST_CODE) {
+            if (resultCode != RESULT_OK) {
+                // If the update is cancelled or fails, we can ignore this if we are implementing a 'Flexible Update'
+            }
+        }
+    }
+
+    private boolean isInternetConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm == null) { return false; }
+        /* NetworkInfo is deprecated in API 29 so we have to check separately for higher API Levels */
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            Network network = cm.getActiveNetwork();
+            if (network == null) { return false; }
+            NetworkCapabilities networkCapabilities = cm.getNetworkCapabilities(network);
+            if (networkCapabilities == null) { return false; }
+            boolean isInternetSuspended = !networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED);
+            return (networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                    && networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+                    && !isInternetSuspended);
+        } else {
+            NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+            return (networkInfo != null && networkInfo.isConnected());
+        }
+    }
+
+    private void setupInAppUpdate() {
+        installStateUpdatedListener = installState -> {
+            if (installState.installStatus() == InstallStatus.DOWNLOADED) {
+                popupSnackbarForCompleteUpdate();
+            }
+        };
+        appUpdateManager = AppUpdateManagerFactory.create(this);
+        appUpdateManager.registerListener(installStateUpdatedListener);
+    }
+
+    private void popupSnackbarForCompleteUpdate() { // Displays the snackbar notification and call to action.
+        Snackbar snackbar = Snackbar.make(findViewById(R.id.root_layout_main_activity),
+                "An update has been downloaded", Snackbar.LENGTH_INDEFINITE);
+        snackbar.setAction("INSTALL", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                appUpdateManager.completeUpdate();
+            }
+        });
+        snackbar.setActionTextColor(getColor(R.color.white));
+        snackbar.show();
+    }
+
+    private void launchInAppUpdateFlowForStaticButton() {
+        if (!isInternetConnected()) {
+            /* Using a feel right as of now. Since, the user may repeatedly press this button it isn't wise to show a dialog
+               for prompting the user to check their internet connection
+             */
+            Toast.makeText(MainActivity.this, "Network connection failed. Please check " +
+                    "internet connectivity", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        appUpdateManager.getAppUpdateInfo().addOnSuccessListener(new OnSuccessListener<>() {
+            @Override
+            public void onSuccess(AppUpdateInfo appUpdateInfo) {
+                int oldVersion = BuildConfig.VERSION_CODE;
+                int newVersion = appUpdateInfo.availableVersionCode();
+                if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
+                    if (appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
+                        Log.i("Custom Debugging", "Update available and flexible");
+                        UpdateAppStaticAvailableDialog updateAppStaticAvailableDialog =
+                                new UpdateAppStaticAvailableDialog(MainActivity.this);
+                        updateAppStaticAvailableDialog.setUpdateAppStaticAvailableDialogListener(response -> {
+                            if (response) {
+                                try {
+                                    appUpdateManager.startUpdateFlowForResult(appUpdateInfo, AppUpdateType.FLEXIBLE,
+                                            MainActivity.this, UPDATE_REQUEST_CODE);
+                                } catch (IntentSender.SendIntentException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                        updateAppStaticAvailableDialog.show();
+                    }
+                } else if (oldVersion == newVersion) {
+                    Log.i("Custom Debugging", "oldVersion == newVersion");
+                    // Note: Even in the case when there was no internet we get UpdateAvailability.UPDATE_NOT_AVAILABLE.
+                    // So we made that check earlier
+                    new UpdateAppStaticUnavailableDialog(MainActivity.this).show();
+                } else {
+                    Log.i("Custom Debugging", "Final Error Branch");
+                    // This is the final error code branch
+                    new ErrorOccurredDialog(MainActivity.this, "Oops! Something went wrong").show();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.i("Custom Debugging", "onFailure: OnFailureListener branch");
+                new ErrorOccurredDialog(MainActivity.this, "Oops! Something went wrong").show();
+            }
+        });
     }
 
     private void updateCoins(int currentCoins) {
@@ -278,7 +420,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onSettingsFragmentInteractionCheckUpdatesClicked() {
-        Toast.makeText(MainActivity.this, "Check Updates Clicked", Toast.LENGTH_SHORT).show();
+        launchInAppUpdateFlowForStaticButton();
     }
 
     @Override
