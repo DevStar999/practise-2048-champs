@@ -277,6 +277,11 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void onSettingsFragmentInteractionCheckUpdatesClicked() {
+        Toast.makeText(MainActivity.this, "Check Updates Clicked", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void onSettingsFragmentInteractionExitClicked() {
         GameExitDialog gameExitDialog = new GameExitDialog(this);
         gameExitDialog.show();

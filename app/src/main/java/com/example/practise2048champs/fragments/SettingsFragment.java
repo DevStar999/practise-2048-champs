@@ -42,6 +42,7 @@ public class SettingsFragment extends Fragment {
     private LinearLayout blockDesignLinearLayout;
     private LinearLayout howToPlayLinearLayout;
     private LinearLayout helpLinearLayout;
+    private LinearLayout checkUpdatesLinearLayout;
     private LinearLayout rateUsLinearLayout;
     private LinearLayout feedbackLinearLayout;
     private LinearLayout facebookLinearLayout;
@@ -130,6 +131,14 @@ public class SettingsFragment extends Fragment {
             public void onClick(View view) {
                 if (mListener != null) {
                     mListener.onSettingsFragmentInteractionHelpClicked();
+                }
+            }
+        });
+        checkUpdatesLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mListener != null) {
+                    mListener.onSettingsFragmentInteractionCheckUpdatesClicked();
                 }
             }
         });
@@ -276,6 +285,7 @@ public class SettingsFragment extends Fragment {
         blockDesignLinearLayout = view.findViewById(R.id.block_design_linear_layout);
         howToPlayLinearLayout = view.findViewById(R.id.how_to_play_linear_layout);
         helpLinearLayout = view.findViewById(R.id.help_linear_layout);
+        checkUpdatesLinearLayout = view.findViewById(R.id.check_updates_linear_layout);
         rateUsLinearLayout = view.findViewById(R.id.rate_us_linear_layout);
         feedbackLinearLayout = view.findViewById(R.id.feedback_linear_layout);
         facebookLinearLayout = view.findViewById(R.id.facebook_linear_layout);
@@ -297,6 +307,7 @@ public class SettingsFragment extends Fragment {
         void onSettingsFragmentInteractionBlockDesignClicked();
         void onSettingsFragmentInteractionHowToPlayClicked();
         void onSettingsFragmentInteractionHelpClicked();
+        void onSettingsFragmentInteractionCheckUpdatesClicked();
         void onSettingsFragmentInteractionExitClicked();
     }
 
