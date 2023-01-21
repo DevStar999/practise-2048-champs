@@ -40,20 +40,6 @@ public class MainActivity extends AppCompatActivity implements
         sharedPreferences = getSharedPreferences("com.nerdcoredevelopment.game2048champsfinal", Context.MODE_PRIVATE);
     }
 
-    private void updateCoins(int currentCoins) {
-        sharedPreferences.edit().putInt("currentCoins", currentCoins).apply();
-        List<Fragment> fragments = new ArrayList<>(getSupportFragmentManager().getFragments());
-        for (int index = 0; index < fragments.size(); index++) {
-            Fragment currentFragment = fragments.get(index);
-            if (currentFragment != null && currentFragment.getTag() != null
-                    && !currentFragment.getTag().isEmpty()) {
-                if (currentFragment.getTag().equals("SHOP_FRAGMENT")) {
-                    ((ShopFragment) currentFragment).updateCoinsShopFragment(currentCoins);
-                }
-            }
-        }
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,6 +95,20 @@ public class MainActivity extends AppCompatActivity implements
         } else {
             // Back button was pressed from fragment
             getSupportFragmentManager().popBackStack();
+        }
+    }
+
+    private void updateCoins(int currentCoins) {
+        sharedPreferences.edit().putInt("currentCoins", currentCoins).apply();
+        List<Fragment> fragments = new ArrayList<>(getSupportFragmentManager().getFragments());
+        for (int index = 0; index < fragments.size(); index++) {
+            Fragment currentFragment = fragments.get(index);
+            if (currentFragment != null && currentFragment.getTag() != null
+                    && !currentFragment.getTag().isEmpty()) {
+                if (currentFragment.getTag().equals("SHOP_FRAGMENT")) {
+                    ((ShopFragment) currentFragment).updateCoinsShopFragment(currentCoins);
+                }
+            }
         }
     }
 
