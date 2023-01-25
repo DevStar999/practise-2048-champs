@@ -255,6 +255,11 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void onNavigationFragmentGpgsSignInClicked() {
+        Toast.makeText(MainActivity.this, "GPGS Sign In Clicked", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void onNavigationFragmentPreGameClicked() {
         // If PreGameFragment was opened and is currently on top, then return
         int countOfFragments = getSupportFragmentManager().getFragments().size();
@@ -274,6 +279,11 @@ public class MainActivity extends AppCompatActivity implements
         transaction.addToBackStack(null);
         transaction.add(R.id.main_activity_full_screen_fragment_container,
                 fragment, "PREGAME_FRAGMENT").commit();
+    }
+
+    @Override
+    public void onNavigationFragmentAchievementsClicked() {
+        Toast.makeText(MainActivity.this, "Achievements Clicked", Toast.LENGTH_SHORT).show();
     }
 
     @Override

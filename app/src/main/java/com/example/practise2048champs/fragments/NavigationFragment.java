@@ -12,6 +12,15 @@ import androidx.fragment.app.Fragment;
 
 import com.example.practise2048champs.R;
 
+
+/* TODO -> (1) Implement the GPGS Sign In feature. Whenever the user is -
+           [a] Signed In = Change visibility of the GPGS Sign In Button to "invisible". Hide the text "PLAY" in the play
+           button below and remove the layout margin bottom of 10dp in it's icon ImageView
+           [b] NOT Signed In = Show the GPGS Sign In Button. Show the text "PLAY" in the play button below and add the
+           layout margin of 10dp in it's icon ImageView
+           (2) Implement the GPGS Achievements feature and assign the visibility of the respective button to "visible"
+           (3) Implement the GPGS Leaderboards feature and assign the visibility of the respective button to "visible"
+*/
 public class NavigationFragment extends Fragment {
     private OnNavigationFragmentInteractionListener mListener;
 
@@ -36,16 +45,34 @@ public class NavigationFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_navigation, container, false);
 
+        FrameLayout gpgsSignInFrameLayout = view.findViewById(R.id.fragment_navigation_gpgs_sign_in_frame_layout);
         FrameLayout pregameFrameLayout = view.findViewById(R.id.fragment_navigation_pregame_frame_layout);
-        FrameLayout leaderboardsFrameLayout = view.findViewById(R.id.fragment_navigation_leaderboards_linear_layout);
-        FrameLayout settingsFrameLayout = view.findViewById(R.id.fragment_navigation_settings_linear_layout);
-        FrameLayout shopFrameLayout = view.findViewById(R.id.fragment_navigation_shop_linear_layout);
+        FrameLayout achievementsFrameLayout = view.findViewById(R.id.fragment_navigation_achievements_frame_layout);
+        FrameLayout leaderboardsFrameLayout = view.findViewById(R.id.fragment_navigation_leaderboards_frame_layout);
+        FrameLayout settingsFrameLayout = view.findViewById(R.id.fragment_navigation_settings_frame_layout);
+        FrameLayout shopFrameLayout = view.findViewById(R.id.fragment_navigation_shop_frame_layout);
 
+        gpgsSignInFrameLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mListener != null) {
+                    mListener.onNavigationFragmentGpgsSignInClicked();
+                }
+            }
+        });
         pregameFrameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mListener != null) {
                     mListener.onNavigationFragmentPreGameClicked();
+                }
+            }
+        });
+        achievementsFrameLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mListener != null) {
+                    mListener.onNavigationFragmentAchievementsClicked();
                 }
             }
         });
@@ -78,7 +105,9 @@ public class NavigationFragment extends Fragment {
     }
 
     public interface OnNavigationFragmentInteractionListener {
+        void onNavigationFragmentGpgsSignInClicked();
         void onNavigationFragmentPreGameClicked();
+        void onNavigationFragmentAchievementsClicked();
         void onNavigationFragmentLeaderboardsClicked();
         void onNavigationFragmentSettingsClicked();
         void onNavigationFragmentShopClicked();
