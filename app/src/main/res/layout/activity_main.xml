@@ -25,8 +25,9 @@
         android:id="@+id/logo_lottie_fragment_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_margin="8dp"
         app:layout_constraintBottom_toTopOf="@id/navigation_fragment_container"
-        app:layout_constraintDimensionRatio="1.2:1"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="@+id/vertical_guide_right_1"
         app:layout_constraintStart_toStartOf="@+id/vertical_guide_left_1"
         app:layout_constraintTop_toTopOf="parent" />
