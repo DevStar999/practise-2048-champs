@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -76,7 +77,10 @@ public class ShopFragment extends Fragment {
         Qonversion.purchase((Activity) context, qProduct, new QonversionPermissionsCallback() {
             @Override
             public void onSuccess(@NotNull Map<String, QPermission> permissions) {
-                currentCoins += coinsReward.get(productIdPrefix);
+                int rewardAmount = coinsReward.get(productIdPrefix);
+                currentCoins += rewardAmount;
+                Toast.makeText(context, "Purchase Successful \uD83E\uDD17 Rewarded +" + rewardAmount + " Coins",
+                        Toast.LENGTH_LONG).show();
                 if (mListener != null) {
                     mListener.onShopFragmentInteractionUpdateCoins(currentCoins);
                 }
