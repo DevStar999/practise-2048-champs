@@ -121,8 +121,8 @@ public class PreGameFragment extends Fragment {
         gamePreviewImageView = layoutView.findViewById(R.id.game_preview_pregame_fragment_image_view);
         startGameLottie = layoutView.findViewById(R.id.start_game_pregame_fragment_lottie);
         highScoreTextView = layoutView.findViewById(R.id.high_score_text_view_pregame_fragment);
-        highScoreTextView.setText(String.valueOf(sharedPreferences.getInt("bestScore" + " " + currentGameMode.getMode()
-                + " " + currentGameMode.getDimensions(), 0)));
+        highScoreTextView.setText(String.valueOf(sharedPreferences.getLong("bestScore" + " " + currentGameMode.getMode()
+                + " " + currentGameMode.getDimensions(), 0L)));
         modeLeft = layoutView.findViewById(R.id.game_mode_left_arrow_pregame_fragment_image_view);
         modeRight = layoutView.findViewById(R.id.game_mode_right_arrow_pregame_fragment_image_view);
         sizeLeft = layoutView.findViewById(R.id.game_size_left_arrow_pregame_fragment_image_view);
@@ -200,8 +200,8 @@ public class PreGameFragment extends Fragment {
         gameSizeTextView.setText(currentGameMode.getDimensions());
 
         // Updating the text view for the high score of the new current game mode
-        highScoreTextView.setText(String.valueOf(sharedPreferences.getInt("bestScore" + " " + currentGameMode.getMode()
-                + " " + currentGameMode.getDimensions(), 0)));
+        highScoreTextView.setText(String.valueOf(sharedPreferences.getLong("bestScore" + " " + currentGameMode.getMode()
+                + " " + currentGameMode.getDimensions(), 0L)));
 
         // Updating Game Mode Browse Icons
         preGameManager.updateModeBrowseIcons(currentGameMode.getMode(), allGameModes);
@@ -254,8 +254,8 @@ public class PreGameFragment extends Fragment {
         gameSizeTextView.setText(currentGameMode.getDimensions());
 
         // Updating the text view for the high score of the new current game mode
-        highScoreTextView.setText(String.valueOf(sharedPreferences.getInt("bestScore" + " " + currentGameMode.getMode()
-                + " " + currentGameMode.getDimensions(), 0)));
+        highScoreTextView.setText(String.valueOf(sharedPreferences.getLong("bestScore" + " " + currentGameMode.getMode()
+                + " " + currentGameMode.getDimensions(), 0L)));
 
         // Updating Game Size Browse Icons
         preGameManager.updateSizeBrowseIcons(currentGameMode.getDimensions(), allCurrentGameSizes);

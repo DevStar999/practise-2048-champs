@@ -16,11 +16,141 @@
         android:textColor="@color/white"
         android:textSize="36sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/start_game_button"
+        app:layout_constraintBottom_toTopOf="@id/current_score_linear_layout_game_activity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_weight="1" />
+
+    <LinearLayout
+        android:id="@+id/current_score_linear_layout_game_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/best_score_linear_layout_game_activity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/game_activity_welcome_text_view">
+
+        <LinearLayout
+            android:id="@+id/current_score_text_linear_layout"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/current_score_display_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Current Score : "
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/current_score_value_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/current_score_change_buttons_linear_layout"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/increase_current_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Inc. CS"
+                android:onClick="increaseCurrentScore" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/decrease_current_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dec. CS"
+                android:onClick="decreaseCurrentScore" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/best_score_linear_layout_game_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/start_game_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/current_score_linear_layout_game_activity">
+
+        <LinearLayout
+            android:id="@+id/best_score_text_linear_layout"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/best_score_display_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Best Score : "
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/best_score_value_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/best_score_change_buttons_linear_layout"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/increase_best_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Inc. BS"
+                android:onClick="increaseBestScore" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/decrease_best_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dec. BS"
+                android:onClick="decreaseBestScore" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/start_game_button"
@@ -38,6 +168,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/game_activity_welcome_text_view" />
+        app:layout_constraintTop_toBottomOf="@+id/best_score_linear_layout_game_activity" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
