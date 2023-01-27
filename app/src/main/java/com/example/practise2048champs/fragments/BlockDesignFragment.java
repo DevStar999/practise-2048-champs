@@ -68,7 +68,7 @@ public class BlockDesignFragment extends Fragment {
                     continue;
                 }
                 FrameLayout blockDesignOption = new FrameLayout(context);
-                blockDesignOption.setBackgroundResource(R.drawable.rounded_corner_block_design_option);
+                blockDesignOption.setBackgroundResource(R.drawable.rounded_corners_block_design_option);
                 RelativeLayout.LayoutParams blockDesignOptionParams =
                         new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
                                 RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -82,7 +82,7 @@ public class BlockDesignFragment extends Fragment {
                 blockDesignOption.setLayoutParams(blockDesignOptionParams);
 
                 AppCompatImageView blockDesignOptionImageView = new AppCompatImageView(context);
-                blockDesignOptionImageView.setBackgroundResource(R.drawable.rounded_corner_block_design_option_image_view);
+                blockDesignOptionImageView.setBackgroundResource(R.drawable.rounded_corners_block_design_option_image_view);
                 blockDesignOptionImageView.setTag("blockOption_row" + String.format("%03d", rowNumber)
                         + "_option" + String.format("%03d", optionNumber));
                 blockDesignOptionImageView.setPadding(dpToPx(8), dpToPx(8), dpToPx(8), dpToPx(8));
@@ -95,7 +95,7 @@ public class BlockDesignFragment extends Fragment {
 
                 AppCompatImageView blockDesignOptionSelectedBackground = new AppCompatImageView(context);
                 blockDesignOptionSelectedBackground.setVisibility(View.GONE);
-                blockDesignOptionSelectedBackground.setImageResource(R.drawable.rounded_corner_block_design_option_selected);
+                blockDesignOptionSelectedBackground.setImageResource(R.drawable.rounded_corners_block_design_option_selected);
                 FrameLayout.LayoutParams blockDesignOptionSelectedBackgroundParams = new FrameLayout.LayoutParams(dpToPx(72), dpToPx(72));
                 blockDesignOptionSelectedBackground.setLayoutParams(blockDesignOptionSelectedBackgroundParams);
 

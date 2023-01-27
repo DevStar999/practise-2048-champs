@@ -14,7 +14,7 @@
         android:id="@+id/pregame_fragment_title_frame_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_corner_fragment_title"
+        android:background="@drawable/rounded_corners_fragment_title"
         android:paddingVertical="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -118,7 +118,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/rounded_corner_best_score"
+            android:background="@drawable/rounded_corners_best_score"
             android:orientation="horizontal"
             android:paddingHorizontal="8dp"
             android:paddingVertical="5dp">
@@ -155,7 +155,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:padding="8dp"
-            android:background="@drawable/rounded_corner_game_mode_browse_options"
+            android:background="@drawable/rounded_corners_game_mode_browse_options"
             android:showDividers="middle"
             android:divider="@drawable/gap_vertical"
             android:orientation="vertical">

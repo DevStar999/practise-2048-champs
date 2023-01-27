@@ -9,5 +9,5 @@
                 android:topRightRadius="24dp" />
         </shape>
     </item>
-    <item android:drawable="@drawable/rounded_corner_card_settings_top" />
+    <item android:drawable="@drawable/rounded_corners_card_settings_top" />
 </ripple>

@@ -6,5 +6,5 @@
             <solid android:color="#000000" />
         </shape>
     </item>
-    <item android:drawable="@drawable/rounded_corner_card_settings_middle" />
+    <item android:drawable="@drawable/rounded_corners_card_settings_middle" />
 </ripple>
