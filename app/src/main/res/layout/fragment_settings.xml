@@ -76,7 +76,7 @@
                     android:id="@+id/get_premium_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/click_settings_buttons_top_and_bottom"
+                    android:background="@drawable/click_settings_button_top_and_bottom"
                     android:orientation="horizontal"
                     android:padding="16dp">
 
@@ -116,7 +116,7 @@
                     android:id="@+id/toggle_rotating_light_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/click_settings_buttons_top"
+                    android:background="@drawable/click_settings_button_top"
                     android:orientation="horizontal"
                     android:padding="16dp">
 
@@ -163,7 +163,7 @@
                     android:id="@+id/block_design_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/click_settings_buttons_middle"
+                    android:background="@drawable/click_settings_button_middle"
                     android:orientation="horizontal"
                     android:padding="16dp">
 
@@ -213,7 +213,7 @@
                     android:id="@+id/how_to_play_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/click_settings_buttons_middle"
+                    android:background="@drawable/click_settings_button_middle"
                     android:orientation="horizontal"
                     android:padding="16dp"
                     android:visibility="gone">
@@ -265,7 +265,7 @@
                     android:id="@+id/help_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/click_settings_buttons_bottom"
+                    android:background="@drawable/click_settings_button_bottom"
                     android:orientation="horizontal"
                     android:padding="16dp"
                     android:visibility="gone">
@@ -311,7 +311,7 @@
                     android:id="@+id/check_updates_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/click_settings_buttons_bottom"
+                    android:background="@drawable/click_settings_button_bottom"
                     android:orientation="horizontal"
                     android:padding="16dp"
                     android:visibility="visible">
@@ -352,7 +352,7 @@
                     android:id="@+id/rate_us_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/click_settings_buttons_top"
+                    android:background="@drawable/click_settings_button_top"
                     android:orientation="horizontal"
                     android:padding="16dp">
 
@@ -389,7 +389,7 @@
                     android:id="@+id/feedback_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/click_settings_buttons_bottom"
+                    android:background="@drawable/click_settings_button_bottom"
                     android:orientation="horizontal"
                     android:padding="16dp">
 
@@ -429,7 +429,7 @@
                     android:id="@+id/facebook_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/click_settings_buttons_top"
+                    android:background="@drawable/click_settings_button_top"
                     android:orientation="horizontal"
                     android:padding="16dp">
 
@@ -464,7 +464,7 @@
                     android:id="@+id/instagram_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/click_settings_buttons_middle"
+                    android:background="@drawable/click_settings_button_middle"
                     android:orientation="horizontal"
                     android:padding="16dp">
 
@@ -499,7 +499,7 @@
                     android:id="@+id/twitter_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/click_settings_buttons_bottom"
+                    android:background="@drawable/click_settings_button_bottom"
                     android:orientation="horizontal"
                     android:padding="16dp">
 
@@ -539,7 +539,7 @@
                     android:id="@+id/privacy_policy_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/click_settings_buttons_top"
+                    android:background="@drawable/click_settings_button_top"
                     android:orientation="horizontal"
                     android:padding="16dp">
 
@@ -576,7 +576,7 @@
                     android:id="@+id/terms_of_service_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/click_settings_buttons_bottom"
+                    android:background="@drawable/click_settings_button_bottom"
                     android:orientation="horizontal"
                     android:padding="16dp">
 
@@ -614,7 +614,7 @@
                     android:id="@+id/exit_game_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/click_settings_buttons_top_and_bottom"
+                    android:background="@drawable/click_settings_button_top_and_bottom"
                     android:orientation="horizontal"
                     android:padding="16dp">
 
