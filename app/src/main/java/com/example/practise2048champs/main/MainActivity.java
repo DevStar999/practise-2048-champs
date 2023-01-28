@@ -205,7 +205,6 @@ public class MainActivity extends AppCompatActivity implements
                 int newVersion = appUpdateInfo.availableVersionCode();
                 if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
                     if (appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
-                        Log.i("Custom Debugging", "Update available and flexible");
                         UpdateAppStaticAvailableDialog updateAppStaticAvailableDialog =
                                 new UpdateAppStaticAvailableDialog(MainActivity.this);
                         updateAppStaticAvailableDialog.setUpdateAppStaticAvailableDialogListener(response -> {
@@ -221,12 +220,10 @@ public class MainActivity extends AppCompatActivity implements
                         updateAppStaticAvailableDialog.show();
                     }
                 } else if (oldVersion == newVersion) {
-                    Log.i("Custom Debugging", "oldVersion == newVersion");
                     // Note: Even in the case when there was no internet we get UpdateAvailability.UPDATE_NOT_AVAILABLE.
                     // So we made that check earlier
                     new UpdateAppStaticUnavailableDialog(MainActivity.this).show();
                 } else {
-                    Log.i("Custom Debugging", "Final Error Branch");
                     // This is the final error code branch
                     new ErrorOccurredDialog(MainActivity.this, "Oops! Something went wrong").show();
                 }
@@ -234,7 +231,6 @@ public class MainActivity extends AppCompatActivity implements
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.i("Custom Debugging", "onFailure: OnFailureListener branch");
                 new ErrorOccurredDialog(MainActivity.this, "Oops! Something went wrong").show();
             }
         });
