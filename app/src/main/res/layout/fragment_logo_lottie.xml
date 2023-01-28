@@ -19,7 +19,7 @@
 
         <!-- Lottie Animation Link = https://lottiefiles.com/42266-roatating-light -->
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/game_preview_spotlight_lottie"
+            android:id="@+id/game_preview_spotlight_logo_lottie_fragment_lottie"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleX="1.15"
@@ -31,7 +31,7 @@
             app:lottie_speed="0.25" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/game_preview_background_image_view"
+            android:id="@+id/game_preview_background_logo_lottie_fragment_image_view"
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:layout_gravity="center"
@@ -40,7 +40,7 @@
             app:srcCompat="@drawable/circular_background" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/game_preview_image_view"
+            android:id="@+id/game_preview_logo_lottie_fragment_image_view"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginBottom="4dp"

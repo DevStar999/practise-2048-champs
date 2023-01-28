@@ -120,7 +120,7 @@ public class PreGameFragment extends Fragment {
         }
         gamePreviewImageView = layoutView.findViewById(R.id.game_preview_pregame_fragment_image_view);
         startGameLottie = layoutView.findViewById(R.id.start_game_pregame_fragment_lottie);
-        highScoreTextView = layoutView.findViewById(R.id.high_score_text_view_pregame_fragment);
+        highScoreTextView = layoutView.findViewById(R.id.high_score_pregame_fragment_text_view);
         highScoreTextView.setText(String.valueOf(sharedPreferences.getLong("bestScore" + " " + currentGameMode.getMode()
                 + " " + currentGameMode.getDimensions(), 0L)));
         modeLeft = layoutView.findViewById(R.id.game_mode_left_arrow_pregame_fragment_image_view);

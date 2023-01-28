@@ -53,7 +53,7 @@
         android:orientation="horizontal"
         android:paddingHorizontal="20dp"
         android:paddingVertical="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/shop_scroll_view"
+        app:layout_constraintBottom_toTopOf="@+id/shop_fragment_scroll_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/shop_fragment_title_frame_layout">
@@ -99,7 +99,7 @@
      still we have the liberty to have the child to be a complex
      layout in itself -->
     <ScrollView
-        android:id="@+id/shop_scroll_view"
+        android:id="@+id/shop_fragment_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -110,14 +110,14 @@
         app:layout_constraintTop_toBottomOf="@id/coins_current_count_shop_fragment_linear_layout">
 
         <LinearLayout
-            android:id="@+id/shop_scroll_view_container_linear_layout"
+            android:id="@+id/scroll_view_container_shop_fragment_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="8dp"
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/shop_coins_level1_constraint_layout"
+                android:id="@+id/shop_coins_level1_shop_fragment_constraint_layout"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:layout_marginHorizontal="12dp"
@@ -131,14 +131,14 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/shop_coins_level1_ribbon_label_image_view"
+                        android:id="@+id/shop_coins_level1_ribbon_label_shop_fragment_image_view"
                         android:layout_width="55dp"
                         android:layout_height="55dp"
                         app:shapeAppearanceOverlay="@style/RoundedCornerTiltedRibbon"
                         app:srcCompat="@drawable/tilted_ribbon_red" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/shop_coins_level1_ribbon_label_text_view"
+                        android:id="@+id/shop_coins_level1_ribbon_label_shop_fragment_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -154,7 +154,7 @@
                 </FrameLayout>
 
                 <FrameLayout
-                    android:id="@+id/shop_coins_level1_symbol_frame_layout"
+                    android:id="@+id/shop_coins_level1_symbol_shop_fragment_frame_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="50dp"
@@ -186,12 +186,12 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/shop_coins_level1_purchase_button"
-                    app:layout_constraintStart_toEndOf="@id/shop_coins_level1_symbol_frame_layout"
+                    app:layout_constraintEnd_toStartOf="@id/shop_coins_level1_shop_fragment_purchase_button"
+                    app:layout_constraintStart_toEndOf="@id/shop_coins_level1_symbol_shop_fragment_frame_layout"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/shop_coins_level1_count_text_view"
+                        android:id="@+id/shop_coins_level1_count_shop_fragment_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -201,7 +201,7 @@
                         android:textStyle="bold" />
 
                     <FrameLayout
-                        android:id="@+id/shop_coins_level1_unit_frame_layout"
+                        android:id="@+id/shop_coins_level1_unit_shop_fragment_frame_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -226,7 +226,7 @@
                 </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/shop_coins_level1_purchase_button"
+                    android:id="@+id/shop_coins_level1_shop_fragment_purchase_button"
                     android:layout_width="72dp"
                     android:layout_height="36dp"
                     android:layout_gravity="center"
@@ -245,7 +245,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/shop_coins_level2_constraint_layout"
+                android:id="@+id/shop_coins_level2_shop_fragment_constraint_layout"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:layout_marginHorizontal="12dp"
@@ -259,14 +259,14 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/shop_coins_level2_ribbon_label_image_view"
+                        android:id="@+id/shop_coins_level2_ribbon_label_shop_fragment_image_view"
                         android:layout_width="55dp"
                         android:layout_height="55dp"
                         app:shapeAppearanceOverlay="@style/RoundedCornerTiltedRibbon"
                         app:srcCompat="@drawable/tilted_ribbon_red" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/shop_coins_level2_ribbon_label_text_view"
+                        android:id="@+id/shop_coins_level2_ribbon_label_shop_fragment_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -282,7 +282,7 @@
                 </FrameLayout>
 
                 <FrameLayout
-                    android:id="@+id/shop_coins_level2_symbol_frame_layout"
+                    android:id="@+id/shop_coins_level2_symbol_shop_fragment_frame_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="50dp"
@@ -316,12 +316,12 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/shop_coins_level2_purchase_button"
-                    app:layout_constraintStart_toEndOf="@id/shop_coins_level2_symbol_frame_layout"
+                    app:layout_constraintEnd_toStartOf="@id/shop_coins_level2_shop_fragment_purchase_button"
+                    app:layout_constraintStart_toEndOf="@id/shop_coins_level2_symbol_shop_fragment_frame_layout"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/shop_coins_level2_count_text_view"
+                        android:id="@+id/shop_coins_level2_count_shop_fragment_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -331,7 +331,7 @@
                         android:textStyle="bold" />
 
                     <FrameLayout
-                        android:id="@+id/shop_coins_level2_unit_frame_layout"
+                        android:id="@+id/shop_coins_level2_unit_shop_fragment_frame_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -356,7 +356,7 @@
                 </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/shop_coins_level2_purchase_button"
+                    android:id="@+id/shop_coins_level2_shop_fragment_purchase_button"
                     android:layout_width="72dp"
                     android:layout_height="36dp"
                     android:layout_gravity="center"
@@ -375,7 +375,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/shop_coins_level3_constraint_layout"
+                android:id="@+id/shop_coins_level3_shop_fragment_constraint_layout"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:layout_marginHorizontal="12dp"
@@ -390,14 +390,14 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/shop_coins_level3_ribbon_label_image_view"
+                        android:id="@+id/shop_coins_level3_ribbon_label_shop_fragment_image_view"
                         android:layout_width="55dp"
                         android:layout_height="55dp"
                         app:shapeAppearanceOverlay="@style/RoundedCornerTiltedRibbon"
                         app:srcCompat="@drawable/tilted_ribbon_red" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/shop_coins_level3_ribbon_label_text_view"
+                        android:id="@+id/shop_coins_level3_ribbon_label_shop_fragment_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -413,7 +413,7 @@
                 </FrameLayout>
 
                 <FrameLayout
-                    android:id="@+id/shop_coins_level3_symbol_frame_layout"
+                    android:id="@+id/shop_coins_level3_symbol_shop_fragment_frame_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="50dp"
@@ -447,12 +447,12 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/shop_coins_level3_purchase_button"
-                    app:layout_constraintStart_toEndOf="@id/shop_coins_level3_symbol_frame_layout"
+                    app:layout_constraintEnd_toStartOf="@id/shop_coins_level3_shop_fragment_purchase_button"
+                    app:layout_constraintStart_toEndOf="@id/shop_coins_level3_symbol_shop_fragment_frame_layout"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/shop_coins_level3_count_text_view"
+                        android:id="@+id/shop_coins_level3_count_shop_fragment_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -462,7 +462,7 @@
                         android:textStyle="bold" />
 
                     <FrameLayout
-                        android:id="@+id/shop_coins_level3_unit_frame_layout"
+                        android:id="@+id/shop_coins_level3_unit_shop_fragment_frame_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -487,7 +487,7 @@
                 </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/shop_coins_level3_purchase_button"
+                    android:id="@+id/shop_coins_level3_shop_fragment_purchase_button"
                     android:layout_width="72dp"
                     android:layout_height="36dp"
                     android:layout_gravity="center"
@@ -506,7 +506,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/shop_coins_level4_constraint_layout"
+                android:id="@+id/shop_coins_level4_shop_fragment_constraint_layout"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:layout_marginHorizontal="12dp"
@@ -520,14 +520,14 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/shop_coins_level4_ribbon_label_image_view"
+                        android:id="@+id/shop_coins_level4_ribbon_label_shop_fragment_image_view"
                         android:layout_width="55dp"
                         android:layout_height="55dp"
                         app:shapeAppearanceOverlay="@style/RoundedCornerTiltedRibbon"
                         app:srcCompat="@drawable/tilted_ribbon_red" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/shop_coins_level4_ribbon_label_text_view"
+                        android:id="@+id/shop_coins_level4_ribbon_label_shop_fragment_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -543,7 +543,7 @@
                 </FrameLayout>
 
                 <FrameLayout
-                    android:id="@+id/shop_coins_level4_symbol_frame_layout"
+                    android:id="@+id/shop_coins_level4_symbol_shop_fragment_frame_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="50dp"
@@ -575,12 +575,12 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/shop_coins_level4_purchase_button"
-                    app:layout_constraintStart_toEndOf="@id/shop_coins_level4_symbol_frame_layout"
+                    app:layout_constraintEnd_toStartOf="@id/shop_coins_level4_shop_fragment_purchase_button"
+                    app:layout_constraintStart_toEndOf="@id/shop_coins_level4_symbol_shop_fragment_frame_layout"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/shop_coins_level4_count_text_view"
+                        android:id="@+id/shop_coins_level4_count_shop_fragment_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -590,7 +590,7 @@
                         android:textStyle="bold" />
 
                     <FrameLayout
-                        android:id="@+id/shop_coins_level4_unit_frame_layout"
+                        android:id="@+id/shop_coins_level4_unit_shop_fragment_frame_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -615,7 +615,7 @@
                 </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/shop_coins_level4_purchase_button"
+                    android:id="@+id/shop_coins_level4_shop_fragment_purchase_button"
                     android:layout_width="72dp"
                     android:layout_height="36dp"
                     android:layout_gravity="center"
@@ -634,7 +634,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/shop_coins_level5_constraint_layout"
+                android:id="@+id/shop_coins_level5_shop_fragment_constraint_layout"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:layout_marginHorizontal="12dp"
@@ -649,14 +649,14 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/shop_coins_level5_ribbon_label_image_view"
+                        android:id="@+id/shop_coins_level5_ribbon_label_shop_fragment_image_view"
                         android:layout_width="55dp"
                         android:layout_height="55dp"
                         app:shapeAppearanceOverlay="@style/RoundedCornerTiltedRibbon"
                         app:srcCompat="@drawable/tilted_ribbon_red" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/shop_coins_level5_ribbon_label_text_view"
+                        android:id="@+id/shop_coins_level5_ribbon_label_shop_fragment_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -672,7 +672,7 @@
                 </FrameLayout>
 
                 <FrameLayout
-                    android:id="@+id/shop_coins_level5_symbol_frame_layout"
+                    android:id="@+id/shop_coins_level5_symbol_shop_fragment_frame_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="50dp"
@@ -706,12 +706,12 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/shop_coins_level5_purchase_button"
-                    app:layout_constraintStart_toEndOf="@id/shop_coins_level5_symbol_frame_layout"
+                    app:layout_constraintEnd_toStartOf="@id/shop_coins_level5_shop_fragment_purchase_button"
+                    app:layout_constraintStart_toEndOf="@id/shop_coins_level5_symbol_shop_fragment_frame_layout"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/shop_coins_level5_count_text_view"
+                        android:id="@+id/shop_coins_level5_count_shop_fragment_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -721,7 +721,7 @@
                         android:textStyle="bold" />
 
                     <FrameLayout
-                        android:id="@+id/shop_coins_level5_unit_frame_layout"
+                        android:id="@+id/shop_coins_level5_unit_shop_fragment_frame_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -746,7 +746,7 @@
                 </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/shop_coins_level5_purchase_button"
+                    android:id="@+id/shop_coins_level5_shop_fragment_purchase_button"
                     android:layout_width="72dp"
                     android:layout_height="36dp"
                     android:layout_gravity="center"
@@ -765,7 +765,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/shop_coins_level6_constraint_layout"
+                android:id="@+id/shop_coins_level6_shop_fragment_constraint_layout"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:layout_marginHorizontal="12dp"
@@ -780,14 +780,14 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/shop_coins_level6_ribbon_label_image_view"
+                        android:id="@+id/shop_coins_level6_ribbon_label_shop_fragment_image_view"
                         android:layout_width="55dp"
                         android:layout_height="55dp"
                         app:shapeAppearanceOverlay="@style/RoundedCornerTiltedRibbon"
                         app:srcCompat="@drawable/tilted_ribbon_red" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/shop_coins_level6_ribbon_label_text_view"
+                        android:id="@+id/shop_coins_level6_ribbon_label_shop_fragment_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -803,7 +803,7 @@
                 </FrameLayout>
 
                 <FrameLayout
-                    android:id="@+id/shop_coins_level6_symbol_frame_layout"
+                    android:id="@+id/shop_coins_level6_symbol_shop_fragment_frame_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="50dp"
@@ -835,12 +835,12 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/shop_coins_level6_purchase_button"
-                    app:layout_constraintStart_toEndOf="@id/shop_coins_level6_symbol_frame_layout"
+                    app:layout_constraintEnd_toStartOf="@id/shop_coins_level6_shop_fragment_purchase_button"
+                    app:layout_constraintStart_toEndOf="@id/shop_coins_level6_symbol_shop_fragment_frame_layout"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/shop_coins_level6_count_text_view"
+                        android:id="@+id/shop_coins_level6_count_shop_fragment_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -850,7 +850,7 @@
                         android:textStyle="bold" />
 
                     <FrameLayout
-                        android:id="@+id/shop_coins_level6_unit_frame_layout"
+                        android:id="@+id/shop_coins_level6_unit_shop_fragment_frame_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -875,7 +875,7 @@
                 </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/shop_coins_level6_purchase_button"
+                    android:id="@+id/shop_coins_level6_shop_fragment_purchase_button"
                     android:layout_width="72dp"
                     android:layout_height="36dp"
                     android:layout_gravity="center"
@@ -894,7 +894,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/shop_coins_level7_constraint_layout"
+                android:id="@+id/shop_coins_level7_shop_fragment_constraint_layout"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:layout_marginHorizontal="12dp"
@@ -908,14 +908,14 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/shop_coins_level7_ribbon_label_image_view"
+                        android:id="@+id/shop_coins_level7_ribbon_label_shop_fragment_image_view"
                         android:layout_width="55dp"
                         android:layout_height="55dp"
                         app:shapeAppearanceOverlay="@style/RoundedCornerTiltedRibbon"
                         app:srcCompat="@drawable/tilted_ribbon_purple" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/shop_coins_level7_ribbon_label_text_view"
+                        android:id="@+id/shop_coins_level7_ribbon_label_shop_fragment_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -931,7 +931,7 @@
                 </FrameLayout>
 
                 <FrameLayout
-                    android:id="@+id/shop_coins_level7_symbol_frame_layout"
+                    android:id="@+id/shop_coins_level7_symbol_shop_fragment_frame_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="50dp"
@@ -963,12 +963,12 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/shop_coins_level7_purchase_button"
-                    app:layout_constraintStart_toEndOf="@id/shop_coins_level7_symbol_frame_layout"
+                    app:layout_constraintEnd_toStartOf="@id/shop_coins_level7_shop_fragment_purchase_button"
+                    app:layout_constraintStart_toEndOf="@id/shop_coins_level7_symbol_shop_fragment_frame_layout"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/shop_coins_level7_count_text_view"
+                        android:id="@+id/shop_coins_level7_count_shop_fragment_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -978,7 +978,7 @@
                         android:textStyle="bold" />
 
                     <FrameLayout
-                        android:id="@+id/shop_coins_level7_unit_frame_layout"
+                        android:id="@+id/shop_coins_level7_unit_shop_fragment_frame_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -1003,7 +1003,7 @@
                 </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/shop_coins_level7_purchase_button"
+                    android:id="@+id/shop_coins_level7_shop_fragment_purchase_button"
                     android:layout_width="72dp"
                     android:layout_height="36dp"
                     android:layout_gravity="center"

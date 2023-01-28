@@ -93,8 +93,8 @@ public class MainActivity extends AppCompatActivity implements
         LogoLottieFragment logoLottieFragment = new LogoLottieFragment();
         NavigationFragment navigationFragment = new NavigationFragment();
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.logo_lottie_fragment_container, logoLottieFragment, "LOGO_LOTTIE_FRAGMENT")
-                .replace(R.id.navigation_fragment_container, navigationFragment, "NAVIGATION_FRAGMENT")
+                .replace(R.id.logo_lottie_main_activity_fragment_container, logoLottieFragment, "LOGO_LOTTIE_FRAGMENT")
+                .replace(R.id.navigation_main_activity_fragment_container, navigationFragment, "NAVIGATION_FRAGMENT")
                 .commit();
 
         setupInAppUpdate();

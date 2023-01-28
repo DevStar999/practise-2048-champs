@@ -49,7 +49,7 @@
      still we have the liberty to have the child to be a complex
      layout in itself -->
     <ScrollView
-        android:id="@+id/settings_scroll_view"
+        android:id="@+id/settings_fragment_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:paddingHorizontal="16dp"
@@ -61,7 +61,7 @@
         app:layout_constraintTop_toBottomOf="@id/settings_fragment_title_frame_layout">
 
         <LinearLayout
-            android:id="@+id/settings_scroll_view_container_linear_layout"
+            android:id="@+id/scroll_view_container_settings_fragment_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -73,7 +73,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/get_premium_linear_layout"
+                    android:id="@+id/get_premium_settings_fragment_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/click_settings_button_top_and_bottom"
@@ -81,7 +81,7 @@
                     android:padding="16dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/get_premium_icon_image_view"
+                        android:id="@+id/get_premium_icon_settings_fragment_image_view"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="start|center_vertical"
@@ -92,7 +92,7 @@
                         app:srcCompat="@drawable/settings_shop_coins_icon" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/get_premium_text_view"
+                        android:id="@+id/get_premium_settings_fragment_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -113,7 +113,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/toggle_rotating_light_linear_layout"
+                    android:id="@+id/toggle_rotating_light_settings_fragment_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/click_settings_button_top"
@@ -121,7 +121,7 @@
                     android:padding="16dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/toggle_rotating_light_icon_image_view"
+                        android:id="@+id/toggle_rotating_light_icon_settings_fragment_image_view"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="start|center_vertical"
@@ -132,7 +132,7 @@
                         app:srcCompat="@drawable/settings_toggle_rotating_light_icon" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/toggle_rotating_light_text_view"
+                        android:id="@+id/toggle_rotating_light_settings_fragment_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -143,7 +143,7 @@
                         android:textStyle="normal" />
 
                     <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/toggle_rotating_light_switch"
+                        android:id="@+id/toggle_rotating_light_settings_fragment_switch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end|center_vertical"
@@ -160,7 +160,7 @@
                     android:background="@color/settings_divider_line" />
 
                 <LinearLayout
-                    android:id="@+id/block_design_linear_layout"
+                    android:id="@+id/block_design_settings_fragment_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/click_settings_button_middle"
@@ -168,7 +168,7 @@
                     android:padding="16dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/block_design_icon_image_view"
+                        android:id="@+id/block_design_icon_settings_fragment_image_view"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="start|center_vertical"
@@ -179,7 +179,7 @@
                         app:srcCompat="@drawable/settings_block_design_icon" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/block_design_text_view"
+                        android:id="@+id/block_design_settings_fragment_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -190,7 +190,7 @@
                         android:textStyle="normal" />
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/block_design_redirect_image_view"
+                        android:id="@+id/block_design_redirect_settings_fragment_image_view"
                         android:layout_width="18dp"
                         android:layout_height="18dp"
                         android:layout_gravity="end|center_vertical"
@@ -210,7 +210,7 @@
                 <!-- TODO -> Change 'android:visibility' after
                              implementing the following -->
                 <LinearLayout
-                    android:id="@+id/how_to_play_linear_layout"
+                    android:id="@+id/how_to_play_settings_fragment_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/click_settings_button_middle"
@@ -219,7 +219,7 @@
                     android:visibility="gone">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/how_to_play_icon_image_view"
+                        android:id="@+id/how_to_play_icon_settings_fragment_image_view"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="start|center_vertical"
@@ -230,7 +230,7 @@
                         app:srcCompat="@drawable/settings_how_to_play_icon" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/how_to_play_text_view"
+                        android:id="@+id/how_to_play_settings_fragment_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -241,7 +241,7 @@
                         android:textStyle="normal" />
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/how_to_play_redirect_image_view"
+                        android:id="@+id/how_to_play_redirect_settings_fragment_image_view"
                         android:layout_width="18dp"
                         android:layout_height="18dp"
                         android:layout_gravity="end|center_vertical"
@@ -262,7 +262,7 @@
                 <!-- TODO -> Change 'android:visibility' after
                              implementing the following -->
                 <LinearLayout
-                    android:id="@+id/help_linear_layout"
+                    android:id="@+id/help_settings_fragment_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/click_settings_button_bottom"
@@ -271,7 +271,7 @@
                     android:visibility="gone">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/help_icon_image_view"
+                        android:id="@+id/help_icon_settings_fragment_image_view"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="start|center_vertical"
@@ -282,7 +282,7 @@
                         app:srcCompat="@drawable/settings_help_icon" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/help_text_view"
+                        android:id="@+id/help_settings_fragment_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -293,7 +293,7 @@
                         android:textStyle="normal" />
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/help_redirect_image_view"
+                        android:id="@+id/help_redirect_settings_fragment_image_view"
                         android:layout_width="18dp"
                         android:layout_height="18dp"
                         android:layout_gravity="end|center_vertical"
@@ -308,7 +308,7 @@
                     android:background="@color/settings_divider_line" />
 
                 <LinearLayout
-                    android:id="@+id/check_updates_linear_layout"
+                    android:id="@+id/check_updates_settings_fragment_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/click_settings_button_bottom"
@@ -317,7 +317,7 @@
                     android:visibility="visible">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/check_updates_icon_image_view"
+                        android:id="@+id/check_updates_icon_settings_fragment_image_view"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="start|center_vertical"
@@ -328,7 +328,7 @@
                         app:srcCompat="@drawable/settings_check_updates_icon" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/check_updates_text_view"
+                        android:id="@+id/check_updates_settings_fragment_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -349,7 +349,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/rate_us_linear_layout"
+                    android:id="@+id/rate_us_settings_fragment_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/click_settings_button_top"
@@ -357,7 +357,7 @@
                     android:padding="16dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/rate_us_icon_image_view"
+                        android:id="@+id/rate_us_icon_settings_fragment_image_view"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="start|center_vertical"
@@ -368,7 +368,7 @@
                         app:srcCompat="@drawable/settings_rate_us_icon" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/rate_us_text_view"
+                        android:id="@+id/rate_us_settings_fragment_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -386,7 +386,7 @@
                     android:background="@color/settings_divider_line" />
 
                 <LinearLayout
-                    android:id="@+id/feedback_linear_layout"
+                    android:id="@+id/feedback_settings_fragment_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/click_settings_button_bottom"
@@ -394,7 +394,7 @@
                     android:padding="16dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/feedback_icon_image_view"
+                        android:id="@+id/feedback_icon_settings_fragment_image_view"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="start|center_vertical"
@@ -405,7 +405,7 @@
                         app:srcCompat="@drawable/settings_feedback_icon" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/feedback_text_view"
+                        android:id="@+id/feedback_settings_fragment_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -426,7 +426,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/facebook_linear_layout"
+                    android:id="@+id/facebook_settings_fragment_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/click_settings_button_top"
@@ -434,7 +434,7 @@
                     android:padding="16dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/facebook_icon_image_view"
+                        android:id="@+id/facebook_icon_settings_fragment_image_view"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="start|center_vertical"
@@ -443,7 +443,7 @@
                         app:srcCompat="@drawable/settings_facebook_icon" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/facebook_text_view"
+                        android:id="@+id/facebook_settings_fragment_text_view"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -461,7 +461,7 @@
                     android:background="@color/settings_divider_line" />
 
                 <LinearLayout
-                    android:id="@+id/instagram_linear_layout"
+                    android:id="@+id/instagram_settings_fragment_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/click_settings_button_middle"
@@ -469,7 +469,7 @@
                     android:padding="16dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/instagram_icon_image_view"
+                        android:id="@+id/instagram_icon_settings_fragment_image_view"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="start|center_vertical"
@@ -478,7 +478,7 @@
                         app:srcCompat="@drawable/settings_instagram_icon" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/instagram_text_view"
+                        android:id="@+id/instagram_settings_fragment_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -496,7 +496,7 @@
                     android:background="@color/settings_divider_line" />
 
                 <LinearLayout
-                    android:id="@+id/twitter_linear_layout"
+                    android:id="@+id/twitter_settings_fragment_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/click_settings_button_bottom"
@@ -504,7 +504,7 @@
                     android:padding="16dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/twitter_icon_image_view"
+                        android:id="@+id/twitter_icon_settings_fragment_image_view"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="start|center_vertical"
@@ -515,7 +515,7 @@
                         app:srcCompat="@drawable/settings_twitter_icon" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/twitter_text_view"
+                        android:id="@+id/twitter_settings_fragment_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -536,7 +536,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/privacy_policy_linear_layout"
+                    android:id="@+id/privacy_policy_settings_fragment_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/click_settings_button_top"
@@ -544,7 +544,7 @@
                     android:padding="16dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/privacy_policy_icon_image_view"
+                        android:id="@+id/privacy_policy_icon_settings_fragment_image_view"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="start|center_vertical"
@@ -555,7 +555,7 @@
                         app:srcCompat="@drawable/settings_privacy_icon" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/privacy_policy_text_view"
+                        android:id="@+id/privacy_policy_settings_fragment_text_view"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -573,7 +573,7 @@
                     android:background="@color/settings_divider_line" />
 
                 <LinearLayout
-                    android:id="@+id/terms_of_service_linear_layout"
+                    android:id="@+id/terms_of_service_settings_fragment_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/click_settings_button_bottom"
@@ -581,7 +581,7 @@
                     android:padding="16dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/terms_of_service_icon_image_view"
+                        android:id="@+id/terms_of_service_icon_settings_fragment_image_view"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="start|center_vertical"
@@ -590,7 +590,7 @@
                         app:srcCompat="@drawable/settings_terms_icon" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/terms_of_service_text_view"
+                        android:id="@+id/terms_of_service_settings_fragment_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -611,7 +611,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/exit_game_linear_layout"
+                    android:id="@+id/exit_game_settings_fragment_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/click_settings_button_top_and_bottom"
@@ -619,7 +619,7 @@
                     android:padding="16dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/exit_game_icon_image_view"
+                        android:id="@+id/exit_game_icon_settings_fragment_image_view"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="start|center_vertical"
@@ -628,7 +628,7 @@
                         app:srcCompat="@drawable/settings_exit_icon" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/exit_game_text_view"
+                        android:id="@+id/exit_game_settings_fragment_text_view"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"

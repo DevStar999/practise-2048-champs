@@ -114,7 +114,7 @@
         app:layout_constraintTop_toBottomOf="@+id/game_preview_pregame_fragment_frame_layout">
 
         <LinearLayout
-            android:id="@+id/high_score_linear_layout_pregame_fragment"
+            android:id="@+id/high_score_pregame_fragment_linear_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -136,7 +136,7 @@
             <!-- The text color is taken from the coin_symbol
                  drawable file -->
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/high_score_text_view_pregame_fragment"
+                android:id="@+id/high_score_pregame_fragment_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|center_vertical"

@@ -48,7 +48,7 @@ public class BlockDesignFragment extends Fragment {
     @SuppressLint("DefaultLocale")
     private void initialiseBlockDesignOptions(View layoutView) {
         LinearLayout blockDesignOptionsScrollViewChild = layoutView
-                .findViewById(R.id.block_design_options_scrollview_child_linear_layout);
+                .findViewById(R.id.block_design_options_scrollview_child_block_design_fragment_linear_layout);
 
         List<AppCompatImageView> blockDesignOptionImageViewList = new ArrayList<>();
         List<AppCompatImageView> blockDesignOptionSelectedBackgroundList = new ArrayList<>();
@@ -199,8 +199,8 @@ public class BlockDesignFragment extends Fragment {
             }
         });
 
-        blockDesignOptionInUseImageView = view.findViewById(R.id.block_design_option_in_use_image_view);
-        blockDesignPreviewImageView = view.findViewById(R.id.block_design_preview_image_view);
+        blockDesignOptionInUseImageView = view.findViewById(R.id.block_design_option_in_use_block_design_fragment_image_view);
+        blockDesignPreviewImageView = view.findViewById(R.id.block_design_preview_block_design_fragment_image_view);
 
         blockDesignsList = new ArrayList<>(BlockDesigns.getAllBlockDesigns());
 
