@@ -143,14 +143,14 @@ public class ShopFragment extends Fragment {
         shopCoinsConstraintLayouts = new ArrayList<>();
         for (int level = 1; level <= 7; level++) {
             int layoutResId = context.getResources().getIdentifier("shop_coins_level" + level +
-                    "_constraint_layout", "id", context.getPackageName());
+                    "_shop_fragment_constraint_layout", "id", context.getPackageName());
             shopCoinsConstraintLayouts.add(view.findViewById(layoutResId));
         }
 
         shopCoinsPurchaseButtons = new ArrayList<>();
         for (int level = 1; level <= 7; level++) {
             int layoutResId = context.getResources().getIdentifier("shop_coins_level" + level +
-                    "_purchase_button", "id", context.getPackageName());
+                    "_shop_fragment_purchase_button", "id", context.getPackageName());
             shopCoinsPurchaseButtons.add(view.findViewById(layoutResId));
         }
 
