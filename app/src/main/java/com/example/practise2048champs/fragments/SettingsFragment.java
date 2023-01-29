@@ -1,5 +1,6 @@
 package com.example.practise2048champs.fragments;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -8,11 +9,15 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,8 +28,15 @@ import androidx.fragment.app.Fragment;
 import com.example.practise2048champs.BuildConfig;
 import com.example.practise2048champs.R;
 import com.example.practise2048champs.dialogs.RateUsPromptDialog;
+import com.example.practise2048champs.main.MainActivity;
+import com.google.android.gms.games.AuthenticationResult;
+import com.google.android.gms.games.GamesSignInClient;
+import com.google.android.gms.games.PlayGames;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 public class SettingsFragment extends Fragment {
+    public static final String SIGN_IN_STATUS = "isUserSignedIn";
     private final static String FACEBOOK_URL = "http://www.facebook.com/Nerdcore-Development-109351035183956";
     private final static String FACEBOOK_PAGE_ID = "Nerdcore-Development-109351035183956";
     private final static String INSTAGRAM_USERNAME = "nerdcoredev";
@@ -36,6 +48,9 @@ public class SettingsFragment extends Fragment {
     private OnSettingsFragmentInteractionListener mListener;
     private SharedPreferences sharedPreferences;
     private AppCompatImageView backButton;
+    private boolean isUserSignedIn;
+    private LinearLayout gpgsSignInContainerLinearLayout;
+    private LinearLayout gpgsSignInLinearLayout;
     private LinearLayout getPremiumLinearLayout;
     private LinearLayout toggleRotatingLightLinearLayout;
     private SwitchCompat toggleRotatingLightSwitch;
@@ -56,9 +71,20 @@ public class SettingsFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public static SettingsFragment newInstance(boolean isUserSignedIn) {
+        SettingsFragment fragment = new SettingsFragment();
+        Bundle args = new Bundle();
+        args.putBoolean(SIGN_IN_STATUS, isUserSignedIn);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            this.isUserSignedIn = getArguments().getBoolean(SIGN_IN_STATUS);
+        }
     }
 
     private void settingOnClickListeners() {
@@ -70,9 +96,18 @@ public class SettingsFragment extends Fragment {
                 }
             }
         });
+        gpgsSignInLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mListener != null) {
+                    mListener.onSettingsFragmentInteractionGPGSSignInClicked();
+                }
+            }
+        });
         getPremiumLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                view.setVisibility(View.GONE);
                 if (mListener != null) {
                     mListener.onSettingsFragmentInteractionGetPremiumClicked();
                 }
@@ -263,6 +298,11 @@ public class SettingsFragment extends Fragment {
         });
     }
 
+    private int dpToPx(int dp, Context context) {
+        float density = context.getResources().getDisplayMetrics().density;
+        return Math.round((float) dp * density);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -278,6 +318,8 @@ public class SettingsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
         backButton = view.findViewById(R.id.title_back_settings_fragment_button);
+        gpgsSignInContainerLinearLayout = view.findViewById(R.id.gpgs_sign_in_container_settings_fragment_linear_layout);
+        gpgsSignInLinearLayout = view.findViewById(R.id.gpgs_sign_in_settings_fragment_linear_layout);
         getPremiumLinearLayout = view.findViewById(R.id.get_premium_settings_fragment_linear_layout);
         toggleRotatingLightLinearLayout = view.findViewById(R.id.toggle_rotating_light_settings_fragment_linear_layout);
         toggleRotatingLightSwitch = view.findViewById(R.id.toggle_rotating_light_settings_fragment_switch);
@@ -295,13 +337,37 @@ public class SettingsFragment extends Fragment {
         termsLinearLayout = view.findViewById(R.id.terms_of_service_settings_fragment_linear_layout);
         exitLinearLayout = view.findViewById(R.id.exit_game_settings_fragment_linear_layout);
 
+        if (!isUserSignedIn) {
+            revealSignInButton();
+        }
+
         settingOnClickListeners();
 
         return view;
     }
 
+    public void revealSignInButton() {
+        if (mListener != null) {
+            int layoutMarginVertical = dpToPx(8, context);
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) gpgsSignInContainerLinearLayout.getLayoutParams();
+            params.setMargins(0, layoutMarginVertical, 0, layoutMarginVertical);
+            gpgsSignInContainerLinearLayout.setLayoutParams(params);
+            gpgsSignInContainerLinearLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void hideSignInButton() {
+        if (mListener != null) {
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) gpgsSignInContainerLinearLayout.getLayoutParams();
+            params.setMargins(0, 0, 0, 0);
+            gpgsSignInContainerLinearLayout.setLayoutParams(params);
+            gpgsSignInContainerLinearLayout.setVisibility(View.GONE);
+        }
+    }
+
     public interface OnSettingsFragmentInteractionListener {
         void onSettingsFragmentInteractionBackClicked();
+        void onSettingsFragmentInteractionGPGSSignInClicked();
         void onSettingsFragmentInteractionGetPremiumClicked();
         void onSettingsFragmentInteractionToggleRotatingLightClicked(boolean isChecked);
         void onSettingsFragmentInteractionBlockDesignClicked();

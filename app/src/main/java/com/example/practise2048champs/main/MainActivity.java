@@ -10,6 +10,7 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -36,8 +37,13 @@ import com.example.practise2048champs.fragments.NavigationFragment;
 import com.example.practise2048champs.fragments.SettingsFragment;
 import com.example.practise2048champs.fragments.ShopFragment;
 import com.example.practise2048champs.pregame.PreGameFragment;
+import com.google.android.gms.games.AuthenticationResult;
+import com.google.android.gms.games.GamesSignInClient;
+import com.google.android.gms.games.PlayGames;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
@@ -58,13 +64,19 @@ public class MainActivity extends AppCompatActivity implements
         ShopFragment.OnShopFragmentInteractionListener {
     private SharedPreferences sharedPreferences;
 
+    // Attributes for Google Play Games Services (GPGS) features
+    private boolean isUserSignedIn;
+    private GamesSignInClient gamesSignInClient;
+
     // Attributes required for In app updates feature
     public static final int UPDATE_REQUEST_CODE = 100;
     private AppUpdateManager appUpdateManager;
     private InstallStateUpdatedListener installStateUpdatedListener;
 
     private void initialise() {
+        isUserSignedIn = true;
         sharedPreferences = getSharedPreferences("com.nerdcoredevelopment.game2048champsfinal", Context.MODE_PRIVATE);
+        gamesSignInClient = PlayGames.getGamesSignInClient(MainActivity.this);
     }
 
     @Override
@@ -96,6 +108,8 @@ public class MainActivity extends AppCompatActivity implements
                 .replace(R.id.logo_lottie_main_activity_fragment_container, logoLottieFragment, "LOGO_LOTTIE_FRAGMENT")
                 .replace(R.id.navigation_main_activity_fragment_container, navigationFragment, "NAVIGATION_FRAGMENT")
                 .commit();
+
+        verifyPlayGamesSignIn(false);
 
         setupInAppUpdate();
     }
@@ -193,7 +207,7 @@ public class MainActivity extends AppCompatActivity implements
                for prompting the user to check their internet connection
              */
             Toast.makeText(MainActivity.this, "Network connection failed. Please check " +
-                    "internet connectivity", Toast.LENGTH_LONG).show();
+                    "Internet connectivity", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -235,6 +249,70 @@ public class MainActivity extends AppCompatActivity implements
         });
     }
 
+    private void verifyPlayGamesSignIn(boolean isSignInAttemptManual) {
+        gamesSignInClient.isAuthenticated().addOnCompleteListener(new OnCompleteListener<AuthenticationResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthenticationResult> isAuthenticatedTask) {
+                boolean isAuthenticated = (isAuthenticatedTask.isSuccessful()
+                        && isAuthenticatedTask.getResult().isAuthenticated());
+                if (isAuthenticated) {
+                    isUserSignedIn = true;
+                    hideSignInButtonThroughoutApp();
+                    /* TODO -> Un-comment the following code when we want to make use of playerId of the GPGS signed in user
+                    PlayGames.getPlayersClient(MainActivity.this).getCurrentPlayer()
+                            .addOnCompleteListener(new OnCompleteListener<Player>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Player> task) {
+                            String playerId = task.getResult().getPlayerId();
+                        }
+                    });
+                    */
+                } else {
+                    isUserSignedIn = false;
+                    revealSignInButtonThroughoutApp();
+                    if (isSignInAttemptManual) {
+                        if (isInternetConnected()) {
+                            // TODO -> Show a dialog for GPGS Sign In Troubleshooting
+                        } else { // Internet is NOT connected
+                            Toast.makeText(MainActivity.this, "Network connection failed. Please check " +
+                                    "Internet connectivity", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    private void hideSignInButtonThroughoutApp() {
+        List<Fragment> fragments = new ArrayList<>(getSupportFragmentManager().getFragments());
+        for (int index = 0; index < fragments.size(); index++) {
+            Fragment currentFragment = fragments.get(index);
+            if (currentFragment != null && currentFragment.getTag() != null
+                    && !currentFragment.getTag().isEmpty()) {
+                if (currentFragment.getTag().equals("NAVIGATION_FRAGMENT")) {
+                    ((NavigationFragment) currentFragment).hideSignInButton();
+                } else if (currentFragment.getTag().equals("SETTINGS_FRAGMENT")) {
+                    ((SettingsFragment) currentFragment).hideSignInButton();
+                }
+            }
+        }
+    }
+
+    private void revealSignInButtonThroughoutApp() {
+        List<Fragment> fragments = new ArrayList<>(getSupportFragmentManager().getFragments());
+        for (int index = 0; index < fragments.size(); index++) {
+            Fragment currentFragment = fragments.get(index);
+            if (currentFragment != null && currentFragment.getTag() != null
+                    && !currentFragment.getTag().isEmpty()) {
+                if (currentFragment.getTag().equals("NAVIGATION_FRAGMENT")) {
+                    ((NavigationFragment) currentFragment).revealSignInButton();
+                } else if (currentFragment.getTag().equals("SETTINGS_FRAGMENT")) {
+                    ((SettingsFragment) currentFragment).revealSignInButton();
+                }
+            }
+        }
+    }
+
     private void updateCoins(int currentCoins) {
         sharedPreferences.edit().putInt("currentCoins", currentCoins).apply();
         List<Fragment> fragments = new ArrayList<>(getSupportFragmentManager().getFragments());
@@ -250,8 +328,14 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onNavigationFragmentGpgsSignInClicked() {
-        Toast.makeText(MainActivity.this, "GPGS Sign In Clicked", Toast.LENGTH_SHORT).show();
+    public void onNavigationFragmentGPGSSignInClicked() {
+        gamesSignInClient.signIn();
+        new CountDownTimer(1000, 10000) {
+            @Override
+            public void onTick(long l) {}
+            @Override
+            public void onFinish() { verifyPlayGamesSignIn(true); }
+        }.start();
     }
 
     @Override
@@ -278,7 +362,14 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onNavigationFragmentAchievementsClicked() {
-        Toast.makeText(MainActivity.this, "Achievements Clicked", Toast.LENGTH_SHORT).show();
+        new CountDownTimer(1000, 10000) {
+            @Override
+            public void onTick(long l) {}
+            @Override
+            public void onFinish() {
+                Toast.makeText(MainActivity.this, "Achievements Clicked", Toast.LENGTH_SHORT).show();
+            }
+        }.start();
     }
 
     @Override
@@ -298,7 +389,7 @@ public class MainActivity extends AppCompatActivity implements
             }
         }
 
-        SettingsFragment fragment = new SettingsFragment();
+        SettingsFragment fragment = SettingsFragment.newInstance(isUserSignedIn);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right,
@@ -353,6 +444,17 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onSettingsFragmentInteractionBackClicked() {
         onBackPressed();
+    }
+
+    @Override
+    public void onSettingsFragmentInteractionGPGSSignInClicked() {
+        gamesSignInClient.signIn();
+        new CountDownTimer(1000, 10000) {
+            @Override
+            public void onTick(long l) {}
+            @Override
+            public void onFinish() { verifyPlayGamesSignIn(true); }
+        }.start();
     }
 
     @Override
