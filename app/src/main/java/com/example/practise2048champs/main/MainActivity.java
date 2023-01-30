@@ -287,6 +287,35 @@ public class MainActivity extends AppCompatActivity implements
         });
     }
 
+    private void verifyPlayGamesSignInPreAchievementsDisplay() {
+        gamesSignInClient.isAuthenticated().addOnCompleteListener(new OnCompleteListener<AuthenticationResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthenticationResult> isAuthenticatedTask) {
+                boolean isAuthenticated = (isAuthenticatedTask.isSuccessful()
+                        && isAuthenticatedTask.getResult().isAuthenticated());
+                if (isAuthenticated) {
+                    isUserSignedIn = true;
+                    hideSignInButtonThroughoutApp();
+                } else {
+                    isUserSignedIn = false;
+                    revealSignInButtonThroughoutApp();
+                    if (isInternetConnected()) {
+                        /* TODO -> Give the message to the user that he/she cannot access this feature unless they
+                                   are signed in
+                        */
+                    } else { // Internet is NOT connected
+                        Toast.makeText(MainActivity.this, "Network connection failed. Please check " +
+                                "Internet connectivity", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                if (isUserSignedIn) {
+                    showAchievementsDisplayPostVerification();
+                }
+            }
+        });
+    }
+
     private void hideSignInButtonThroughoutApp() {
         List<Fragment> fragments = new ArrayList<>(getSupportFragmentManager().getFragments());
         for (int index = 0; index < fragments.size(); index++) {
@@ -364,9 +393,40 @@ public class MainActivity extends AppCompatActivity implements
                 fragment, "PREGAME_FRAGMENT").commit();
     }
 
+    private void showAchievementsDisplayPostVerification() {
+        achievementsClient.getAchievementsIntent().addOnSuccessListener(new OnSuccessListener<Intent>() {
+            @Override
+            public void onSuccess(Intent intent) {
+                startActivityForResult(intent, RC_ACHIEVEMENT_UI);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                if (!isInternetConnected()) { // Internet is not connected which can be the cause of this failure
+                    Toast.makeText(MainActivity.this, "Network connection failed. Please check " +
+                            "Internet connectivity", Toast.LENGTH_LONG).show();
+                } else { // Some unknown error has occurred
+                    new ErrorOccurredDialog(MainActivity.this, "Oops! Something went wrong").show();
+                }
+            }
+        });
+    }
+
     @Override
     public void onNavigationFragmentAchievementsClicked() {
-
+        if (!isUserSignedIn) {
+            gamesSignInClient.signIn();
+            new CountDownTimer(1000, 10000) {
+                @Override
+                public void onTick(long l) {}
+                @Override
+                public void onFinish() {
+                    verifyPlayGamesSignInPreAchievementsDisplay();
+                }
+            }.start();
+        } else {
+            showAchievementsDisplayPostVerification();
+        }
     }
 
     @Override
