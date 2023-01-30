@@ -40,7 +40,9 @@ import com.example.practise2048champs.pregame.PreGameFragment;
 import com.google.android.gms.games.AchievementsClient;
 import com.google.android.gms.games.AuthenticationResult;
 import com.google.android.gms.games.GamesSignInClient;
+import com.google.android.gms.games.LeaderboardsClient;
 import com.google.android.gms.games.PlayGames;
+import com.google.android.gms.games.Player;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -262,15 +264,25 @@ public class MainActivity extends AppCompatActivity implements
                 if (isAuthenticated) {
                     isUserSignedIn = true;
                     hideSignInButtonThroughoutApp();
-                    /* TODO -> Un-comment the following code when we want to make use of playerId of the GPGS signed in user
                     PlayGames.getPlayersClient(MainActivity.this).getCurrentPlayer()
                             .addOnCompleteListener(new OnCompleteListener<Player>() {
                         @Override
                         public void onComplete(@NonNull Task<Player> task) {
                             String playerId = task.getResult().getPlayerId();
+                            String previousSignedInPlayerId = sharedPreferences.getString("previousSignedInPlayerId",
+                                    "<Default Signed In Player>");
+                            String currentSignedInPlayerId = sharedPreferences.getString("currentSignedInPlayerId",
+                                    previousSignedInPlayerId); // Expected currently signed in player
+                            if (currentSignedInPlayerId.equals(playerId)) { // The previous player has
+                                // All is good here
+                            } else {
+                                sharedPreferences.edit().putString("previousSignedInPlayerId",
+                                    currentSignedInPlayerId).apply();
+                                sharedPreferences.edit().putString("currentSignedInPlayerId", playerId).apply();
+                                updateAchievementsProgress();
+                            }
                         }
                     });
-                    */
                 } else {
                     isUserSignedIn = false;
                     revealSignInButtonThroughoutApp();
@@ -344,6 +356,10 @@ public class MainActivity extends AppCompatActivity implements
                 }
             }
         }
+    }
+
+    private void updateAchievementsProgress() {
+        // TODO -> Complete the code to update the Achievements Progress data for the newly signed in player
     }
 
     private void updateCoins(int currentCoins) {
