@@ -37,6 +37,7 @@ import com.example.practise2048champs.fragments.NavigationFragment;
 import com.example.practise2048champs.fragments.SettingsFragment;
 import com.example.practise2048champs.fragments.ShopFragment;
 import com.example.practise2048champs.pregame.PreGameFragment;
+import com.google.android.gms.games.AchievementsClient;
 import com.google.android.gms.games.AuthenticationResult;
 import com.google.android.gms.games.GamesSignInClient;
 import com.google.android.gms.games.PlayGames;
@@ -67,6 +68,8 @@ public class MainActivity extends AppCompatActivity implements
     // Attributes for Google Play Games Services (GPGS) features
     private boolean isUserSignedIn;
     private GamesSignInClient gamesSignInClient;
+    private static final int RC_ACHIEVEMENT_UI = 9003;
+    private AchievementsClient achievementsClient;
 
     // Attributes required for In app updates feature
     public static final int UPDATE_REQUEST_CODE = 100;
@@ -77,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements
         isUserSignedIn = true;
         sharedPreferences = getSharedPreferences("com.nerdcoredevelopment.game2048champsfinal", Context.MODE_PRIVATE);
         gamesSignInClient = PlayGames.getGamesSignInClient(MainActivity.this);
+        achievementsClient = PlayGames.getAchievementsClient(MainActivity.this);
     }
 
     @Override
@@ -362,14 +366,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onNavigationFragmentAchievementsClicked() {
-        new CountDownTimer(1000, 10000) {
-            @Override
-            public void onTick(long l) {}
-            @Override
-            public void onFinish() {
-                Toast.makeText(MainActivity.this, "Achievements Clicked", Toast.LENGTH_SHORT).show();
-            }
-        }.start();
+
     }
 
     @Override
