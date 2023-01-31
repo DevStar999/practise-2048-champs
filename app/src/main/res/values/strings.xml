@@ -36,6 +36,8 @@
     <string name="leaderboard_5x5__block_2_corners_sq." translatable="false">CgkIj57DhMoUEAIQEg</string>
     <!--leaderboard 4x6 - Block 2 Corners Rec.-->
     <string name="leaderboard_4x6__block_2_corners_rec." translatable="false">CgkIj57DhMoUEAIQEw</string>
+    <!--leaderboard for Arriving Game Modes-->
+    <string name="leaderboard_arriving_game_modes" translatable="false">00000</string>
     <!--leaderboard Coins Leaderboard-->
     <string name="leaderboard_coins_leaderboard" translatable="false">CgkIj57DhMoUEAIQFA</string>
 </resources>
