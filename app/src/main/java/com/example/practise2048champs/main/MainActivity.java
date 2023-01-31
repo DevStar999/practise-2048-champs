@@ -31,6 +31,7 @@ import com.example.practise2048champs.dialogs.ErrorOccurredDialog;
 import com.example.practise2048champs.dialogs.GameExitDialog;
 import com.example.practise2048champs.dialogs.UpdateAppStaticAvailableDialog;
 import com.example.practise2048champs.dialogs.UpdateAppStaticUnavailableDialog;
+import com.example.practise2048champs.enums.GameModes;
 import com.example.practise2048champs.fragments.BlockDesignFragment;
 import com.example.practise2048champs.fragments.LeaderboardsFragment;
 import com.example.practise2048champs.fragments.LogoLottieFragment;
@@ -39,11 +40,15 @@ import com.example.practise2048champs.fragments.SettingsFragment;
 import com.example.practise2048champs.fragments.ShopFragment;
 import com.example.practise2048champs.fragments.PreGameFragment;
 import com.google.android.gms.games.AchievementsClient;
+import com.google.android.gms.games.AnnotatedData;
 import com.google.android.gms.games.AuthenticationResult;
 import com.google.android.gms.games.GamesSignInClient;
 import com.google.android.gms.games.LeaderboardsClient;
 import com.google.android.gms.games.PlayGames;
 import com.google.android.gms.games.Player;
+import com.google.android.gms.games.leaderboard.Leaderboard;
+import com.google.android.gms.games.leaderboard.LeaderboardBuffer;
+import com.google.android.gms.games.leaderboard.LeaderboardVariant;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -58,7 +63,9 @@ import com.google.android.play.core.install.model.InstallStatus;
 import com.google.android.play.core.install.model.UpdateAvailability;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements
         NavigationFragment.OnNavigationFragmentInteractionListener,
@@ -76,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements
     private AchievementsClient achievementsClient;
     public static final int RC_LEADERBOARD_UI = 9004;
     private LeaderboardsClient leaderboardsClient;
+    private Map<String, GameModes> leaderboardIdToGameMode;
 
     // Attributes required for In app updates feature
     public static final int UPDATE_REQUEST_CODE = 100;
@@ -88,6 +96,18 @@ public class MainActivity extends AppCompatActivity implements
         gamesSignInClient = PlayGames.getGamesSignInClient(MainActivity.this);
         achievementsClient = PlayGames.getAchievementsClient(MainActivity.this);
         leaderboardsClient = PlayGames.getLeaderboardsClient(MainActivity.this);
+        leaderboardIdToGameMode = new HashMap<>() {{
+            put(getString(R.string.leaderboard_4x4__square), GameModes.SQUARE_4X4);
+            put(getString(R.string.leaderboard_5x5__square), GameModes.SQUARE_5X5);
+            put(getString(R.string.leaderboard_6x6__square), GameModes.SQUARE_6X6);
+            put(getString(R.string.leaderboard_4x5__rectangle), GameModes.RECTANGLE_4X5);
+            put(getString(R.string.leaderboard_4x6__rectangle), GameModes.RECTANGLE_4X6);
+            put(getString(R.string.leaderboard_5x6__rectangle), GameModes.RECTANGLE_5X6);
+            put(getString(R.string.leaderboard_5x5__block_middle_sq_), GameModes.BLOCK_MIDDLE_SQUARE_5X5);
+            put(getString(R.string.leaderboard_4x6__block_middle_rec_), GameModes.BLOCK_MIDDLE_RECTANGLE_4X6);
+            put(getString(R.string.leaderboard_5x5__block_2_corners_sq_), GameModes.BLOCK_2_CORNERS_SQUARE_5X5);
+            put(getString(R.string.leaderboard_4x6__block_2_corners_rec_), GameModes.BLOCK_2_CORNERS_RECTANGLE_4X6);
+        }};
     }
 
     @Override
@@ -285,6 +305,7 @@ public class MainActivity extends AppCompatActivity implements
                                     currentSignedInPlayerId).apply();
                                 sharedPreferences.edit().putString("currentSignedInPlayerId", playerId).apply();
                                 updateAchievementsProgress();
+                                updateLeaderboardsProgress(0);
                             }
                         }
                     });
@@ -313,6 +334,26 @@ public class MainActivity extends AppCompatActivity implements
                 if (isAuthenticated) {
                     isUserSignedIn = true;
                     hideSignInButtonThroughoutApp();
+                    PlayGames.getPlayersClient(MainActivity.this).getCurrentPlayer()
+                            .addOnCompleteListener(new OnCompleteListener<Player>() {
+                                @Override
+                        public void onComplete(@NonNull Task<Player> task) {
+                            String playerId = task.getResult().getPlayerId();
+                            String previousSignedInPlayerId = sharedPreferences.getString("previousSignedInPlayerId",
+                                    "<Default Signed In Player>");
+                            String currentSignedInPlayerId = sharedPreferences.getString("currentSignedInPlayerId",
+                                    previousSignedInPlayerId); // Expected currently signed in player
+                            if (currentSignedInPlayerId.equals(playerId)) { // The previous player has
+                                // All is good here
+                            } else {
+                                sharedPreferences.edit().putString("previousSignedInPlayerId",
+                                        currentSignedInPlayerId).apply();
+                                sharedPreferences.edit().putString("currentSignedInPlayerId", playerId).apply();
+                                updateAchievementsProgress();
+                                updateLeaderboardsProgress(0);
+                            }
+                        }
+                    });
                 } else {
                     isUserSignedIn = false;
                     revealSignInButtonThroughoutApp();
@@ -342,6 +383,26 @@ public class MainActivity extends AppCompatActivity implements
                 if (isAuthenticated) {
                     isUserSignedIn = true;
                     hideSignInButtonThroughoutApp();
+                    PlayGames.getPlayersClient(MainActivity.this).getCurrentPlayer()
+                            .addOnCompleteListener(new OnCompleteListener<Player>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Player> task) {
+                            String playerId = task.getResult().getPlayerId();
+                            String previousSignedInPlayerId = sharedPreferences.getString("previousSignedInPlayerId",
+                                    "<Default Signed In Player>");
+                            String currentSignedInPlayerId = sharedPreferences.getString("currentSignedInPlayerId",
+                                    previousSignedInPlayerId); // Expected currently signed in player
+                            if (currentSignedInPlayerId.equals(playerId)) { // The previous player has
+                                // All is good here
+                            } else {
+                                sharedPreferences.edit().putString("previousSignedInPlayerId",
+                                        currentSignedInPlayerId).apply();
+                                sharedPreferences.edit().putString("currentSignedInPlayerId", playerId).apply();
+                                updateAchievementsProgress();
+                                updateLeaderboardsProgress(0);
+                            }
+                        }
+                    });
                 } else {
                     isUserSignedIn = false;
                     revealSignInButtonThroughoutApp();
@@ -394,6 +455,51 @@ public class MainActivity extends AppCompatActivity implements
 
     private void updateAchievementsProgress() {
         // TODO -> Complete the code to update the Achievements Progress data for the newly signed in player
+    }
+
+    private void updateLeaderboardsProgress(int retryAttempt) {
+        if (retryAttempt >= 3) {
+            return;
+        }
+
+        leaderboardsClient.loadLeaderboardMetadata(false)
+                .addOnSuccessListener(new OnSuccessListener<AnnotatedData<LeaderboardBuffer>>() {
+            @Override
+            public void onSuccess(AnnotatedData<LeaderboardBuffer> leaderboardBufferAnnotatedData) {
+                LeaderboardBuffer leaderboardBuffer = leaderboardBufferAnnotatedData.get();
+                if (leaderboardBuffer != null) {
+                    int count = leaderboardBuffer.getCount();
+                    for (int index = 0; index < count; index++) {
+                        Leaderboard leaderboard = leaderboardBuffer.get(index);
+                        String leaderboardId = leaderboard.getLeaderboardId();
+                        if (leaderboardIdToGameMode.containsKey(leaderboardId)) {
+                            GameModes currentGameMode = leaderboardIdToGameMode.get(leaderboardId);
+                            List<LeaderboardVariant> leaderboardVariants = leaderboard.getVariants();
+                            for (int variantIndex = 0; variantIndex < leaderboardVariants.size(); variantIndex++) {
+                                LeaderboardVariant currentVariant = leaderboardVariants.get(variantIndex);
+                                if (currentVariant.getTimeSpan() == LeaderboardVariant.TIME_SPAN_ALL_TIME &&
+                                        currentVariant.getCollection() == LeaderboardVariant.COLLECTION_PUBLIC) {
+                                    long leaderboardBestScore = currentVariant.getRawPlayerScore();
+                                    long gameModeSavedBestScore = sharedPreferences.getLong("bestScore" + " " +
+                                            currentGameMode.getMode() + " " + currentGameMode.getDimensions(), 0L);
+                                    if (leaderboardBestScore < gameModeSavedBestScore) {
+                                        leaderboardsClient.submitScore(leaderboardId, gameModeSavedBestScore);
+                                    } else {
+                                        sharedPreferences.edit().putLong("bestScore" + " " + currentGameMode.getMode()
+                                                + " " + currentGameMode.getDimensions(), leaderboardBestScore).apply();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                updateLeaderboardsProgress(retryAttempt + 1);
+            }
+        });
     }
 
     private void updateCoins(int currentCoins) {
