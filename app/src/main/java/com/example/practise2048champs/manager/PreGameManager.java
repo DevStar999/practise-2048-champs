@@ -1,4 +1,4 @@
-package com.example.practise2048champs.pregame;
+package com.example.practise2048champs.manager;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;

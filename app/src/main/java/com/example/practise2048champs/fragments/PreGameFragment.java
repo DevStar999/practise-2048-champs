@@ -1,4 +1,4 @@
-package com.example.practise2048champs.pregame;
+package com.example.practise2048champs.fragments;
 
 import android.app.Activity;
 import android.content.Context;
@@ -20,6 +20,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.example.practise2048champs.R;
 import com.example.practise2048champs.enums.GameModes;
 import com.example.practise2048champs.enums.GameStates;
+import com.example.practise2048champs.manager.PreGameManager;
 
 import java.util.List;
 
