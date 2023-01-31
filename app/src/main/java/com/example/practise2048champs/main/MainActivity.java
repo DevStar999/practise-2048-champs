@@ -438,6 +438,7 @@ public class MainActivity extends AppCompatActivity implements
                     for (int index = 0; index < count; index++) {
                         Leaderboard leaderboard = leaderboardBuffer.get(index);
                         String leaderboardId = leaderboard.getLeaderboardId();
+                        // Update progress related to the best scores in various game modes
                         if (leaderboardIdToGameMode.containsKey(leaderboardId)) {
                             GameModes currentGameMode = leaderboardIdToGameMode.get(leaderboardId);
                             List<LeaderboardVariant> leaderboardVariants = leaderboard.getVariants();
@@ -453,6 +454,23 @@ public class MainActivity extends AppCompatActivity implements
                                     } else {
                                         sharedPreferences.edit().putLong("bestScore" + " " + currentGameMode.getMode()
                                                 + " " + currentGameMode.getDimensions(), leaderboardBestScore).apply();
+                                    }
+                                }
+                            }
+                        }
+                        // Updating the progress related to the most number of coins saved
+                        if (leaderboardId.equals(getString(R.string.leaderboard_coins_leaderboard))) {
+                            List<LeaderboardVariant> leaderboardVariants = leaderboard.getVariants();
+                            for (int variantIndex = 0; variantIndex < leaderboardVariants.size(); variantIndex++) {
+                                LeaderboardVariant currentVariant = leaderboardVariants.get(variantIndex);
+                                if (currentVariant.getTimeSpan() == LeaderboardVariant.TIME_SPAN_ALL_TIME &&
+                                        currentVariant.getCollection() == LeaderboardVariant.COLLECTION_PUBLIC) {
+                                    int leaderboardMostCoins = (int) currentVariant.getRawPlayerScore();
+                                    int savedMostCoins = sharedPreferences.getInt("mostCoins", 0);
+                                    if (leaderboardMostCoins < savedMostCoins) {
+                                        leaderboardsClient.submitScore(leaderboardId, savedMostCoins);
+                                    } else {
+                                        sharedPreferences.edit().putInt("mostCoins", leaderboardMostCoins).apply();
                                     }
                                 }
                             }
@@ -479,6 +497,13 @@ public class MainActivity extends AppCompatActivity implements
                     ((ShopFragment) currentFragment).updateCoinsShopFragment(currentCoins);
                 }
             }
+        }
+
+        // Check if current coins count is greater than the highest most coins count
+        int mostCoins = sharedPreferences.getInt("mostCoins", 0);
+        if (currentCoins >= mostCoins + 1000) {
+            sharedPreferences.edit().putInt("mostCoins", currentCoins).apply();
+            leaderboardsClient.submitScore(getString(R.string.leaderboard_coins_leaderboard), currentCoins);
         }
     }
 
