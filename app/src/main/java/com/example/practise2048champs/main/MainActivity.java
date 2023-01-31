@@ -32,11 +32,12 @@ import com.example.practise2048champs.dialogs.GameExitDialog;
 import com.example.practise2048champs.dialogs.UpdateAppStaticAvailableDialog;
 import com.example.practise2048champs.dialogs.UpdateAppStaticUnavailableDialog;
 import com.example.practise2048champs.fragments.BlockDesignFragment;
+import com.example.practise2048champs.fragments.LeaderboardsFragment;
 import com.example.practise2048champs.fragments.LogoLottieFragment;
 import com.example.practise2048champs.fragments.NavigationFragment;
 import com.example.practise2048champs.fragments.SettingsFragment;
 import com.example.practise2048champs.fragments.ShopFragment;
-import com.example.practise2048champs.pregame.PreGameFragment;
+import com.example.practise2048champs.fragments.PreGameFragment;
 import com.google.android.gms.games.AchievementsClient;
 import com.google.android.gms.games.AuthenticationResult;
 import com.google.android.gms.games.GamesSignInClient;
@@ -62,9 +63,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements
         NavigationFragment.OnNavigationFragmentInteractionListener,
         PreGameFragment.OnPreGameFragmentInteractionListener,
+        LeaderboardsFragment.OnLeaderboardsFragmentInteractionListener,
+        ShopFragment.OnShopFragmentInteractionListener,
         SettingsFragment.OnSettingsFragmentInteractionListener,
-        BlockDesignFragment.OnBlockDesignFragmentInteractionListener,
-        ShopFragment.OnShopFragmentInteractionListener {
+        BlockDesignFragment.OnBlockDesignFragmentInteractionListener {
     private SharedPreferences sharedPreferences;
 
     // Attributes for Google Play Games Services (GPGS) features
@@ -72,6 +74,8 @@ public class MainActivity extends AppCompatActivity implements
     private GamesSignInClient gamesSignInClient;
     private static final int RC_ACHIEVEMENT_UI = 9003;
     private AchievementsClient achievementsClient;
+    public static final int RC_LEADERBOARD_UI = 9004;
+    private LeaderboardsClient leaderboardsClient;
 
     // Attributes required for In app updates feature
     public static final int UPDATE_REQUEST_CODE = 100;
@@ -83,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements
         sharedPreferences = getSharedPreferences("com.nerdcoredevelopment.game2048champsfinal", Context.MODE_PRIVATE);
         gamesSignInClient = PlayGames.getGamesSignInClient(MainActivity.this);
         achievementsClient = PlayGames.getAchievementsClient(MainActivity.this);
+        leaderboardsClient = PlayGames.getLeaderboardsClient(MainActivity.this);
     }
 
     @Override
@@ -313,7 +318,7 @@ public class MainActivity extends AppCompatActivity implements
                     revealSignInButtonThroughoutApp();
                     if (isInternetConnected()) {
                         /* TODO -> Give the message to the user that he/she cannot access this feature unless they
-                                   are signed in
+                                   are signed in (Achievements Feature)
                         */
                     } else { // Internet is NOT connected
                         Toast.makeText(MainActivity.this, "Network connection failed. Please check " +
@@ -323,6 +328,35 @@ public class MainActivity extends AppCompatActivity implements
 
                 if (isUserSignedIn) {
                     showAchievementsDisplayPostVerification();
+                }
+            }
+        });
+    }
+
+    private void verifyPlayGamesSignInPreLeaderboardsDisplay() {
+        gamesSignInClient.isAuthenticated().addOnCompleteListener(new OnCompleteListener<AuthenticationResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthenticationResult> isAuthenticatedTask) {
+                boolean isAuthenticated = (isAuthenticatedTask.isSuccessful()
+                        && isAuthenticatedTask.getResult().isAuthenticated());
+                if (isAuthenticated) {
+                    isUserSignedIn = true;
+                    hideSignInButtonThroughoutApp();
+                } else {
+                    isUserSignedIn = false;
+                    revealSignInButtonThroughoutApp();
+                    if (isInternetConnected()) {
+                        /* TODO -> Give the message to the user that he/she cannot access this feature unless they
+                                   are signed in (Leaderboards Feature)
+                        */
+                    } else { // Internet is NOT connected
+                        Toast.makeText(MainActivity.this, "Network connection failed. Please check " +
+                                "Internet connectivity", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                if (isUserSignedIn) {
+                    showLeaderboardsDisplayPostVerification();
                 }
             }
         });
@@ -445,9 +479,42 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
+    private void showLeaderboardsDisplayPostVerification() {
+        // If LeaderboardsFragment was opened and is currently on top, then return
+        int countOfFragments = getSupportFragmentManager().getFragments().size();
+        if (countOfFragments > 0) {
+            Fragment topMostFragment = getSupportFragmentManager().getFragments().get(countOfFragments-1);
+            if (topMostFragment != null && topMostFragment.getTag() != null && !topMostFragment.getTag().isEmpty()
+                    && topMostFragment.getTag().equals("LEADERBOARDS_FRAGMENT")) {
+                return;
+            }
+        }
+
+        LeaderboardsFragment fragment = new LeaderboardsFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right,
+                R.anim.enter_from_right, R.anim.exit_to_right);
+        transaction.addToBackStack(null);
+        transaction.add(R.id.main_activity_full_screen_fragment_container,
+                fragment, "LEADERBOARDS_FRAGMENT").commit();
+    }
+
     @Override
     public void onNavigationFragmentLeaderboardsClicked() {
-        Toast.makeText(MainActivity.this, "Leaderboards Clicked", Toast.LENGTH_SHORT).show();
+        if (!isUserSignedIn) {
+            gamesSignInClient.signIn();
+            new CountDownTimer(1000, 10000) {
+                @Override
+                public void onTick(long l) {}
+                @Override
+                public void onFinish() {
+                    verifyPlayGamesSignInPreLeaderboardsDisplay();
+                }
+            }.start();
+        } else {
+            showLeaderboardsDisplayPostVerification();
+        }
     }
 
     @Override
@@ -512,6 +579,32 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onPreGameFragmentInteractionShowArrivingFeatureDialog() {
         new ArrivingFeatureDialog(this).show();
+    }
+
+    @Override
+    public void onLeaderboardsFragmentInteractionBackClicked() {
+        onBackPressed();
+    }
+
+    @Override
+    public void onLeaderboardsFragmentInteractionShowLeaderboard(int leaderboardStringResourceId) {
+        leaderboardsClient.getLeaderboardIntent(getString(leaderboardStringResourceId))
+            .addOnSuccessListener(new OnSuccessListener<Intent>() {
+                @Override
+                public void onSuccess(Intent intent) {
+                    startActivityForResult(intent, RC_LEADERBOARD_UI);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    if (!isInternetConnected()) { // Internet is not connected which can be the cause of this failure
+                        Toast.makeText(MainActivity.this, "Network connection failed. Please check " +
+                                "Internet connectivity", Toast.LENGTH_LONG).show();
+                    } else { // Some unknown error has occurred
+                        new ErrorOccurredDialog(MainActivity.this, "Oops! Something went wrong").show();
+                    }
+                }
+            });
     }
 
     @Override
