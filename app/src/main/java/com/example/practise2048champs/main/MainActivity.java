@@ -280,6 +280,29 @@ public class MainActivity extends AppCompatActivity implements
         });
     }
 
+    private void checkForNewSignedInPlayer() {
+        PlayGames.getPlayersClient(MainActivity.this).getCurrentPlayer()
+                .addOnCompleteListener(new OnCompleteListener<Player>() {
+            @Override
+            public void onComplete(@NonNull Task<Player> task) {
+                String playerId = task.getResult().getPlayerId();
+                String previousSignedInPlayerId = sharedPreferences.getString("previousSignedInPlayerId",
+                        "<Default Signed In Player>");
+                String currentSignedInPlayerId = sharedPreferences.getString("currentSignedInPlayerId",
+                        previousSignedInPlayerId); // Expected currently signed in player
+                if (currentSignedInPlayerId.equals(playerId)) { // The previous player has
+                    // All is good here
+                } else {
+                    sharedPreferences.edit().putString("previousSignedInPlayerId",
+                            currentSignedInPlayerId).apply();
+                    sharedPreferences.edit().putString("currentSignedInPlayerId", playerId).apply();
+                    updateAchievementsProgress();
+                    updateLeaderboardsProgress(0);
+                }
+            }
+        });
+    }
+
     private void verifyPlayGamesSignIn(boolean isSignInAttemptManual) {
         gamesSignInClient.isAuthenticated().addOnCompleteListener(new OnCompleteListener<AuthenticationResult>() {
             @Override
@@ -289,26 +312,7 @@ public class MainActivity extends AppCompatActivity implements
                 if (isAuthenticated) {
                     isUserSignedIn = true;
                     hideSignInButtonThroughoutApp();
-                    PlayGames.getPlayersClient(MainActivity.this).getCurrentPlayer()
-                            .addOnCompleteListener(new OnCompleteListener<Player>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Player> task) {
-                            String playerId = task.getResult().getPlayerId();
-                            String previousSignedInPlayerId = sharedPreferences.getString("previousSignedInPlayerId",
-                                    "<Default Signed In Player>");
-                            String currentSignedInPlayerId = sharedPreferences.getString("currentSignedInPlayerId",
-                                    previousSignedInPlayerId); // Expected currently signed in player
-                            if (currentSignedInPlayerId.equals(playerId)) { // The previous player has
-                                // All is good here
-                            } else {
-                                sharedPreferences.edit().putString("previousSignedInPlayerId",
-                                    currentSignedInPlayerId).apply();
-                                sharedPreferences.edit().putString("currentSignedInPlayerId", playerId).apply();
-                                updateAchievementsProgress();
-                                updateLeaderboardsProgress(0);
-                            }
-                        }
-                    });
+                    checkForNewSignedInPlayer();
                 } else {
                     isUserSignedIn = false;
                     revealSignInButtonThroughoutApp();
@@ -334,26 +338,7 @@ public class MainActivity extends AppCompatActivity implements
                 if (isAuthenticated) {
                     isUserSignedIn = true;
                     hideSignInButtonThroughoutApp();
-                    PlayGames.getPlayersClient(MainActivity.this).getCurrentPlayer()
-                            .addOnCompleteListener(new OnCompleteListener<Player>() {
-                                @Override
-                        public void onComplete(@NonNull Task<Player> task) {
-                            String playerId = task.getResult().getPlayerId();
-                            String previousSignedInPlayerId = sharedPreferences.getString("previousSignedInPlayerId",
-                                    "<Default Signed In Player>");
-                            String currentSignedInPlayerId = sharedPreferences.getString("currentSignedInPlayerId",
-                                    previousSignedInPlayerId); // Expected currently signed in player
-                            if (currentSignedInPlayerId.equals(playerId)) { // The previous player has
-                                // All is good here
-                            } else {
-                                sharedPreferences.edit().putString("previousSignedInPlayerId",
-                                        currentSignedInPlayerId).apply();
-                                sharedPreferences.edit().putString("currentSignedInPlayerId", playerId).apply();
-                                updateAchievementsProgress();
-                                updateLeaderboardsProgress(0);
-                            }
-                        }
-                    });
+                    checkForNewSignedInPlayer();
                 } else {
                     isUserSignedIn = false;
                     revealSignInButtonThroughoutApp();
@@ -383,26 +368,7 @@ public class MainActivity extends AppCompatActivity implements
                 if (isAuthenticated) {
                     isUserSignedIn = true;
                     hideSignInButtonThroughoutApp();
-                    PlayGames.getPlayersClient(MainActivity.this).getCurrentPlayer()
-                            .addOnCompleteListener(new OnCompleteListener<Player>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Player> task) {
-                            String playerId = task.getResult().getPlayerId();
-                            String previousSignedInPlayerId = sharedPreferences.getString("previousSignedInPlayerId",
-                                    "<Default Signed In Player>");
-                            String currentSignedInPlayerId = sharedPreferences.getString("currentSignedInPlayerId",
-                                    previousSignedInPlayerId); // Expected currently signed in player
-                            if (currentSignedInPlayerId.equals(playerId)) { // The previous player has
-                                // All is good here
-                            } else {
-                                sharedPreferences.edit().putString("previousSignedInPlayerId",
-                                        currentSignedInPlayerId).apply();
-                                sharedPreferences.edit().putString("currentSignedInPlayerId", playerId).apply();
-                                updateAchievementsProgress();
-                                updateLeaderboardsProgress(0);
-                            }
-                        }
-                    });
+                    checkForNewSignedInPlayer();
                 } else {
                     isUserSignedIn = false;
                     revealSignInButtonThroughoutApp();
