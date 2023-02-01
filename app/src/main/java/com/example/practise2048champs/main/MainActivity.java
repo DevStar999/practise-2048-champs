@@ -309,7 +309,11 @@ public class MainActivity extends AppCompatActivity implements
                     revealSignInButtonThroughoutApp();
                     if (isSignInAttemptManual) {
                         if (isInternetConnected()) {
-                            // TODO -> Show a dialog for GPGS Sign In Troubleshooting
+                            /* TODO -> Replace this toast with something better like a dialog etc. and more descriptive
+                                       (Sign In feature)
+                            */
+                            Toast.makeText(MainActivity.this, "Download the 'Google Play Games' app and " +
+                                    "select an account to play this game", Toast.LENGTH_LONG).show();
                         } else { // Internet is NOT connected
                             Toast.makeText(MainActivity.this, "Network connection failed. Please check " +
                                     "Internet connectivity", Toast.LENGTH_LONG).show();
@@ -334,9 +338,11 @@ public class MainActivity extends AppCompatActivity implements
                     isUserSignedIn = false;
                     revealSignInButtonThroughoutApp();
                     if (isInternetConnected()) {
-                        /* TODO -> Give the message to the user that he/she cannot access this feature unless they
-                                   are signed in (Achievements Feature)
+                        /* TODO -> Replace this toast with something better like a dialog etc. and more descriptive
+                                   (Achievements feature)
                         */
+                        Toast.makeText(MainActivity.this, "Cannot access this feature without being Signed In",
+                                Toast.LENGTH_LONG).show();
                     } else { // Internet is NOT connected
                         Toast.makeText(MainActivity.this, "Network connection failed. Please check " +
                                 "Internet connectivity", Toast.LENGTH_LONG).show();
@@ -364,9 +370,11 @@ public class MainActivity extends AppCompatActivity implements
                     isUserSignedIn = false;
                     revealSignInButtonThroughoutApp();
                     if (isInternetConnected()) {
-                        /* TODO -> Give the message to the user that he/she cannot access this feature unless they
-                                   are signed in (Leaderboards Feature)
+                        /* TODO -> Replace this toast with something better like a dialog etc. and more descriptive
+                                   (Leaderboards feature)
                         */
+                        Toast.makeText(MainActivity.this, "Ensure you are Signed In and 'Everyone can see your " +
+                                "game activity' in 'Google Play Games' app settings", Toast.LENGTH_LONG).show();
                     } else { // Internet is NOT connected
                         Toast.makeText(MainActivity.this, "Network connection failed. Please check " +
                                 "Internet connectivity", Toast.LENGTH_LONG).show();
