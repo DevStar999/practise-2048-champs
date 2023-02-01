@@ -32,6 +32,8 @@ import com.example.practise2048champs.dialogs.GameExitDialog;
 import com.example.practise2048champs.dialogs.UpdateAppStaticAvailableDialog;
 import com.example.practise2048champs.dialogs.UpdateAppStaticUnavailableDialog;
 import com.example.practise2048champs.enums.GameModes;
+import com.example.practise2048champs.enums.ScoringAchievements;
+import com.example.practise2048champs.enums.TileUnlockAchievements;
 import com.example.practise2048champs.fragments.BlockDesignFragment;
 import com.example.practise2048champs.fragments.LeaderboardsFragment;
 import com.example.practise2048champs.fragments.LogoLottieFragment;
@@ -46,6 +48,8 @@ import com.google.android.gms.games.GamesSignInClient;
 import com.google.android.gms.games.LeaderboardsClient;
 import com.google.android.gms.games.PlayGames;
 import com.google.android.gms.games.Player;
+import com.google.android.gms.games.achievement.Achievement;
+import com.google.android.gms.games.achievement.AchievementBuffer;
 import com.google.android.gms.games.leaderboard.Leaderboard;
 import com.google.android.gms.games.leaderboard.LeaderboardBuffer;
 import com.google.android.gms.games.leaderboard.LeaderboardVariant;
@@ -83,7 +87,6 @@ public class MainActivity extends AppCompatActivity implements
     private AchievementsClient achievementsClient;
     public static final int RC_LEADERBOARD_UI = 9004;
     private LeaderboardsClient leaderboardsClient;
-    private Map<String, GameModes> leaderboardIdToGameMode;
 
     // Attributes required for In app updates feature
     public static final int UPDATE_REQUEST_CODE = 100;
@@ -96,18 +99,6 @@ public class MainActivity extends AppCompatActivity implements
         gamesSignInClient = PlayGames.getGamesSignInClient(MainActivity.this);
         achievementsClient = PlayGames.getAchievementsClient(MainActivity.this);
         leaderboardsClient = PlayGames.getLeaderboardsClient(MainActivity.this);
-        leaderboardIdToGameMode = new HashMap<>() {{
-            put(getString(R.string.leaderboard_4x4__square), GameModes.SQUARE_4X4);
-            put(getString(R.string.leaderboard_5x5__square), GameModes.SQUARE_5X5);
-            put(getString(R.string.leaderboard_6x6__square), GameModes.SQUARE_6X6);
-            put(getString(R.string.leaderboard_4x5__rectangle), GameModes.RECTANGLE_4X5);
-            put(getString(R.string.leaderboard_4x6__rectangle), GameModes.RECTANGLE_4X6);
-            put(getString(R.string.leaderboard_5x6__rectangle), GameModes.RECTANGLE_5X6);
-            put(getString(R.string.leaderboard_5x5__block_middle_sq_), GameModes.BLOCK_MIDDLE_SQUARE_5X5);
-            put(getString(R.string.leaderboard_4x6__block_middle_rec_), GameModes.BLOCK_MIDDLE_RECTANGLE_4X6);
-            put(getString(R.string.leaderboard_5x5__block_2_corners_sq_), GameModes.BLOCK_2_CORNERS_SQUARE_5X5);
-            put(getString(R.string.leaderboard_4x6__block_2_corners_rec_), GameModes.BLOCK_2_CORNERS_RECTANGLE_4X6);
-        }};
     }
 
     @Override
@@ -296,7 +287,7 @@ public class MainActivity extends AppCompatActivity implements
                     sharedPreferences.edit().putString("previousSignedInPlayerId",
                             currentSignedInPlayerId).apply();
                     sharedPreferences.edit().putString("currentSignedInPlayerId", playerId).apply();
-                    updateAchievementsProgress();
+                    updateAchievementsProgress(0);
                     updateLeaderboardsProgress(0);
                 }
             }
@@ -419,8 +410,64 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    private void updateAchievementsProgress() {
-        // TODO -> Complete the code to update the Achievements Progress data for the newly signed in player
+    private void updateAchievementsProgress(int retryAttempt) {
+        if (retryAttempt >= 3) {
+            return;
+        }
+
+        achievementsClient.load(false).addOnSuccessListener(new OnSuccessListener<AnnotatedData<AchievementBuffer>>() {
+            @Override
+            public void onSuccess(AnnotatedData<AchievementBuffer> achievementBufferAnnotatedData) {
+                AchievementBuffer achievementBuffer = achievementBufferAnnotatedData.get();
+                if (achievementBuffer != null) {
+                    int count = achievementBuffer.getCount();
+                    for (int index = 0; index < count; index++) {
+                        Achievement achievement = achievementBuffer.get(index);
+                        String achievementId = achievement.getAchievementId();
+                        // Update the progress related to ScoringAchievements
+                        for (int scoringAchievementIndex = 0; scoringAchievementIndex < ScoringAchievements.values().length;
+                             scoringAchievementIndex++) {
+                            ScoringAchievements currentScoringAchievement =
+                                    ScoringAchievements.values()[scoringAchievementIndex];
+                            if (achievementId.equals(getString(currentScoringAchievement.getAchievementStringResourceId()))) {
+                                if (achievement.getState() == Achievement.STATE_UNLOCKED) {
+                                    sharedPreferences.edit().putBoolean("scoringAchievement" + "_" +
+                                            getString(currentScoringAchievement.getAchievementStringResourceId()), true).apply();
+                                } else {
+                                    sharedPreferences.edit().putBoolean("scoringAchievement" + "_" +
+                                            getString(currentScoringAchievement.getAchievementStringResourceId()), false).apply();
+                                }
+                            }
+                        }
+                        
+                        // Update the progress related to TileUnlockAchievements
+                        for (int tileUnlockAchievementIndex = 0; tileUnlockAchievementIndex < TileUnlockAchievements.values().length;
+                             tileUnlockAchievementIndex++) {
+                            TileUnlockAchievements currentTileUnlockAchievement =
+                                    TileUnlockAchievements.values()[tileUnlockAchievementIndex];
+                            if (achievementId.equals(getString(currentTileUnlockAchievement.getAchievementStringResourceId()))) {
+                                if (achievement.getState() == Achievement.STATE_UNLOCKED) {
+                                    sharedPreferences.edit().putBoolean("tileUnlockAchievement" + "_" +
+                                            getString(currentTileUnlockAchievement.getAchievementStringResourceId()), true).apply();
+                                } else {
+                                    sharedPreferences.edit().putBoolean("tileUnlockAchievement" + "_" +
+                                            getString(currentTileUnlockAchievement.getAchievementStringResourceId()), false).apply();
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                if (achievementBuffer != null) {
+                    achievementBuffer.release();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                updateAchievementsProgress(retryAttempt + 1);
+            }
+        });
     }
 
     private void updateLeaderboardsProgress(int retryAttempt) {
@@ -439,25 +486,29 @@ public class MainActivity extends AppCompatActivity implements
                         Leaderboard leaderboard = leaderboardBuffer.get(index);
                         String leaderboardId = leaderboard.getLeaderboardId();
                         // Update progress related to the best scores in various game modes
-                        if (leaderboardIdToGameMode.containsKey(leaderboardId)) {
-                            GameModes currentGameMode = leaderboardIdToGameMode.get(leaderboardId);
-                            List<LeaderboardVariant> leaderboardVariants = leaderboard.getVariants();
-                            for (int variantIndex = 0; variantIndex < leaderboardVariants.size(); variantIndex++) {
-                                LeaderboardVariant currentVariant = leaderboardVariants.get(variantIndex);
-                                if (currentVariant.getTimeSpan() == LeaderboardVariant.TIME_SPAN_ALL_TIME &&
-                                        currentVariant.getCollection() == LeaderboardVariant.COLLECTION_PUBLIC) {
-                                    long leaderboardBestScore = currentVariant.getRawPlayerScore();
-                                    long gameModeSavedBestScore = sharedPreferences.getLong("bestScore" + " " +
-                                            currentGameMode.getMode() + " " + currentGameMode.getDimensions(), 0L);
-                                    if (leaderboardBestScore < gameModeSavedBestScore) {
-                                        leaderboardsClient.submitScore(leaderboardId, gameModeSavedBestScore);
-                                    } else {
-                                        sharedPreferences.edit().putLong("bestScore" + " " + currentGameMode.getMode()
-                                                + " " + currentGameMode.getDimensions(), leaderboardBestScore).apply();
+                        for (int currentGameModeIndex = 0; currentGameModeIndex < GameModes.values().length; 
+                             currentGameModeIndex++) {
+                            GameModes currentGameMode = GameModes.values()[currentGameModeIndex];
+                            if (leaderboardId.equals(getString(currentGameMode.getLeaderboardStringResourceId()))) {
+                                List<LeaderboardVariant> leaderboardVariants = leaderboard.getVariants();
+                                for (int variantIndex = 0; variantIndex < leaderboardVariants.size(); variantIndex++) {
+                                    LeaderboardVariant currentVariant = leaderboardVariants.get(variantIndex);
+                                    if (currentVariant.getTimeSpan() == LeaderboardVariant.TIME_SPAN_ALL_TIME &&
+                                            currentVariant.getCollection() == LeaderboardVariant.COLLECTION_PUBLIC) {
+                                        long leaderboardBestScore = currentVariant.getRawPlayerScore();
+                                        long gameModeSavedBestScore = sharedPreferences.getLong("bestScore" + " " +
+                                                currentGameMode.getMode() + " " + currentGameMode.getDimensions(), 0L);
+                                        if (leaderboardBestScore < gameModeSavedBestScore) {
+                                            leaderboardsClient.submitScore(leaderboardId, gameModeSavedBestScore);
+                                        } else {
+                                            sharedPreferences.edit().putLong("bestScore" + " " + currentGameMode.getMode()
+                                                    + " " + currentGameMode.getDimensions(), leaderboardBestScore).apply();
+                                        }
                                     }
                                 }
                             }
                         }
+                        
                         // Updating the progress related to the most number of coins saved
                         if (leaderboardId.equals(getString(R.string.leaderboard_coins_leaderboard))) {
                             List<LeaderboardVariant> leaderboardVariants = leaderboard.getVariants();
@@ -466,7 +517,6 @@ public class MainActivity extends AppCompatActivity implements
                                 if (currentVariant.getTimeSpan() == LeaderboardVariant.TIME_SPAN_ALL_TIME &&
                                         currentVariant.getCollection() == LeaderboardVariant.COLLECTION_PUBLIC) {
                                     int leaderboardMostCoins = (int) currentVariant.getRawPlayerScore();
-                                    int savedMostCoins = sharedPreferences.getInt("mostCoins", 0);
                                     // Basically saying that we always update the mostCoins
                                     sharedPreferences.edit().putInt("mostCoins", leaderboardMostCoins).apply();
                                 }
@@ -474,6 +524,7 @@ public class MainActivity extends AppCompatActivity implements
                         }
                     }
                 }
+                
                 if (leaderboardBuffer != null) {
                     leaderboardBuffer.release();
                 }
