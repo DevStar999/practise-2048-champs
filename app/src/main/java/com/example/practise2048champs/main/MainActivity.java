@@ -474,6 +474,9 @@ public class MainActivity extends AppCompatActivity implements
                         }
                     }
                 }
+                if (leaderboardBuffer != null) {
+                    leaderboardBuffer.release();
+                }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
