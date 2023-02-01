@@ -467,11 +467,8 @@ public class MainActivity extends AppCompatActivity implements
                                         currentVariant.getCollection() == LeaderboardVariant.COLLECTION_PUBLIC) {
                                     int leaderboardMostCoins = (int) currentVariant.getRawPlayerScore();
                                     int savedMostCoins = sharedPreferences.getInt("mostCoins", 0);
-                                    if (leaderboardMostCoins < savedMostCoins) {
-                                        leaderboardsClient.submitScore(leaderboardId, savedMostCoins);
-                                    } else {
-                                        sharedPreferences.edit().putInt("mostCoins", leaderboardMostCoins).apply();
-                                    }
+                                    // Basically saying that we always update the mostCoins
+                                    sharedPreferences.edit().putInt("mostCoins", leaderboardMostCoins).apply();
                                 }
                             }
                         }
