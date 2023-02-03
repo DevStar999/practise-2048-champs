@@ -47,6 +47,7 @@ import com.google.android.gms.games.AuthenticationResult;
 import com.google.android.gms.games.GamesSignInClient;
 import com.google.android.gms.games.LeaderboardsClient;
 import com.google.android.gms.games.PlayGames;
+import com.google.android.gms.games.PlayGamesSdk;
 import com.google.android.gms.games.Player;
 import com.google.android.gms.games.achievement.Achievement;
 import com.google.android.gms.games.achievement.AchievementBuffer;
@@ -131,7 +132,16 @@ public class MainActivity extends AppCompatActivity implements
                 .replace(R.id.navigation_main_activity_fragment_container, navigationFragment, "NAVIGATION_FRAGMENT")
                 .commit();
 
-        verifyPlayGamesSignIn(false);
+        PlayGamesSdk.initialize(this);
+
+        new CountDownTimer(500, 10000) {
+            @Override
+            public void onTick(long l) {}
+            @Override
+            public void onFinish() {
+                verifyPlayGamesSignIn(false);
+            }
+        }.start();
 
         setupInAppUpdate();
     }
