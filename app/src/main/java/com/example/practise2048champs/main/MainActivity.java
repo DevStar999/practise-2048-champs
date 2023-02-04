@@ -11,6 +11,7 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -497,6 +498,7 @@ public class MainActivity extends AppCompatActivity implements
                 .addOnSuccessListener(new OnSuccessListener<AnnotatedData<LeaderboardBuffer>>() {
             @Override
             public void onSuccess(AnnotatedData<LeaderboardBuffer> leaderboardBufferAnnotatedData) {
+                Log.i("Custom Debugging", "Inside the success condition of updating the leaderboard scores");
                 LeaderboardBuffer leaderboardBuffer = leaderboardBufferAnnotatedData.get();
                 if (leaderboardBuffer != null) {
                     int count = leaderboardBuffer.getCount();
@@ -509,20 +511,19 @@ public class MainActivity extends AppCompatActivity implements
                             GameModes currentGameMode = GameModes.values()[currentGameModeIndex];
                             if (leaderboardId.equals(getString(currentGameMode.getLeaderboardStringResourceId()))) {
                                 List<LeaderboardVariant> leaderboardVariants = leaderboard.getVariants();
+                                long leaderboardBestScore = Long.MIN_VALUE;
+                                long gameModeSavedBestScore = sharedPreferences.getLong("bestScore" + " " +
+                                        currentGameMode.getMode() + " " + currentGameMode.getDimensions(), 0L);
                                 for (int variantIndex = 0; variantIndex < leaderboardVariants.size(); variantIndex++) {
                                     LeaderboardVariant currentVariant = leaderboardVariants.get(variantIndex);
-                                    if (currentVariant.getTimeSpan() == LeaderboardVariant.TIME_SPAN_ALL_TIME &&
-                                            currentVariant.getCollection() == LeaderboardVariant.COLLECTION_PUBLIC) {
-                                        long leaderboardBestScore = currentVariant.getRawPlayerScore();
-                                        long gameModeSavedBestScore = sharedPreferences.getLong("bestScore" + " " +
-                                                currentGameMode.getMode() + " " + currentGameMode.getDimensions(), 0L);
-                                        if (leaderboardBestScore < gameModeSavedBestScore) {
-                                            leaderboardsClient.submitScore(leaderboardId, gameModeSavedBestScore);
-                                        } else {
-                                            sharedPreferences.edit().putLong("bestScore" + " " + currentGameMode.getMode()
-                                                    + " " + currentGameMode.getDimensions(), leaderboardBestScore).apply();
-                                        }
-                                    }
+                                    long currentLeaderboardBestScore = currentVariant.getRawPlayerScore();
+                                    leaderboardBestScore = Math.max(leaderboardBestScore, currentLeaderboardBestScore);
+                                }
+                                if (leaderboardBestScore < gameModeSavedBestScore) {
+                                    leaderboardsClient.submitScore(leaderboardId, gameModeSavedBestScore);
+                                } else {
+                                    sharedPreferences.edit().putLong("bestScore" + " " + currentGameMode.getMode()
+                                            + " " + currentGameMode.getDimensions(), leaderboardBestScore).apply();
                                 }
                             }
                         }
@@ -530,15 +531,14 @@ public class MainActivity extends AppCompatActivity implements
                         // Updating the progress related to the most number of coins saved
                         if (leaderboardId.equals(getString(R.string.leaderboard_coins_leaderboard))) {
                             List<LeaderboardVariant> leaderboardVariants = leaderboard.getVariants();
+                            int leaderboardMostCoins = Integer.MIN_VALUE;
                             for (int variantIndex = 0; variantIndex < leaderboardVariants.size(); variantIndex++) {
                                 LeaderboardVariant currentVariant = leaderboardVariants.get(variantIndex);
-                                if (currentVariant.getTimeSpan() == LeaderboardVariant.TIME_SPAN_ALL_TIME &&
-                                        currentVariant.getCollection() == LeaderboardVariant.COLLECTION_PUBLIC) {
-                                    int leaderboardMostCoins = (int) currentVariant.getRawPlayerScore();
-                                    // Basically saying that we always update the mostCoins
-                                    sharedPreferences.edit().putInt("mostCoins", leaderboardMostCoins).apply();
-                                }
+                                int currentLeaderboardMostCoins = (int) currentVariant.getRawPlayerScore();
+                                leaderboardMostCoins = Math.max(leaderboardMostCoins, currentLeaderboardMostCoins);
                             }
+                            // Basically saying that we always update the mostCoins
+                            sharedPreferences.edit().putInt("mostCoins", leaderboardMostCoins).apply();
                         }
                     }
                 }
