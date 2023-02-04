@@ -433,7 +433,7 @@ public class MainActivity extends AppCompatActivity implements
             return;
         }
 
-        achievementsClient.load(false).addOnSuccessListener(new OnSuccessListener<AnnotatedData<AchievementBuffer>>() {
+        achievementsClient.load(true).addOnSuccessListener(new OnSuccessListener<AnnotatedData<AchievementBuffer>>() {
             @Override
             public void onSuccess(AnnotatedData<AchievementBuffer> achievementBufferAnnotatedData) {
                 AchievementBuffer achievementBuffer = achievementBufferAnnotatedData.get();
@@ -493,7 +493,7 @@ public class MainActivity extends AppCompatActivity implements
             return;
         }
 
-        leaderboardsClient.loadLeaderboardMetadata(false)
+        leaderboardsClient.loadLeaderboardMetadata(true)
                 .addOnSuccessListener(new OnSuccessListener<AnnotatedData<LeaderboardBuffer>>() {
             @Override
             public void onSuccess(AnnotatedData<LeaderboardBuffer> leaderboardBufferAnnotatedData) {
