@@ -17,6 +17,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import com.example.practise2048champs.NumericValueDisplay;
 import com.example.practise2048champs.R;
 import com.qonversion.android.sdk.Qonversion;
 import com.qonversion.android.sdk.QonversionError;
@@ -161,7 +162,7 @@ public class ShopFragment extends Fragment {
         }
 
         currentCoins = sharedPreferences.getInt("currentCoins", 3000);
-        currentCoinsTextView.setText(String.valueOf(currentCoins));
+        currentCoinsTextView.setText(NumericValueDisplay.getGeneralValueDisplay(currentCoins));
         coinsReward = new HashMap<>() {{
             put("coins_level1", 1000); put("coins_level2", 3000); put("coins_level3", 5000);
             put("coins_level4", 10000); put("coins_level5", 25000);
@@ -178,7 +179,7 @@ public class ShopFragment extends Fragment {
     public void updateCoinsShopFragment(int currentCoins) {
         if (mListener != null) {
             this.currentCoins = currentCoins;
-            currentCoinsTextView.setText(String.valueOf(currentCoins));
+            currentCoinsTextView.setText(NumericValueDisplay.getGeneralValueDisplay(currentCoins));
         }
     }
 
