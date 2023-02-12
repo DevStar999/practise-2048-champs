@@ -11,7 +11,6 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -498,7 +497,6 @@ public class MainActivity extends AppCompatActivity implements
                 .addOnSuccessListener(new OnSuccessListener<AnnotatedData<LeaderboardBuffer>>() {
             @Override
             public void onSuccess(AnnotatedData<LeaderboardBuffer> leaderboardBufferAnnotatedData) {
-                Log.i("Custom Debugging", "Inside the success condition of updating the leaderboard scores");
                 LeaderboardBuffer leaderboardBuffer = leaderboardBufferAnnotatedData.get();
                 if (leaderboardBuffer != null) {
                     int count = leaderboardBuffer.getCount();

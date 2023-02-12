@@ -1,6 +1,5 @@
 package com.example.practise2048champs.fragments;
 
-import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -9,15 +8,11 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,12 +23,6 @@ import androidx.fragment.app.Fragment;
 import com.example.practise2048champs.BuildConfig;
 import com.example.practise2048champs.R;
 import com.example.practise2048champs.dialogs.RateUsPromptDialog;
-import com.example.practise2048champs.main.MainActivity;
-import com.google.android.gms.games.AuthenticationResult;
-import com.google.android.gms.games.GamesSignInClient;
-import com.google.android.gms.games.PlayGames;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
 public class SettingsFragment extends Fragment {
     public static final String SIGN_IN_STATUS = "isUserSignedIn";
