@@ -529,14 +529,19 @@ public class MainActivity extends AppCompatActivity implements
                         // Updating the progress related to the most number of coins saved
                         if (leaderboardId.equals(getString(R.string.leaderboard_coins_leaderboard))) {
                             List<LeaderboardVariant> leaderboardVariants = leaderboard.getVariants();
+                            int savedCurrentCoins = sharedPreferences.getInt("currentCoins", 3000);
+                            int savedMostCoins = sharedPreferences.getInt("mostCoins", savedCurrentCoins);
                             int leaderboardMostCoins = Integer.MIN_VALUE;
                             for (int variantIndex = 0; variantIndex < leaderboardVariants.size(); variantIndex++) {
                                 LeaderboardVariant currentVariant = leaderboardVariants.get(variantIndex);
                                 int currentLeaderboardMostCoins = (int) currentVariant.getRawPlayerScore();
                                 leaderboardMostCoins = Math.max(leaderboardMostCoins, currentLeaderboardMostCoins);
                             }
-                            // Basically saying that we always update the mostCoins
-                            sharedPreferences.edit().putInt("mostCoins", leaderboardMostCoins).apply();
+                            if (leaderboardMostCoins < savedMostCoins) {
+                                leaderboardsClient.submitScore(leaderboardId, savedMostCoins);
+                            } else {
+                                sharedPreferences.edit().putInt("mostCoins", leaderboardMostCoins).apply();
+                            }
                         }
                     }
                 }
