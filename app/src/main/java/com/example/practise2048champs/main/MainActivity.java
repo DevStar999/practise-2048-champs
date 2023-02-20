@@ -34,6 +34,7 @@ import com.example.practise2048champs.dialogs.UpdateAppStaticAvailableDialog;
 import com.example.practise2048champs.dialogs.UpdateAppStaticUnavailableDialog;
 import com.example.practise2048champs.enums.GameModes;
 import com.example.practise2048champs.enums.ScoringAchievements;
+import com.example.practise2048champs.enums.SmashTileToolAchievements;
 import com.example.practise2048champs.enums.TileUnlockAchievements;
 import com.example.practise2048champs.enums.UndoToolAchievements;
 import com.example.practise2048champs.fragments.BlockDesignFragment;
@@ -490,6 +491,19 @@ public class MainActivity extends AppCompatActivity implements
                                 break;
                             }
                         }
+
+                        // Update the progress related to SmashTileToolAchievements
+                        for (int smashTileToolAchievementIndex = 0; smashTileToolAchievementIndex < SmashTileToolAchievements
+                                .values().length; smashTileToolAchievementIndex++) {
+                            SmashTileToolAchievements currentSmashTileToolAchievement =
+                                    SmashTileToolAchievements.values()[smashTileToolAchievementIndex];
+                            if (achievementId.equals(getString(currentSmashTileToolAchievement.getAchievementStringResourceId()))) {
+                                sharedPreferences.edit().putInt("smashTileToolAchievement" + "_" +
+                                        getString(currentSmashTileToolAchievement.getAchievementStringResourceId()),
+                                        achievement.getState()).apply();
+                                break;
+                            }
+                        }
                     }
                 }
                 
@@ -642,6 +656,91 @@ public class MainActivity extends AppCompatActivity implements
                                 sharedPreferences.edit().putInt("undoToolAchievement" + "_" +
                                                 getString(currentUndoToolAchievement.getAchievementStringResourceId()),
                                                 currentStateOfAchievement).apply();
+                            }
+                        }
+
+                        // Updating the progress related to the use count of 'Smash Tile' tool
+                        if (leaderboardId.equals(getString(R.string.leaderboard_smash_tile_tool_masters))) {
+                            List<LeaderboardVariant> leaderboardVariants = leaderboard.getVariants();
+                            int savedSmashTileToolUseCountSubmitted =
+                                    sharedPreferences.getInt("smashTileToolUseCountSubmitted", 0);
+                            int savedSmashTileToolCurrentUseCount =
+                                    sharedPreferences.getInt("smashTileToolCurrentUseCount", savedSmashTileToolUseCountSubmitted);
+                            int leaderboardSmashTileToolUseCount = Integer.MIN_VALUE;
+                            for (int variantIndex = 0; variantIndex < leaderboardVariants.size(); variantIndex++) {
+                                LeaderboardVariant currentVariant = leaderboardVariants.get(variantIndex);
+                                int currentLeaderboardSmashTileToolUseCount = (int) currentVariant.getRawPlayerScore();
+                                leaderboardSmashTileToolUseCount = Math.max(leaderboardSmashTileToolUseCount, currentLeaderboardSmashTileToolUseCount);
+                            }
+                            // (1) If the score was never submitted, then value of 'leaderboardSmashTileToolUseCount' will be -1.
+                            // So we first submit the score to the leaderboard
+                            if (leaderboardSmashTileToolUseCount < 0) {
+                                leaderboardSmashTileToolUseCount = 0;
+                                leaderboardsClient.submitScore(leaderboardId, leaderboardSmashTileToolUseCount);
+                            }
+
+                            // (2) Always update 'smashTileToolUseCountSubmitted' in saved data
+                            savedSmashTileToolUseCountSubmitted = leaderboardSmashTileToolUseCount;
+                            sharedPreferences.edit().putInt("smashTileToolUseCountSubmitted", savedSmashTileToolUseCountSubmitted).apply();
+
+                            // (3) Based on value of 'smashTileToolUseCountSubmitted' save the value of 'smashTileToolCurrentUseCount'
+                            if (savedSmashTileToolCurrentUseCount >= savedSmashTileToolUseCountSubmitted
+                                    && savedSmashTileToolCurrentUseCount < savedSmashTileToolUseCountSubmitted + 10) {
+                            } else {
+                                savedSmashTileToolCurrentUseCount = savedSmashTileToolUseCountSubmitted;
+                            }
+                            sharedPreferences.edit().putInt("smashTileToolCurrentUseCount", savedSmashTileToolCurrentUseCount).apply();
+
+                            // (4) Verify if the state of the achievements is in accordance with the above 2 values
+                            List<Integer> levelWiseExpectedState = new ArrayList<>() {{
+                                add(Achievement.STATE_REVEALED); add(Achievement.STATE_HIDDEN); add(Achievement.STATE_HIDDEN);
+                            }};
+                            if (savedSmashTileToolUseCountSubmitted >= 100 && savedSmashTileToolUseCountSubmitted < 250) {
+                                levelWiseExpectedState.set(0, Achievement.STATE_UNLOCKED);
+                                levelWiseExpectedState.set(1, Achievement.STATE_REVEALED);
+                                levelWiseExpectedState.set(2, Achievement.STATE_HIDDEN);
+                            } else if (savedSmashTileToolUseCountSubmitted >= 250 && savedSmashTileToolUseCountSubmitted < 500) {
+                                levelWiseExpectedState.set(0, Achievement.STATE_UNLOCKED);
+                                levelWiseExpectedState.set(1, Achievement.STATE_UNLOCKED);
+                                levelWiseExpectedState.set(2, Achievement.STATE_REVEALED);
+                            } else if (savedSmashTileToolUseCountSubmitted >= 500) {
+                                levelWiseExpectedState.set(0, Achievement.STATE_UNLOCKED);
+                                levelWiseExpectedState.set(1, Achievement.STATE_UNLOCKED);
+                                levelWiseExpectedState.set(2, Achievement.STATE_UNLOCKED);
+                            }
+
+                            for (int smashTileToolAchievementsIndex = 0; smashTileToolAchievementsIndex <
+                                    SmashTileToolAchievements.values().length; smashTileToolAchievementsIndex++) {
+                                SmashTileToolAchievements currentSmashTileToolAchievement =
+                                        SmashTileToolAchievements.values()[smashTileToolAchievementsIndex];
+                                int currentStateOfAchievement = sharedPreferences.getInt("smashTileToolAchievement" + "_" +
+                                        getString(currentSmashTileToolAchievement.getAchievementStringResourceId()),
+                                        currentSmashTileToolAchievement.getInitialAchievementState());
+
+                                if (levelWiseExpectedState.get(smashTileToolAchievementsIndex) == currentStateOfAchievement) {
+                                    // All good here
+                                } else {
+                                    if (levelWiseExpectedState.get(smashTileToolAchievementsIndex) == Achievement.STATE_HIDDEN) {
+                                        // Then, currentStateOfAchievement is either 'STATE_REVEALED' or 'STATE_UNLOCKED'.
+                                        // Either way, nothing we can do
+                                    } else if (levelWiseExpectedState.get(smashTileToolAchievementsIndex) == Achievement.STATE_REVEALED) {
+                                        // Then, currentStateOfAchievement is either 'STATE_HIDDEN' or 'STATE_UNLOCKED'.
+                                        // if currentStateOfAchievement is 'STATE_HIDDEN' we can do the following
+                                        if (currentStateOfAchievement == Achievement.STATE_HIDDEN) {
+                                            currentStateOfAchievement = Achievement.STATE_REVEALED;
+                                            achievementsClient.reveal(getString(currentSmashTileToolAchievement.getAchievementStringResourceId()));
+                                        }
+                                    } else if (levelWiseExpectedState.get(smashTileToolAchievementsIndex) == Achievement.STATE_UNLOCKED) {
+                                        // Then, currentStateOfAchievement is either 'STATE_REVEALED' or 'STATE_UNLOCKED'.
+                                        // Either way, we can unlock the achievement
+                                        currentStateOfAchievement = Achievement.STATE_UNLOCKED;
+                                        achievementsClient.unlock(getString(currentSmashTileToolAchievement.getAchievementStringResourceId()));
+                                    }
+                                }
+
+                                sharedPreferences.edit().putInt("smashTileToolAchievement" + "_" +
+                                        getString(currentSmashTileToolAchievement.getAchievementStringResourceId()),
+                                        currentStateOfAchievement).apply();
                             }
                         }
                     }
