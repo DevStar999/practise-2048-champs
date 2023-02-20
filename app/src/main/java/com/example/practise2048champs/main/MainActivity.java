@@ -35,6 +35,7 @@ import com.example.practise2048champs.dialogs.UpdateAppStaticUnavailableDialog;
 import com.example.practise2048champs.enums.GameModes;
 import com.example.practise2048champs.enums.ScoringAchievements;
 import com.example.practise2048champs.enums.SmashTileToolAchievements;
+import com.example.practise2048champs.enums.SwapTilesToolAchievements;
 import com.example.practise2048champs.enums.TileUnlockAchievements;
 import com.example.practise2048champs.enums.UndoToolAchievements;
 import com.example.practise2048champs.fragments.BlockDesignFragment;
@@ -504,6 +505,19 @@ public class MainActivity extends AppCompatActivity implements
                                 break;
                             }
                         }
+
+                        // Update the progress related to SwapTilesToolAchievements
+                        for (int swapTilesToolAchievementIndex = 0; swapTilesToolAchievementIndex < SwapTilesToolAchievements
+                                .values().length; swapTilesToolAchievementIndex++) {
+                            SwapTilesToolAchievements currentSwapTilesToolAchievement =
+                                    SwapTilesToolAchievements.values()[swapTilesToolAchievementIndex];
+                            if (achievementId.equals(getString(currentSwapTilesToolAchievement.getAchievementStringResourceId()))) {
+                                sharedPreferences.edit().putInt("swapTilesToolAchievement" + "_" +
+                                        getString(currentSwapTilesToolAchievement.getAchievementStringResourceId()),
+                                        achievement.getState()).apply();
+                                break;
+                            }
+                        }
                     }
                 }
                 
@@ -740,6 +754,91 @@ public class MainActivity extends AppCompatActivity implements
 
                                 sharedPreferences.edit().putInt("smashTileToolAchievement" + "_" +
                                         getString(currentSmashTileToolAchievement.getAchievementStringResourceId()),
+                                        currentStateOfAchievement).apply();
+                            }
+                        }
+
+                        // Updating the progress related to the use count of 'Swap Tiles' tool
+                        if (leaderboardId.equals(getString(R.string.leaderboard_swap_tiles_tool_masters))) {
+                            List<LeaderboardVariant> leaderboardVariants = leaderboard.getVariants();
+                            int savedSwapTilesToolUseCountSubmitted =
+                                    sharedPreferences.getInt("swapTilesToolUseCountSubmitted", 0);
+                            int savedSwapTilesToolCurrentUseCount =
+                                    sharedPreferences.getInt("swapTilesToolCurrentUseCount", savedSwapTilesToolUseCountSubmitted);
+                            int leaderboardSwapTilesToolUseCount = Integer.MIN_VALUE;
+                            for (int variantIndex = 0; variantIndex < leaderboardVariants.size(); variantIndex++) {
+                                LeaderboardVariant currentVariant = leaderboardVariants.get(variantIndex);
+                                int currentLeaderboardSwapTilesToolUseCount = (int) currentVariant.getRawPlayerScore();
+                                leaderboardSwapTilesToolUseCount = Math.max(leaderboardSwapTilesToolUseCount, currentLeaderboardSwapTilesToolUseCount);
+                            }
+                            // (1) If the score was never submitted, then value of 'leaderboardSwapTilesToolUseCount' will be -1.
+                            // So we first submit the score to the leaderboard
+                            if (leaderboardSwapTilesToolUseCount < 0) {
+                                leaderboardSwapTilesToolUseCount = 0;
+                                leaderboardsClient.submitScore(leaderboardId, leaderboardSwapTilesToolUseCount);
+                            }
+
+                            // (2) Always update 'swapTilesToolUseCountSubmitted' in saved data
+                            savedSwapTilesToolUseCountSubmitted = leaderboardSwapTilesToolUseCount;
+                            sharedPreferences.edit().putInt("swapTilesToolUseCountSubmitted", savedSwapTilesToolUseCountSubmitted).apply();
+
+                            // (3) Based on value of 'swapTilesToolUseCountSubmitted' save the value of 'swapTilesToolCurrentUseCount'
+                            if (savedSwapTilesToolCurrentUseCount >= savedSwapTilesToolUseCountSubmitted
+                                    && savedSwapTilesToolCurrentUseCount < savedSwapTilesToolUseCountSubmitted + 10) {
+                            } else {
+                                savedSwapTilesToolCurrentUseCount = savedSwapTilesToolUseCountSubmitted;
+                            }
+                            sharedPreferences.edit().putInt("swapTilesToolCurrentUseCount", savedSwapTilesToolCurrentUseCount).apply();
+
+                            // (4) Verify if the state of the achievements is in accordance with the above 2 values
+                            List<Integer> levelWiseExpectedState = new ArrayList<>() {{
+                                add(Achievement.STATE_REVEALED); add(Achievement.STATE_HIDDEN); add(Achievement.STATE_HIDDEN);
+                            }};
+                            if (savedSwapTilesToolUseCountSubmitted >= 100 && savedSwapTilesToolUseCountSubmitted < 250) {
+                                levelWiseExpectedState.set(0, Achievement.STATE_UNLOCKED);
+                                levelWiseExpectedState.set(1, Achievement.STATE_REVEALED);
+                                levelWiseExpectedState.set(2, Achievement.STATE_HIDDEN);
+                            } else if (savedSwapTilesToolUseCountSubmitted >= 250 && savedSwapTilesToolUseCountSubmitted < 500) {
+                                levelWiseExpectedState.set(0, Achievement.STATE_UNLOCKED);
+                                levelWiseExpectedState.set(1, Achievement.STATE_UNLOCKED);
+                                levelWiseExpectedState.set(2, Achievement.STATE_REVEALED);
+                            } else if (savedSwapTilesToolUseCountSubmitted >= 500) {
+                                levelWiseExpectedState.set(0, Achievement.STATE_UNLOCKED);
+                                levelWiseExpectedState.set(1, Achievement.STATE_UNLOCKED);
+                                levelWiseExpectedState.set(2, Achievement.STATE_UNLOCKED);
+                            }
+
+                            for (int swapTilesToolAchievementsIndex = 0; swapTilesToolAchievementsIndex <
+                                    SwapTilesToolAchievements.values().length; swapTilesToolAchievementsIndex++) {
+                                SwapTilesToolAchievements currentSwapTilesToolAchievement =
+                                        SwapTilesToolAchievements.values()[swapTilesToolAchievementsIndex];
+                                int currentStateOfAchievement = sharedPreferences.getInt("swapTilesToolAchievement" + "_" +
+                                        getString(currentSwapTilesToolAchievement.getAchievementStringResourceId()),
+                                        currentSwapTilesToolAchievement.getInitialAchievementState());
+
+                                if (levelWiseExpectedState.get(swapTilesToolAchievementsIndex) == currentStateOfAchievement) {
+                                    // All good here
+                                } else {
+                                    if (levelWiseExpectedState.get(swapTilesToolAchievementsIndex) == Achievement.STATE_HIDDEN) {
+                                        // Then, currentStateOfAchievement is either 'STATE_REVEALED' or 'STATE_UNLOCKED'.
+                                        // Either way, nothing we can do
+                                    } else if (levelWiseExpectedState.get(swapTilesToolAchievementsIndex) == Achievement.STATE_REVEALED) {
+                                        // Then, currentStateOfAchievement is either 'STATE_HIDDEN' or 'STATE_UNLOCKED'.
+                                        // if currentStateOfAchievement is 'STATE_HIDDEN' we can do the following
+                                        if (currentStateOfAchievement == Achievement.STATE_HIDDEN) {
+                                            currentStateOfAchievement = Achievement.STATE_REVEALED;
+                                            achievementsClient.reveal(getString(currentSwapTilesToolAchievement.getAchievementStringResourceId()));
+                                        }
+                                    } else if (levelWiseExpectedState.get(swapTilesToolAchievementsIndex) == Achievement.STATE_UNLOCKED) {
+                                        // Then, currentStateOfAchievement is either 'STATE_REVEALED' or 'STATE_UNLOCKED'.
+                                        // Either way, we can unlock the achievement
+                                        currentStateOfAchievement = Achievement.STATE_UNLOCKED;
+                                        achievementsClient.unlock(getString(currentSwapTilesToolAchievement.getAchievementStringResourceId()));
+                                    }
+                                }
+
+                                sharedPreferences.edit().putInt("swapTilesToolAchievement" + "_" +
+                                        getString(currentSwapTilesToolAchievement.getAchievementStringResourceId()),
                                         currentStateOfAchievement).apply();
                             }
                         }
