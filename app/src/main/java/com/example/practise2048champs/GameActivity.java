@@ -37,7 +37,7 @@ public class GameActivity extends AppCompatActivity {
                 + " " + currentGameMode.getDimensions(), 0L);
         bestScore = sharedPreferences.getLong("bestScore" + " " + currentGameMode.getMode()
                 + " " + currentGameMode.getDimensions(), 0L);
-        changeValue = 101010101010101L;
+        changeValue = 10101L;
         currentScoreValueTextView = findViewById(R.id.current_score_value_text_view);
         currentScoreValueTextView.setText(String.valueOf(currentScore));
         bestScoreValueTextView = findViewById(R.id.best_score_value_text_view);
