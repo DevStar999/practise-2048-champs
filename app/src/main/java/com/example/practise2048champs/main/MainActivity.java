@@ -11,6 +11,7 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -34,6 +35,7 @@ import com.example.practise2048champs.dialogs.UpdateAppStaticUnavailableDialog;
 import com.example.practise2048champs.enums.GameModes;
 import com.example.practise2048champs.enums.ScoringAchievements;
 import com.example.practise2048champs.enums.TileUnlockAchievements;
+import com.example.practise2048champs.enums.UndoToolAchievements;
 import com.example.practise2048champs.fragments.BlockDesignFragment;
 import com.example.practise2048champs.fragments.LeaderboardsFragment;
 import com.example.practise2048champs.fragments.LogoLottieFragment;
@@ -429,6 +431,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void updateAchievementsProgress(int retryAttempt) {
+        Log.i("Custom Debugging", "inside updateAchievementsProgress()");
         if (retryAttempt >= 3) {
             return;
         }
@@ -439,9 +442,12 @@ public class MainActivity extends AppCompatActivity implements
                 AchievementBuffer achievementBuffer = achievementBufferAnnotatedData.get();
                 if (achievementBuffer != null) {
                     int count = achievementBuffer.getCount();
+                    Log.i("inside updateAchievementsProgress()", "Count of Achievements = " + count);
                     for (int index = 0; index < count; index++) {
+                        Log.i("inside updateAchievementsProgress()", "current index value = " + index);
                         Achievement achievement = achievementBuffer.get(index);
                         String achievementId = achievement.getAchievementId();
+                        Log.i("inside updateAchievementsProgress()", "Achievement = " + achievement.getName());
                         // Update the progress related to ScoringAchievements
                         for (int scoringAchievementIndex = 0; scoringAchievementIndex < ScoringAchievements.values().length;
                              scoringAchievementIndex++) {
@@ -455,9 +461,10 @@ public class MainActivity extends AppCompatActivity implements
                                     sharedPreferences.edit().putBoolean("scoringAchievement" + "_" +
                                             getString(currentScoringAchievement.getAchievementStringResourceId()), false).apply();
                                 }
+                                break;
                             }
                         }
-                        
+
                         // Update the progress related to TileUnlockAchievements
                         for (int tileUnlockAchievementIndex = 0; tileUnlockAchievementIndex < TileUnlockAchievements.values().length;
                              tileUnlockAchievementIndex++) {
@@ -471,6 +478,29 @@ public class MainActivity extends AppCompatActivity implements
                                     sharedPreferences.edit().putBoolean("tileUnlockAchievement" + "_" +
                                             getString(currentTileUnlockAchievement.getAchievementStringResourceId()), false).apply();
                                 }
+                                break;
+                            }
+                        }
+
+                        // Update the progress related to UndoToolAchievements
+                        for (int undoToolsAchievementIndex = 0; undoToolsAchievementIndex < UndoToolAchievements.values().length;
+                             undoToolsAchievementIndex++) {
+                            UndoToolAchievements currentUndoToolAchievement =
+                                    UndoToolAchievements.values()[undoToolsAchievementIndex];
+                            if (achievementId.equals(getString(currentUndoToolAchievement.getAchievementStringResourceId()))) {
+                                sharedPreferences.edit().putInt("undoToolAchievement" + "_" +
+                                        getString(currentUndoToolAchievement.getAchievementStringResourceId()),
+                                        achievement.getState()).apply();
+                                Log.i("inside updateAchievementsProgress()", "currentUndoToolAchievement = " +
+                                        currentUndoToolAchievement);
+                                if (achievement.getState() == Achievement.STATE_HIDDEN) {
+                                    Log.i("inside updateAchievementsProgress()", "currentState = " + "STATE_HIDDEN");
+                                } else if (achievement.getState() == Achievement.STATE_REVEALED) {
+                                    Log.i("inside updateAchievementsProgress()", "currentState = " + "STATE_REVEALED");
+                                } else if (achievement.getState() == Achievement.STATE_UNLOCKED) {
+                                    Log.i("inside updateAchievementsProgress()", "currentState = " + "STATE_UNLOCKED");
+                                }
+                                break;
                             }
                         }
                     }
@@ -489,6 +519,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void updateLeaderboardsProgress(int retryAttempt) {
+        Log.i("Custom Debugging", "inside updateLeaderboardsProgress()");
         if (retryAttempt >= 3) {
             return;
         }
@@ -503,6 +534,7 @@ public class MainActivity extends AppCompatActivity implements
                     for (int index = 0; index < count; index++) {
                         Leaderboard leaderboard = leaderboardBuffer.get(index);
                         String leaderboardId = leaderboard.getLeaderboardId();
+                        Log.i("Custom Debugging", "Leaderboard  = " + leaderboard.getDisplayName());
                         // Update progress related to the best scores in various game modes
                         for (int currentGameModeIndex = 0; currentGameModeIndex < GameModes.values().length; 
                              currentGameModeIndex++) {
@@ -529,8 +561,7 @@ public class MainActivity extends AppCompatActivity implements
                         // Updating the progress related to the most number of coins saved
                         if (leaderboardId.equals(getString(R.string.leaderboard_coins_leaderboard))) {
                             List<LeaderboardVariant> leaderboardVariants = leaderboard.getVariants();
-                            int savedCurrentCoins = sharedPreferences.getInt("currentCoins", 3000);
-                            int savedMostCoins = sharedPreferences.getInt("mostCoins", savedCurrentCoins);
+                            int savedMostCoins = sharedPreferences.getInt("mostCoins", 3000);
                             int leaderboardMostCoins = Integer.MIN_VALUE;
                             for (int variantIndex = 0; variantIndex < leaderboardVariants.size(); variantIndex++) {
                                 LeaderboardVariant currentVariant = leaderboardVariants.get(variantIndex);
@@ -541,6 +572,118 @@ public class MainActivity extends AppCompatActivity implements
                                 leaderboardsClient.submitScore(leaderboardId, savedMostCoins);
                             } else {
                                 sharedPreferences.edit().putInt("mostCoins", leaderboardMostCoins).apply();
+                            }
+                        }
+
+                        // Updating the progress related to the use count of 'Undo' tool
+                        if (leaderboardId.equals(getString(R.string.leaderboard_undo_tool_masters))) {
+                            Log.i("Custom Debugging", "Undo Leaderboard encountered");
+                            List<LeaderboardVariant> leaderboardVariants = leaderboard.getVariants();
+                            int savedUndoToolUseCountSubmitted =
+                                    sharedPreferences.getInt("undoToolUseCountSubmitted", 0);
+                            int savedUndoToolCurrentUseCount =
+                                    sharedPreferences.getInt("undoToolCurrentUseCount", savedUndoToolUseCountSubmitted);
+                            Log.i("Custom Debugging", "savedUndoToolUseCountSubmitted " +
+                                    "(just after sharedPreferences fetch) = " + savedUndoToolUseCountSubmitted);
+                            Log.i("Custom Debugging", "savedUndoToolCurrentUseCount " +
+                                    "(just after sharedPreferences fetch) = " + savedUndoToolCurrentUseCount);
+                            int leaderboardUndoToolUseCount = Integer.MIN_VALUE;
+                            for (int variantIndex = 0; variantIndex < leaderboardVariants.size(); variantIndex++) {
+                                LeaderboardVariant currentVariant = leaderboardVariants.get(variantIndex);
+                                int currentLeaderboardUndoToolUseCount = (int) currentVariant.getRawPlayerScore();
+                                leaderboardUndoToolUseCount = Math.max(leaderboardUndoToolUseCount, currentLeaderboardUndoToolUseCount);
+                            }
+                            Log.i("Custom Debugging", "leaderboardUndoToolUseCount (among all variants) = " + leaderboardUndoToolUseCount);
+                            // (1) If the score was never submitted, then value of 'leaderboardUndoToolUseCount' will be -1.
+                            // So we first submit the score to the leaderboard
+                            if (leaderboardUndoToolUseCount < 0) {
+                                Log.i("Custom Debugging", "Value NOT submitted to leaderboard ever before " + leaderboardUndoToolUseCount);
+                                leaderboardUndoToolUseCount = 0;
+                                leaderboardsClient.submitScore(leaderboardId, leaderboardUndoToolUseCount);
+                            }
+
+                            // (2) Always update 'undoToolUseCountSubmitted' in saved data
+                            savedUndoToolUseCountSubmitted = leaderboardUndoToolUseCount;
+                            sharedPreferences.edit().putInt("undoToolUseCountSubmitted", savedUndoToolUseCountSubmitted).apply();
+
+                            // (3) Based on value of 'undoToolUseCountSubmitted' save the value of 'undoToolCurrentUseCount'
+                            if (savedUndoToolCurrentUseCount >= savedUndoToolUseCountSubmitted
+                                    && savedUndoToolCurrentUseCount < savedUndoToolUseCountSubmitted + 10) {
+                            } else {
+                                savedUndoToolCurrentUseCount = savedUndoToolUseCountSubmitted;
+                            }
+                            sharedPreferences.edit().putInt("undoToolCurrentUseCount", savedUndoToolCurrentUseCount).apply();
+                            Log.i("Custom Debugging", "savedUndoToolUseCountSubmitted " +
+                                    "(after update) = " + savedUndoToolUseCountSubmitted);
+                            Log.i("Custom Debugging", "savedUndoToolCurrentUseCount " +
+                                    "(after update) = " + savedUndoToolCurrentUseCount);
+
+                            // (4) Verify if the state of the achievements is in accordance with the above 2 values
+                            List<Integer> levelWiseExpectedState = new ArrayList<>() {{
+                                add(Achievement.STATE_REVEALED); add(Achievement.STATE_HIDDEN); add(Achievement.STATE_HIDDEN);
+                            }};
+                            if (savedUndoToolUseCountSubmitted >= 100 && savedUndoToolUseCountSubmitted < 250) {
+                                levelWiseExpectedState.set(0, Achievement.STATE_UNLOCKED);
+                                levelWiseExpectedState.set(1, Achievement.STATE_REVEALED);
+                                levelWiseExpectedState.set(2, Achievement.STATE_HIDDEN);
+                            } else if (savedUndoToolUseCountSubmitted >= 250 && savedUndoToolUseCountSubmitted < 500) {
+                                levelWiseExpectedState.set(0, Achievement.STATE_UNLOCKED);
+                                levelWiseExpectedState.set(1, Achievement.STATE_UNLOCKED);
+                                levelWiseExpectedState.set(2, Achievement.STATE_REVEALED);
+                            } else if (savedUndoToolUseCountSubmitted >= 500) {
+                                levelWiseExpectedState.set(0, Achievement.STATE_UNLOCKED);
+                                levelWiseExpectedState.set(1, Achievement.STATE_UNLOCKED);
+                                levelWiseExpectedState.set(2, Achievement.STATE_UNLOCKED);
+                            }
+                            Log.i("Custom Debugging", "Going inside levelWiseExpectedState as follows - ");
+                            for (int tempIndex = 0; tempIndex < levelWiseExpectedState.size(); tempIndex++) {
+                                String debugMessage = "tempIndex = " + tempIndex;
+                                if (levelWiseExpectedState.get(tempIndex) == Achievement.STATE_HIDDEN) {
+                                    debugMessage += ", expectedState = STATE_HIDDEN";
+                                } else if (levelWiseExpectedState.get(tempIndex) == Achievement.STATE_REVEALED) {
+                                    debugMessage += ", expectedState = STATE_REVEALED";
+                                } else if (levelWiseExpectedState.get(tempIndex) == Achievement.STATE_UNLOCKED) {
+                                    debugMessage += ", expectedState = STATE_UNLOCKED";
+                                }
+                                Log.i("Custom Debugging", debugMessage);
+                            }
+
+                            for (int undoToolAchievementsIndex = 0; undoToolAchievementsIndex <
+                                    UndoToolAchievements.values().length; undoToolAchievementsIndex++) {
+                                UndoToolAchievements currentUndoToolAchievement =
+                                        UndoToolAchievements.values()[undoToolAchievementsIndex];
+                                int currentStateOfAchievement = sharedPreferences.getInt("undoToolAchievement" + "_" +
+                                                getString(currentUndoToolAchievement.getAchievementStringResourceId()),
+                                        currentUndoToolAchievement.getInitialAchievementState());
+
+                                Log.i("Custom Debugging", "inside updateLeaderboardsProgress(), Achievement = " +
+                                        currentUndoToolAchievement.getNameOfAchievement());
+                                if (levelWiseExpectedState.get(undoToolAchievementsIndex) == currentStateOfAchievement) {
+                                    // All good here
+                                    Log.i("Custom Debugging", "State of the above achievement is as expected");
+                                } else {
+                                    Log.i("Custom Debugging", "State of the above achievement is NOT as expected");
+                                    if (levelWiseExpectedState.get(undoToolAchievementsIndex) == Achievement.STATE_HIDDEN) {
+                                        // Then, currentStateOfAchievement is either 'STATE_REVEALED' or 'STATE_UNLOCKED'.
+                                        // Either way, nothing we can do
+                                    } else if (levelWiseExpectedState.get(undoToolAchievementsIndex) == Achievement.STATE_REVEALED) {
+                                        // Then, currentStateOfAchievement is either 'STATE_HIDDEN' or 'STATE_UNLOCKED'.
+                                        // if currentStateOfAchievement is 'STATE_HIDDEN' we can do the following
+                                        if (currentStateOfAchievement == Achievement.STATE_HIDDEN) {
+                                            currentStateOfAchievement = Achievement.STATE_REVEALED;
+                                            achievementsClient.reveal(getString(currentUndoToolAchievement.getAchievementStringResourceId()));
+                                        }
+                                    } else if (levelWiseExpectedState.get(undoToolAchievementsIndex) == Achievement.STATE_UNLOCKED) {
+                                        // Then, currentStateOfAchievement is either 'STATE_REVEALED' or 'STATE_UNLOCKED'.
+                                        // Either way, we can unlock the achievement
+                                        currentStateOfAchievement = Achievement.STATE_UNLOCKED;
+                                        achievementsClient.unlock(getString(currentUndoToolAchievement.getAchievementStringResourceId()));
+                                    }
+                                }
+
+                                sharedPreferences.edit().putInt("undoToolAchievement" + "_" +
+                                                getString(currentUndoToolAchievement.getAchievementStringResourceId()),
+                                                currentStateOfAchievement).apply();
                             }
                         }
                     }
@@ -572,7 +715,7 @@ public class MainActivity extends AppCompatActivity implements
         }
 
         // Check if current coins count is greater than the highest most coins count
-        int mostCoins = sharedPreferences.getInt("mostCoins", 0);
+        int mostCoins = sharedPreferences.getInt("mostCoins", 3000);
         if (currentCoins >= mostCoins + 1000) {
             sharedPreferences.edit().putInt("mostCoins", currentCoins).apply();
             leaderboardsClient.submitScore(getString(R.string.leaderboard_coins_leaderboard), currentCoins);
