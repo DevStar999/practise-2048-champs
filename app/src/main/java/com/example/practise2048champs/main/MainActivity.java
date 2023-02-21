@@ -33,6 +33,7 @@ import com.example.practise2048champs.dialogs.GameExitDialog;
 import com.example.practise2048champs.dialogs.UpdateAppStaticAvailableDialog;
 import com.example.practise2048champs.dialogs.UpdateAppStaticUnavailableDialog;
 import com.example.practise2048champs.enums.ChangeValueToolAchievements;
+import com.example.practise2048champs.enums.DestroyAreaToolAchievements;
 import com.example.practise2048champs.enums.EliminateValueToolAchievements;
 import com.example.practise2048champs.enums.GameModes;
 import com.example.practise2048champs.enums.ScoringAchievements;
@@ -546,6 +547,19 @@ public class MainActivity extends AppCompatActivity implements
                                 break;
                             }
                         }
+
+                        // Update the progress related to DestroyAreaToolAchievements
+                        for (int destroyAreaToolAchievementIndex = 0; destroyAreaToolAchievementIndex <
+                                DestroyAreaToolAchievements.values().length; destroyAreaToolAchievementIndex++) {
+                            DestroyAreaToolAchievements currentDestroyAreaToolAchievement =
+                                    DestroyAreaToolAchievements.values()[destroyAreaToolAchievementIndex];
+                            if (achievementId.equals(getString(currentDestroyAreaToolAchievement.getAchievementStringResourceId()))) {
+                                sharedPreferences.edit().putInt("destroyAreaToolAchievement" + "_" +
+                                        getString(currentDestroyAreaToolAchievement.getAchievementStringResourceId()),
+                                        achievement.getState()).apply();
+                                break;
+                            }
+                        }
                     }
                 }
                 
@@ -1037,6 +1051,91 @@ public class MainActivity extends AppCompatActivity implements
 
                                 sharedPreferences.edit().putInt("eliminateValueToolAchievement" + "_" +
                                         getString(currentEliminateValueToolAchievement.getAchievementStringResourceId()),
+                                        currentStateOfAchievement).apply();
+                            }
+                        }
+
+                        // Updating the progress related to the use count of 'Destroy Area' tool
+                        if (leaderboardId.equals(getString(R.string.leaderboard_destroy_area_tool_masters))) {
+                            List<LeaderboardVariant> leaderboardVariants = leaderboard.getVariants();
+                            int savedDestroyAreaToolUseCountSubmitted =
+                                    sharedPreferences.getInt("destroyAreaToolUseCountSubmitted", 0);
+                            int savedDestroyAreaToolCurrentUseCount =
+                                    sharedPreferences.getInt("destroyAreaToolCurrentUseCount", savedDestroyAreaToolUseCountSubmitted);
+                            int leaderboardDestroyAreaToolUseCount = Integer.MIN_VALUE;
+                            for (int variantIndex = 0; variantIndex < leaderboardVariants.size(); variantIndex++) {
+                                LeaderboardVariant currentVariant = leaderboardVariants.get(variantIndex);
+                                int currentLeaderboardDestroyAreaToolUseCount = (int) currentVariant.getRawPlayerScore();
+                                leaderboardDestroyAreaToolUseCount = Math.max(leaderboardDestroyAreaToolUseCount, currentLeaderboardDestroyAreaToolUseCount);
+                            }
+                            // (1) If the score was never submitted, then value of 'leaderboardDestroyAreaToolUseCount' will be -1.
+                            // So we first submit the score to the leaderboard
+                            if (leaderboardDestroyAreaToolUseCount < 0) {
+                                leaderboardDestroyAreaToolUseCount = 0;
+                                leaderboardsClient.submitScore(leaderboardId, leaderboardDestroyAreaToolUseCount);
+                            }
+
+                            // (2) Always update 'destroyAreaToolUseCountSubmitted' in saved data
+                            savedDestroyAreaToolUseCountSubmitted = leaderboardDestroyAreaToolUseCount;
+                            sharedPreferences.edit().putInt("destroyAreaToolUseCountSubmitted", savedDestroyAreaToolUseCountSubmitted).apply();
+
+                            // (3) Based on value of 'destroyAreaToolUseCountSubmitted' save the value of 'destroyAreaToolCurrentUseCount'
+                            if (savedDestroyAreaToolCurrentUseCount >= savedDestroyAreaToolUseCountSubmitted
+                                    && savedDestroyAreaToolCurrentUseCount < savedDestroyAreaToolUseCountSubmitted + 10) {
+                            } else {
+                                savedDestroyAreaToolCurrentUseCount = savedDestroyAreaToolUseCountSubmitted;
+                            }
+                            sharedPreferences.edit().putInt("destroyAreaToolCurrentUseCount", savedDestroyAreaToolCurrentUseCount).apply();
+
+                            // (4) Verify if the state of the achievements is in accordance with the above 2 values
+                            List<Integer> levelWiseExpectedState = new ArrayList<>() {{
+                                add(Achievement.STATE_REVEALED); add(Achievement.STATE_HIDDEN); add(Achievement.STATE_HIDDEN);
+                            }};
+                            if (savedDestroyAreaToolUseCountSubmitted >= 100 && savedDestroyAreaToolUseCountSubmitted < 250) {
+                                levelWiseExpectedState.set(0, Achievement.STATE_UNLOCKED);
+                                levelWiseExpectedState.set(1, Achievement.STATE_REVEALED);
+                                levelWiseExpectedState.set(2, Achievement.STATE_HIDDEN);
+                            } else if (savedDestroyAreaToolUseCountSubmitted >= 250 && savedDestroyAreaToolUseCountSubmitted < 500) {
+                                levelWiseExpectedState.set(0, Achievement.STATE_UNLOCKED);
+                                levelWiseExpectedState.set(1, Achievement.STATE_UNLOCKED);
+                                levelWiseExpectedState.set(2, Achievement.STATE_REVEALED);
+                            } else if (savedDestroyAreaToolUseCountSubmitted >= 500) {
+                                levelWiseExpectedState.set(0, Achievement.STATE_UNLOCKED);
+                                levelWiseExpectedState.set(1, Achievement.STATE_UNLOCKED);
+                                levelWiseExpectedState.set(2, Achievement.STATE_UNLOCKED);
+                            }
+
+                            for (int destroyAreaToolAchievementsIndex = 0; destroyAreaToolAchievementsIndex <
+                                    DestroyAreaToolAchievements.values().length; destroyAreaToolAchievementsIndex++) {
+                                DestroyAreaToolAchievements currentDestroyAreaToolAchievement =
+                                        DestroyAreaToolAchievements.values()[destroyAreaToolAchievementsIndex];
+                                int currentStateOfAchievement = sharedPreferences.getInt("destroyAreaToolAchievement" + "_" +
+                                                getString(currentDestroyAreaToolAchievement.getAchievementStringResourceId()),
+                                        currentDestroyAreaToolAchievement.getInitialAchievementState());
+
+                                if (levelWiseExpectedState.get(destroyAreaToolAchievementsIndex) == currentStateOfAchievement) {
+                                    // All good here
+                                } else {
+                                    if (levelWiseExpectedState.get(destroyAreaToolAchievementsIndex) == Achievement.STATE_HIDDEN) {
+                                        // Then, currentStateOfAchievement is either 'STATE_REVEALED' or 'STATE_UNLOCKED'.
+                                        // Either way, nothing we can do
+                                    } else if (levelWiseExpectedState.get(destroyAreaToolAchievementsIndex) == Achievement.STATE_REVEALED) {
+                                        // Then, currentStateOfAchievement is either 'STATE_HIDDEN' or 'STATE_UNLOCKED'.
+                                        // if currentStateOfAchievement is 'STATE_HIDDEN' we can do the following
+                                        if (currentStateOfAchievement == Achievement.STATE_HIDDEN) {
+                                            currentStateOfAchievement = Achievement.STATE_REVEALED;
+                                            achievementsClient.reveal(getString(currentDestroyAreaToolAchievement.getAchievementStringResourceId()));
+                                        }
+                                    } else if (levelWiseExpectedState.get(destroyAreaToolAchievementsIndex) == Achievement.STATE_UNLOCKED) {
+                                        // Then, currentStateOfAchievement is either 'STATE_REVEALED' or 'STATE_UNLOCKED'.
+                                        // Either way, we can unlock the achievement
+                                        currentStateOfAchievement = Achievement.STATE_UNLOCKED;
+                                        achievementsClient.unlock(getString(currentDestroyAreaToolAchievement.getAchievementStringResourceId()));
+                                    }
+                                }
+
+                                sharedPreferences.edit().putInt("destroyAreaToolAchievement" + "_" +
+                                                getString(currentDestroyAreaToolAchievement.getAchievementStringResourceId()),
                                         currentStateOfAchievement).apply();
                             }
                         }
