@@ -33,6 +33,7 @@ import com.example.practise2048champs.dialogs.GameExitDialog;
 import com.example.practise2048champs.dialogs.UpdateAppStaticAvailableDialog;
 import com.example.practise2048champs.dialogs.UpdateAppStaticUnavailableDialog;
 import com.example.practise2048champs.enums.ChangeValueToolAchievements;
+import com.example.practise2048champs.enums.EliminateValueToolAchievements;
 import com.example.practise2048champs.enums.GameModes;
 import com.example.practise2048champs.enums.ScoringAchievements;
 import com.example.practise2048champs.enums.SmashTileToolAchievements;
@@ -532,6 +533,19 @@ public class MainActivity extends AppCompatActivity implements
                                 break;
                             }
                         }
+
+                        // Update the progress related to EliminateValueToolAchievements
+                        for (int eliminateValueToolAchievementIndex = 0; eliminateValueToolAchievementIndex <
+                                EliminateValueToolAchievements.values().length; eliminateValueToolAchievementIndex++) {
+                            EliminateValueToolAchievements currentEliminateValueToolAchievement =
+                                    EliminateValueToolAchievements.values()[eliminateValueToolAchievementIndex];
+                            if (achievementId.equals(getString(currentEliminateValueToolAchievement.getAchievementStringResourceId()))) {
+                                sharedPreferences.edit().putInt("eliminateValueToolAchievement" + "_" +
+                                        getString(currentEliminateValueToolAchievement.getAchievementStringResourceId()),
+                                        achievement.getState()).apply();
+                                break;
+                            }
+                        }
                     }
                 }
                 
@@ -938,6 +952,91 @@ public class MainActivity extends AppCompatActivity implements
 
                                 sharedPreferences.edit().putInt("changeValueToolAchievement" + "_" +
                                         getString(currentChangeValueToolAchievement.getAchievementStringResourceId()),
+                                        currentStateOfAchievement).apply();
+                            }
+                        }
+
+                        // Updating the progress related to the use count of 'Eliminate Value' tool
+                        if (leaderboardId.equals(getString(R.string.leaderboard_eliminate_value_tool_masters))) {
+                            List<LeaderboardVariant> leaderboardVariants = leaderboard.getVariants();
+                            int savedEliminateValueToolUseCountSubmitted =
+                                    sharedPreferences.getInt("eliminateValueToolUseCountSubmitted", 0);
+                            int savedEliminateValueToolCurrentUseCount =
+                                    sharedPreferences.getInt("eliminateValueToolCurrentUseCount", savedEliminateValueToolUseCountSubmitted);
+                            int leaderboardEliminateValueToolUseCount = Integer.MIN_VALUE;
+                            for (int variantIndex = 0; variantIndex < leaderboardVariants.size(); variantIndex++) {
+                                LeaderboardVariant currentVariant = leaderboardVariants.get(variantIndex);
+                                int currentLeaderboardEliminateValueToolUseCount = (int) currentVariant.getRawPlayerScore();
+                                leaderboardEliminateValueToolUseCount = Math.max(leaderboardEliminateValueToolUseCount, currentLeaderboardEliminateValueToolUseCount);
+                            }
+                            // (1) If the score was never submitted, then value of 'leaderboardEliminateValueToolUseCount' will be -1.
+                            // So we first submit the score to the leaderboard
+                            if (leaderboardEliminateValueToolUseCount < 0) {
+                                leaderboardEliminateValueToolUseCount = 0;
+                                leaderboardsClient.submitScore(leaderboardId, leaderboardEliminateValueToolUseCount);
+                            }
+
+                            // (2) Always update 'eliminateValueToolUseCountSubmitted' in saved data
+                            savedEliminateValueToolUseCountSubmitted = leaderboardEliminateValueToolUseCount;
+                            sharedPreferences.edit().putInt("eliminateValueToolUseCountSubmitted", savedEliminateValueToolUseCountSubmitted).apply();
+
+                            // (3) Based on value of 'eliminateValueToolUseCountSubmitted' save the value of 'eliminateValueToolCurrentUseCount'
+                            if (savedEliminateValueToolCurrentUseCount >= savedEliminateValueToolUseCountSubmitted
+                                    && savedEliminateValueToolCurrentUseCount < savedEliminateValueToolUseCountSubmitted + 10) {
+                            } else {
+                                savedEliminateValueToolCurrentUseCount = savedEliminateValueToolUseCountSubmitted;
+                            }
+                            sharedPreferences.edit().putInt("eliminateValueToolCurrentUseCount", savedEliminateValueToolCurrentUseCount).apply();
+
+                            // (4) Verify if the state of the achievements is in accordance with the above 2 values
+                            List<Integer> levelWiseExpectedState = new ArrayList<>() {{
+                                add(Achievement.STATE_REVEALED); add(Achievement.STATE_HIDDEN); add(Achievement.STATE_HIDDEN);
+                            }};
+                            if (savedEliminateValueToolUseCountSubmitted >= 100 && savedEliminateValueToolUseCountSubmitted < 250) {
+                                levelWiseExpectedState.set(0, Achievement.STATE_UNLOCKED);
+                                levelWiseExpectedState.set(1, Achievement.STATE_REVEALED);
+                                levelWiseExpectedState.set(2, Achievement.STATE_HIDDEN);
+                            } else if (savedEliminateValueToolUseCountSubmitted >= 250 && savedEliminateValueToolUseCountSubmitted < 500) {
+                                levelWiseExpectedState.set(0, Achievement.STATE_UNLOCKED);
+                                levelWiseExpectedState.set(1, Achievement.STATE_UNLOCKED);
+                                levelWiseExpectedState.set(2, Achievement.STATE_REVEALED);
+                            } else if (savedEliminateValueToolUseCountSubmitted >= 500) {
+                                levelWiseExpectedState.set(0, Achievement.STATE_UNLOCKED);
+                                levelWiseExpectedState.set(1, Achievement.STATE_UNLOCKED);
+                                levelWiseExpectedState.set(2, Achievement.STATE_UNLOCKED);
+                            }
+
+                            for (int eliminateValueToolAchievementsIndex = 0; eliminateValueToolAchievementsIndex <
+                                    EliminateValueToolAchievements.values().length; eliminateValueToolAchievementsIndex++) {
+                                EliminateValueToolAchievements currentEliminateValueToolAchievement =
+                                        EliminateValueToolAchievements.values()[eliminateValueToolAchievementsIndex];
+                                int currentStateOfAchievement = sharedPreferences.getInt("eliminateValueToolAchievement" + "_" +
+                                        getString(currentEliminateValueToolAchievement.getAchievementStringResourceId()),
+                                        currentEliminateValueToolAchievement.getInitialAchievementState());
+
+                                if (levelWiseExpectedState.get(eliminateValueToolAchievementsIndex) == currentStateOfAchievement) {
+                                    // All good here
+                                } else {
+                                    if (levelWiseExpectedState.get(eliminateValueToolAchievementsIndex) == Achievement.STATE_HIDDEN) {
+                                        // Then, currentStateOfAchievement is either 'STATE_REVEALED' or 'STATE_UNLOCKED'.
+                                        // Either way, nothing we can do
+                                    } else if (levelWiseExpectedState.get(eliminateValueToolAchievementsIndex) == Achievement.STATE_REVEALED) {
+                                        // Then, currentStateOfAchievement is either 'STATE_HIDDEN' or 'STATE_UNLOCKED'.
+                                        // if currentStateOfAchievement is 'STATE_HIDDEN' we can do the following
+                                        if (currentStateOfAchievement == Achievement.STATE_HIDDEN) {
+                                            currentStateOfAchievement = Achievement.STATE_REVEALED;
+                                            achievementsClient.reveal(getString(currentEliminateValueToolAchievement.getAchievementStringResourceId()));
+                                        }
+                                    } else if (levelWiseExpectedState.get(eliminateValueToolAchievementsIndex) == Achievement.STATE_UNLOCKED) {
+                                        // Then, currentStateOfAchievement is either 'STATE_REVEALED' or 'STATE_UNLOCKED'.
+                                        // Either way, we can unlock the achievement
+                                        currentStateOfAchievement = Achievement.STATE_UNLOCKED;
+                                        achievementsClient.unlock(getString(currentEliminateValueToolAchievement.getAchievementStringResourceId()));
+                                    }
+                                }
+
+                                sharedPreferences.edit().putInt("eliminateValueToolAchievement" + "_" +
+                                        getString(currentEliminateValueToolAchievement.getAchievementStringResourceId()),
                                         currentStateOfAchievement).apply();
                             }
                         }
