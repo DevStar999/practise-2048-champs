@@ -36,6 +36,7 @@ import com.example.practise2048champs.enums.ChangeValueToolAchievements;
 import com.example.practise2048champs.enums.DestroyAreaToolAchievements;
 import com.example.practise2048champs.enums.EliminateValueToolAchievements;
 import com.example.practise2048champs.enums.GameModes;
+import com.example.practise2048champs.enums.ReviveGameToolAchievements;
 import com.example.practise2048champs.enums.ScoringAchievements;
 import com.example.practise2048champs.enums.SmashTileToolAchievements;
 import com.example.practise2048champs.enums.SwapTilesToolAchievements;
@@ -556,6 +557,19 @@ public class MainActivity extends AppCompatActivity implements
                             if (achievementId.equals(getString(currentDestroyAreaToolAchievement.getAchievementStringResourceId()))) {
                                 sharedPreferences.edit().putInt("destroyAreaToolAchievement" + "_" +
                                         getString(currentDestroyAreaToolAchievement.getAchievementStringResourceId()),
+                                        achievement.getState()).apply();
+                                break;
+                            }
+                        }
+
+                        // Update the progress related to ReviveGameToolAchievements
+                        for (int reviveGameToolAchievementIndex = 0; reviveGameToolAchievementIndex <
+                                ReviveGameToolAchievements.values().length; reviveGameToolAchievementIndex++) {
+                            ReviveGameToolAchievements currentReviveGameToolAchievement =
+                                    ReviveGameToolAchievements.values()[reviveGameToolAchievementIndex];
+                            if (achievementId.equals(getString(currentReviveGameToolAchievement.getAchievementStringResourceId()))) {
+                                sharedPreferences.edit().putInt("reviveGameToolAchievement" + "_" +
+                                        getString(currentReviveGameToolAchievement.getAchievementStringResourceId()),
                                         achievement.getState()).apply();
                                 break;
                             }
@@ -1136,6 +1150,91 @@ public class MainActivity extends AppCompatActivity implements
 
                                 sharedPreferences.edit().putInt("destroyAreaToolAchievement" + "_" +
                                                 getString(currentDestroyAreaToolAchievement.getAchievementStringResourceId()),
+                                        currentStateOfAchievement).apply();
+                            }
+                        }
+
+                        // Updating the progress related to the use count of 'Revive Game' tool
+                        if (leaderboardId.equals(getString(R.string.leaderboard_revive_game_tool_masters))) {
+                            List<LeaderboardVariant> leaderboardVariants = leaderboard.getVariants();
+                            int savedReviveGameToolUseCountSubmitted =
+                                    sharedPreferences.getInt("reviveGameToolUseCountSubmitted", 0);
+                            int savedReviveGameToolCurrentUseCount =
+                                    sharedPreferences.getInt("reviveGameToolCurrentUseCount", savedReviveGameToolUseCountSubmitted);
+                            int leaderboardReviveGameToolUseCount = Integer.MIN_VALUE;
+                            for (int variantIndex = 0; variantIndex < leaderboardVariants.size(); variantIndex++) {
+                                LeaderboardVariant currentVariant = leaderboardVariants.get(variantIndex);
+                                int currentLeaderboardReviveGameToolUseCount = (int) currentVariant.getRawPlayerScore();
+                                leaderboardReviveGameToolUseCount = Math.max(leaderboardReviveGameToolUseCount, currentLeaderboardReviveGameToolUseCount);
+                            }
+                            // (1) If the score was never submitted, then value of 'leaderboardReviveGameToolUseCount' will be -1.
+                            // So we first submit the score to the leaderboard
+                            if (leaderboardReviveGameToolUseCount < 0) {
+                                leaderboardReviveGameToolUseCount = 0;
+                                leaderboardsClient.submitScore(leaderboardId, leaderboardReviveGameToolUseCount);
+                            }
+
+                            // (2) Always update 'reviveGameToolUseCountSubmitted' in saved data
+                            savedReviveGameToolUseCountSubmitted = leaderboardReviveGameToolUseCount;
+                            sharedPreferences.edit().putInt("reviveGameToolUseCountSubmitted", savedReviveGameToolUseCountSubmitted).apply();
+
+                            // (3) Based on value of 'reviveGameToolUseCountSubmitted' save the value of 'reviveGameToolCurrentUseCount'
+                            if (savedReviveGameToolCurrentUseCount >= savedReviveGameToolUseCountSubmitted
+                                    && savedReviveGameToolCurrentUseCount < savedReviveGameToolUseCountSubmitted + 10) {
+                            } else {
+                                savedReviveGameToolCurrentUseCount = savedReviveGameToolUseCountSubmitted;
+                            }
+                            sharedPreferences.edit().putInt("reviveGameToolCurrentUseCount", savedReviveGameToolCurrentUseCount).apply();
+
+                            // (4) Verify if the state of the achievements is in accordance with the above 2 values
+                            List<Integer> levelWiseExpectedState = new ArrayList<>() {{
+                                add(Achievement.STATE_REVEALED); add(Achievement.STATE_HIDDEN); add(Achievement.STATE_HIDDEN);
+                            }};
+                            if (savedReviveGameToolUseCountSubmitted >= 50 && savedReviveGameToolUseCountSubmitted < 100) {
+                                levelWiseExpectedState.set(0, Achievement.STATE_UNLOCKED);
+                                levelWiseExpectedState.set(1, Achievement.STATE_REVEALED);
+                                levelWiseExpectedState.set(2, Achievement.STATE_HIDDEN);
+                            } else if (savedReviveGameToolUseCountSubmitted >= 100 && savedReviveGameToolUseCountSubmitted < 200) {
+                                levelWiseExpectedState.set(0, Achievement.STATE_UNLOCKED);
+                                levelWiseExpectedState.set(1, Achievement.STATE_UNLOCKED);
+                                levelWiseExpectedState.set(2, Achievement.STATE_REVEALED);
+                            } else if (savedReviveGameToolUseCountSubmitted >= 200) {
+                                levelWiseExpectedState.set(0, Achievement.STATE_UNLOCKED);
+                                levelWiseExpectedState.set(1, Achievement.STATE_UNLOCKED);
+                                levelWiseExpectedState.set(2, Achievement.STATE_UNLOCKED);
+                            }
+
+                            for (int reviveGameToolAchievementsIndex = 0; reviveGameToolAchievementsIndex <
+                                    ReviveGameToolAchievements.values().length; reviveGameToolAchievementsIndex++) {
+                                ReviveGameToolAchievements currentReviveGameToolAchievement =
+                                        ReviveGameToolAchievements.values()[reviveGameToolAchievementsIndex];
+                                int currentStateOfAchievement = sharedPreferences.getInt("reviveGameToolAchievement" + "_" +
+                                                getString(currentReviveGameToolAchievement.getAchievementStringResourceId()),
+                                        currentReviveGameToolAchievement.getInitialAchievementState());
+
+                                if (levelWiseExpectedState.get(reviveGameToolAchievementsIndex) == currentStateOfAchievement) {
+                                    // All good here
+                                } else {
+                                    if (levelWiseExpectedState.get(reviveGameToolAchievementsIndex) == Achievement.STATE_HIDDEN) {
+                                        // Then, currentStateOfAchievement is either 'STATE_REVEALED' or 'STATE_UNLOCKED'.
+                                        // Either way, nothing we can do
+                                    } else if (levelWiseExpectedState.get(reviveGameToolAchievementsIndex) == Achievement.STATE_REVEALED) {
+                                        // Then, currentStateOfAchievement is either 'STATE_HIDDEN' or 'STATE_UNLOCKED'.
+                                        // if currentStateOfAchievement is 'STATE_HIDDEN' we can do the following
+                                        if (currentStateOfAchievement == Achievement.STATE_HIDDEN) {
+                                            currentStateOfAchievement = Achievement.STATE_REVEALED;
+                                            achievementsClient.reveal(getString(currentReviveGameToolAchievement.getAchievementStringResourceId()));
+                                        }
+                                    } else if (levelWiseExpectedState.get(reviveGameToolAchievementsIndex) == Achievement.STATE_UNLOCKED) {
+                                        // Then, currentStateOfAchievement is either 'STATE_REVEALED' or 'STATE_UNLOCKED'.
+                                        // Either way, we can unlock the achievement
+                                        currentStateOfAchievement = Achievement.STATE_UNLOCKED;
+                                        achievementsClient.unlock(getString(currentReviveGameToolAchievement.getAchievementStringResourceId()));
+                                    }
+                                }
+
+                                sharedPreferences.edit().putInt("reviveGameToolAchievement" + "_" +
+                                                getString(currentReviveGameToolAchievement.getAchievementStringResourceId()),
                                         currentStateOfAchievement).apply();
                             }
                         }
