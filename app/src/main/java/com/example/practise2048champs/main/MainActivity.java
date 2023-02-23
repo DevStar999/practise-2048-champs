@@ -1,5 +1,6 @@
 package com.example.practise2048champs.main;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -1311,7 +1312,12 @@ public class MainActivity extends AppCompatActivity implements
         achievementsClient.getAchievementsIntent().addOnSuccessListener(new OnSuccessListener<Intent>() {
             @Override
             public void onSuccess(Intent intent) {
-                startActivityForResult(intent, RC_ACHIEVEMENT_UI);
+                try {
+                    startActivityForResult(intent, RC_ACHIEVEMENT_UI);
+                } catch (ActivityNotFoundException exception) {
+                    new ErrorOccurredDialog(MainActivity.this, "Oops! Something went wrong.\n" +
+                            "Please ensure you have 'Google Play Games' app downloaded on your device").show();
+                }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -1456,7 +1462,12 @@ public class MainActivity extends AppCompatActivity implements
             .addOnSuccessListener(new OnSuccessListener<Intent>() {
                 @Override
                 public void onSuccess(Intent intent) {
-                    startActivityForResult(intent, RC_LEADERBOARD_UI);
+                    try {
+                        startActivityForResult(intent, RC_LEADERBOARD_UI);
+                    } catch (ActivityNotFoundException exception) {
+                        new ErrorOccurredDialog(MainActivity.this, "Oops! Something went wrong.\n" +
+                                "Please ensure you have 'Google Play Games' app downloaded on your device").show();
+                    }
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
