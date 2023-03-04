@@ -85,7 +85,7 @@
     <!-- Achievement Fountain of Life ('Revive Game' Tool Level 3) -->
     <string name="achievement_fountain_of_life" translatable="false">CgkIj57DhMoUEAIQMg</string>
 
-        <!-- Early Out Achievements are as follows -->
+        <!-- # Early Out Achievements are as follows -->
     <!-- Achievement Newbie (Loss before score 1000) -->
     <string name="achievement_newbie" translatable="false">CgkIj57DhMoUEAIQMw</string>
     <!-- Achievement Rookie (Loss before the reaching tile '256') -->
