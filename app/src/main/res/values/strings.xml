@@ -29,6 +29,16 @@
     <!-- Achievement Enigma (Tile Unlock Level 4) -->
     <string name="achievement_enigma" translatable="false">CgkIj57DhMoUEAIQFg</string>
 
+    <!-- # Early Out Achievements are as follows -->
+    <!-- Achievement Newbie (Loss before score 1000) -->
+    <string name="achievement_newbie" translatable="false">CgkIj57DhMoUEAIQMw</string>
+    <!-- Achievement Rookie (Loss before the reaching tile '256') -->
+    <string name="achievement_rookie" translatable="false">CgkIj57DhMoUEAIQNA</string>
+    <!-- Achievement Trickster (Loss before score 500) -->
+    <string name="achievement_trickster" translatable="false">CgkIj57DhMoUEAIQNQ</string>
+    <!-- Achievement Scammer (Loss before the reaching tile '128') -->
+    <string name="achievement_scammer" translatable="false">CgkIj57DhMoUEAIQNg</string>
+
         <!-- # 'Undo' Tool Achievements are as follows -->
     <!-- Achievement Uno Reverse ('Undo' Tool Level 1) -->
     <string name="achievement_uno_reverse" translatable="false">CgkIj57DhMoUEAIQGA</string>
@@ -84,16 +94,6 @@
     <string name="achievement_cure_all" translatable="false">CgkIj57DhMoUEAIQMQ</string>
     <!-- Achievement Fountain of Life ('Revive Game' Tool Level 3) -->
     <string name="achievement_fountain_of_life" translatable="false">CgkIj57DhMoUEAIQMg</string>
-
-        <!-- # Early Out Achievements are as follows -->
-    <!-- Achievement Newbie (Loss before score 1000) -->
-    <string name="achievement_newbie" translatable="false">CgkIj57DhMoUEAIQMw</string>
-    <!-- Achievement Rookie (Loss before the reaching tile '256') -->
-    <string name="achievement_rookie" translatable="false">CgkIj57DhMoUEAIQNA</string>
-    <!-- Achievement Trickster (Loss before score 500) -->
-    <string name="achievement_trickster" translatable="false">CgkIj57DhMoUEAIQNQ</string>
-    <!-- Achievement Scammer (Loss before the reaching tile '128') -->
-    <string name="achievement_scammer" translatable="false">CgkIj57DhMoUEAIQNg</string>
 
     <!-- ## Leaderboards are listed as follows -->
 
