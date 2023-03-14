@@ -63,6 +63,7 @@ import com.google.android.gms.games.achievement.AchievementBuffer;
 import com.google.android.gms.games.leaderboard.Leaderboard;
 import com.google.android.gms.games.leaderboard.LeaderboardBuffer;
 import com.google.android.gms.games.leaderboard.LeaderboardVariant;
+import com.google.android.gms.games.leaderboard.ScoreSubmissionData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -636,7 +637,18 @@ public class MainActivity extends AppCompatActivity implements
                                     leaderboardBestScore = Math.max(leaderboardBestScore, currentLeaderboardBestScore);
                                 }
                                 if (leaderboardBestScore < gameModeSavedBestScore) {
-                                    leaderboardsClient.submitScore(leaderboardId, gameModeSavedBestScore);
+                                    leaderboardsClient.submitScoreImmediate(leaderboardId, gameModeSavedBestScore)
+                                        .addOnCompleteListener(new OnCompleteListener<ScoreSubmissionData>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<ScoreSubmissionData> task) {
+                                                if (task.isSuccessful()) {
+                                                    // Score was submitted to the leaderboard
+                                                } else {
+                                                    // Error submitting the score, so we use submitScore() method
+                                                    leaderboardsClient.submitScore(leaderboardId, gameModeSavedBestScore);
+                                                }
+                                            }
+                                        });
                                 } else {
                                     sharedPreferences.edit().putLong("bestScore" + " " + currentGameMode.getMode()
                                             + " " + currentGameMode.getDimensions(), leaderboardBestScore).apply();
@@ -655,7 +667,18 @@ public class MainActivity extends AppCompatActivity implements
                                 leaderboardMostCoins = Math.max(leaderboardMostCoins, currentLeaderboardMostCoins);
                             }
                             if (leaderboardMostCoins < savedMostCoins) {
-                                leaderboardsClient.submitScore(leaderboardId, savedMostCoins);
+                                leaderboardsClient.submitScoreImmediate(leaderboardId, savedMostCoins)
+                                    .addOnCompleteListener(new OnCompleteListener<ScoreSubmissionData>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<ScoreSubmissionData> task) {
+                                            if (task.isSuccessful()) {
+                                                // Score was submitted to the leaderboard
+                                            } else {
+                                                // Error submitting the score, so we use submitScore() method
+                                                leaderboardsClient.submitScore(leaderboardId, savedMostCoins);
+                                            }
+                                        }
+                                    });
                             } else {
                                 sharedPreferences.edit().putInt("mostCoins", leaderboardMostCoins).apply();
                             }
@@ -678,7 +701,19 @@ public class MainActivity extends AppCompatActivity implements
                             // So we first submit the score to the leaderboard
                             if (leaderboardUndoToolUseCount < 0) {
                                 leaderboardUndoToolUseCount = 0;
-                                leaderboardsClient.submitScore(leaderboardId, leaderboardUndoToolUseCount);
+                                int finalLeaderboardUndoToolUseCount = leaderboardUndoToolUseCount;
+                                leaderboardsClient.submitScoreImmediate(leaderboardId, leaderboardUndoToolUseCount)
+                                    .addOnCompleteListener(new OnCompleteListener<ScoreSubmissionData>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<ScoreSubmissionData> task) {
+                                            if (task.isSuccessful()) {
+                                                // Score was submitted to the leaderboard
+                                            } else {
+                                                // Error submitting the score, so we use submitScore() method
+                                                leaderboardsClient.submitScore(leaderboardId, finalLeaderboardUndoToolUseCount);
+                                            }
+                                        }
+                                    });
                             }
 
                             // (2) Always update 'undoToolUseCountSubmitted' in saved data
@@ -763,7 +798,19 @@ public class MainActivity extends AppCompatActivity implements
                             // So we first submit the score to the leaderboard
                             if (leaderboardSmashTileToolUseCount < 0) {
                                 leaderboardSmashTileToolUseCount = 0;
-                                leaderboardsClient.submitScore(leaderboardId, leaderboardSmashTileToolUseCount);
+                                int finalLeaderboardSmashTileToolUseCount = leaderboardSmashTileToolUseCount;
+                                leaderboardsClient.submitScoreImmediate(leaderboardId, leaderboardSmashTileToolUseCount)
+                                    .addOnCompleteListener(new OnCompleteListener<ScoreSubmissionData>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<ScoreSubmissionData> task) {
+                                            if (task.isSuccessful()) {
+                                                // Score was submitted to the leaderboard
+                                            } else {
+                                                // Error submitting the score, so we use submitScore() method
+                                                leaderboardsClient.submitScore(leaderboardId, finalLeaderboardSmashTileToolUseCount);
+                                            }
+                                        }
+                                    });
                             }
 
                             // (2) Always update 'smashTileToolUseCountSubmitted' in saved data
@@ -848,7 +895,19 @@ public class MainActivity extends AppCompatActivity implements
                             // So we first submit the score to the leaderboard
                             if (leaderboardSwapTilesToolUseCount < 0) {
                                 leaderboardSwapTilesToolUseCount = 0;
-                                leaderboardsClient.submitScore(leaderboardId, leaderboardSwapTilesToolUseCount);
+                                int finalLeaderboardSwapTilesToolUseCount = leaderboardSwapTilesToolUseCount;
+                                leaderboardsClient.submitScoreImmediate(leaderboardId, leaderboardSwapTilesToolUseCount)
+                                    .addOnCompleteListener(new OnCompleteListener<ScoreSubmissionData>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<ScoreSubmissionData> task) {
+                                            if (task.isSuccessful()) {
+                                                // Score was submitted to the leaderboard
+                                            } else {
+                                                // Error submitting the score, so we use submitScore() method
+                                                leaderboardsClient.submitScore(leaderboardId, finalLeaderboardSwapTilesToolUseCount);
+                                            }
+                                        }
+                                    });
                             }
 
                             // (2) Always update 'swapTilesToolUseCountSubmitted' in saved data
@@ -933,7 +992,19 @@ public class MainActivity extends AppCompatActivity implements
                             // So we first submit the score to the leaderboard
                             if (leaderboardChangeValueToolUseCount < 0) {
                                 leaderboardChangeValueToolUseCount = 0;
-                                leaderboardsClient.submitScore(leaderboardId, leaderboardChangeValueToolUseCount);
+                                int finalLeaderboardChangeValueToolUseCount = leaderboardChangeValueToolUseCount;
+                                leaderboardsClient.submitScoreImmediate(leaderboardId, leaderboardChangeValueToolUseCount)
+                                    .addOnCompleteListener(new OnCompleteListener<ScoreSubmissionData>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<ScoreSubmissionData> task) {
+                                            if (task.isSuccessful()) {
+                                                // Score was submitted to the leaderboard
+                                            } else {
+                                                // Error submitting the score, so we use submitScore() method
+                                                leaderboardsClient.submitScore(leaderboardId, finalLeaderboardChangeValueToolUseCount);
+                                            }
+                                        }
+                                    });
                             }
 
                             // (2) Always update 'changeValueToolUseCountSubmitted' in saved data
@@ -1018,7 +1089,19 @@ public class MainActivity extends AppCompatActivity implements
                             // So we first submit the score to the leaderboard
                             if (leaderboardEliminateValueToolUseCount < 0) {
                                 leaderboardEliminateValueToolUseCount = 0;
-                                leaderboardsClient.submitScore(leaderboardId, leaderboardEliminateValueToolUseCount);
+                                int finalLeaderboardEliminateValueToolUseCount = leaderboardEliminateValueToolUseCount;
+                                leaderboardsClient.submitScoreImmediate(leaderboardId, leaderboardEliminateValueToolUseCount)
+                                    .addOnCompleteListener(new OnCompleteListener<ScoreSubmissionData>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<ScoreSubmissionData> task) {
+                                            if (task.isSuccessful()) {
+                                                // Score was submitted to the leaderboard
+                                            } else {
+                                                // Error submitting the score, so we use submitScore() method
+                                                leaderboardsClient.submitScore(leaderboardId, finalLeaderboardEliminateValueToolUseCount);
+                                            }
+                                        }
+                                    });
                             }
 
                             // (2) Always update 'eliminateValueToolUseCountSubmitted' in saved data
@@ -1103,7 +1186,19 @@ public class MainActivity extends AppCompatActivity implements
                             // So we first submit the score to the leaderboard
                             if (leaderboardDestroyAreaToolUseCount < 0) {
                                 leaderboardDestroyAreaToolUseCount = 0;
-                                leaderboardsClient.submitScore(leaderboardId, leaderboardDestroyAreaToolUseCount);
+                                int finalLeaderboardDestroyAreaToolUseCount = leaderboardDestroyAreaToolUseCount;
+                                leaderboardsClient.submitScoreImmediate(leaderboardId, leaderboardDestroyAreaToolUseCount)
+                                    .addOnCompleteListener(new OnCompleteListener<ScoreSubmissionData>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<ScoreSubmissionData> task) {
+                                            if (task.isSuccessful()) {
+                                                // Score was submitted to the leaderboard
+                                            } else {
+                                                // Error submitting the score, so we use submitScore() method
+                                                leaderboardsClient.submitScore(leaderboardId, finalLeaderboardDestroyAreaToolUseCount);
+                                            }
+                                        }
+                                    });
                             }
 
                             // (2) Always update 'destroyAreaToolUseCountSubmitted' in saved data
@@ -1188,7 +1283,19 @@ public class MainActivity extends AppCompatActivity implements
                             // So we first submit the score to the leaderboard
                             if (leaderboardReviveGameToolUseCount < 0) {
                                 leaderboardReviveGameToolUseCount = 0;
-                                leaderboardsClient.submitScore(leaderboardId, leaderboardReviveGameToolUseCount);
+                                int finalLeaderboardReviveGameToolUseCount = leaderboardReviveGameToolUseCount;
+                                leaderboardsClient.submitScoreImmediate(leaderboardId, leaderboardReviveGameToolUseCount)
+                                    .addOnCompleteListener(new OnCompleteListener<ScoreSubmissionData>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<ScoreSubmissionData> task) {
+                                            if (task.isSuccessful()) {
+                                                // Score was submitted to the leaderboard
+                                            } else {
+                                                // Error submitting the score, so we use submitScore() method
+                                                leaderboardsClient.submitScore(leaderboardId, finalLeaderboardReviveGameToolUseCount);
+                                            }
+                                        }
+                                    });
                             }
 
                             // (2) Always update 'reviveGameToolUseCountSubmitted' in saved data
@@ -1287,7 +1394,18 @@ public class MainActivity extends AppCompatActivity implements
         int mostCoins = sharedPreferences.getInt("mostCoins", 3000);
         if (currentCoins >= mostCoins + 1000) {
             sharedPreferences.edit().putInt("mostCoins", currentCoins).apply();
-            leaderboardsClient.submitScore(getString(R.string.leaderboard_coins_leaderboard), currentCoins);
+            leaderboardsClient.submitScoreImmediate(getString(R.string.leaderboard_coins_leaderboard), currentCoins)
+                .addOnCompleteListener(new OnCompleteListener<ScoreSubmissionData>() {
+                    @Override
+                    public void onComplete(@NonNull Task<ScoreSubmissionData> task) {
+                        if (task.isSuccessful()) {
+                            // Score was submitted to the leaderboard
+                        } else {
+                            // Error submitting the score, so we use submitScore() method
+                            leaderboardsClient.submitScore(getString(R.string.leaderboard_coins_leaderboard), currentCoins);
+                        }
+                    }
+                });
         }
     }
 
