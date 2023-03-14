@@ -659,7 +659,7 @@ public class MainActivity extends AppCompatActivity implements
                         // Updating the progress related to the most number of coins saved
                         if (leaderboardId.equals(getString(R.string.leaderboard_coins_leaderboard))) {
                             List<LeaderboardVariant> leaderboardVariants = leaderboard.getVariants();
-                            int savedMostCoins = sharedPreferences.getInt("mostCoins", 3000);
+                            int savedMostCoins = sharedPreferences.getInt("mostCoins", 5000);
                             int leaderboardMostCoins = Integer.MIN_VALUE;
                             for (int variantIndex = 0; variantIndex < leaderboardVariants.size(); variantIndex++) {
                                 LeaderboardVariant currentVariant = leaderboardVariants.get(variantIndex);
@@ -1391,7 +1391,7 @@ public class MainActivity extends AppCompatActivity implements
         }
 
         // Check if current coins count is greater than the highest most coins count
-        int mostCoins = sharedPreferences.getInt("mostCoins", 3000);
+        int mostCoins = sharedPreferences.getInt("mostCoins", 5000);
         if (currentCoins >= mostCoins + 1000) {
             sharedPreferences.edit().putInt("mostCoins", currentCoins).apply();
             leaderboardsClient.submitScoreImmediate(getString(R.string.leaderboard_coins_leaderboard), currentCoins)

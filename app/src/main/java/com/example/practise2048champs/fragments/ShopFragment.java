@@ -210,7 +210,7 @@ public class ShopFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_shop, container, false);
 
-        currentCoins = sharedPreferences.getInt("currentCoins", 3000);
+        currentCoins = sharedPreferences.getInt("currentCoins", 5000);
         coinsReward = new HashMap<>() {{
             put("coins_level1", 1000); put("coins_level2", 3000); put("coins_level3", 5000);
             put("coins_level4", 10000); put("coins_level5", 25000);
