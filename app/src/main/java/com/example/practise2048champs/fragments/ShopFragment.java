@@ -39,10 +39,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/* TODO -> Whenever the ShopFragment is opened give something like a toast message or a dialog that says 'Network connection
-           failed' etc. when internet is not connected (Or else the user will keep pressing the button but nothing will
-           happen.
-*/
 public class ShopFragment extends Fragment {
     private Context context;
     private OnShopFragmentInteractionListener mListener;
